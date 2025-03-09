@@ -1,0 +1,33 @@
+{
+  "name": "doc-test",
+  "version": "1.0.0",
+  "main": "basicFunctions.js",
+  "scripts": {
+    "dev": "tsc-watch --onSuccess \"node dist/basicFunctions.js\"",
+    "doc": "typedoc",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage --coverage.include src/*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@vitest/coverage-v8": "^3.0.5",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-tsdoc": "^0.4.0",
+    "globals": "^15.15.0",
+    "prettier": "^3.5.1",
+    "tsc-watch": "^6.2.1",
+    "typedoc": "^0.27.7",
+    "typescript-eslint": "^8.24.1",
+    "vitest": "^3.0.5"
+  },
+  "dependencies": {
+    "inquirer": "^12.4.3",
+    "lowdb": "^7.0.1",
+    "uuid": "^11.1.0"
+  }
+}
