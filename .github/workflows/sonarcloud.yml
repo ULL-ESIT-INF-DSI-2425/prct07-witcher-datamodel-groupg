@@ -3,47 +3,30 @@ name: SonarCloud Analysis
 on:
   push:
     branches:
-      - dev
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
   sonarcloud:
-    name: SonarCloud Scan
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Necesario para el análisis completo
+          fetch-depth: 0
 
-      - name: Set up JDK (Java es requerido por SonarScanner)
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle
-          restore-keys: ${{ runner.os }}-gradle
+      - name: Install dependencies
+        run: npm install
 
       - name: Run SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn verify sonar:sonar \
-            -Dsonar.projectKey=prct07-witcher-datamodel-groupg \
+          npx sonar-scanner \
             -Dsonar.organization=ULL-ESIT-INF-DSI-2425 \
+            -Dsonar.projectKey=prct07-witcher-datamodel-groupg \
+            -Dsonar.sources=src \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.token=$SONAR_TOKEN
