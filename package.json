@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "basicFunctions.js",
   "scripts": {
-    "dev": "tsc-watch --onSuccess \"node dist/basicFunctions.js\"",
+    "dev": "tsc-watch --onSuccess \"node dist/invent-repository.js\"",
     "doc": "typedoc",
     "test": "vitest run",
     "coverage": "vitest run --coverage --coverage.include src/* tests/*"

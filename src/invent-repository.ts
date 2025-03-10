@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
 import { LowSync } from 'lowdb';
 import { JSONFileSync } from 'lowdb/node';
+import { v4 as uuidv4 } from 'uuid';
 import { Item, Merchant, Client, Transaction, DatabaseSchema } from './interfaces';
 
 const db = new LowSync<DatabaseSchema>(new JSONFileSync("db.json"), { items: [], merchants: [], clients: [], transactions: [] });
@@ -85,3 +86,74 @@ export class InventoryRepository {
     return this.db.transactions;
   }
 }
+
+/**
+ * Clase que representa un servicio de inventario.
+ */
+class InventoryService {
+  /**
+   * 
+   * @param repository - El repositorio de inventario a utilizar.
+   */
+  constructor(private repository: InventoryRepository) {}
+
+  /**
+   * Lista todos los ítems del inventario.
+   */
+  listItems(): void {
+      console.log("Lista de bienes:");
+      this.repository.getItems().forEach(item => {
+          console.log(`${item.name} - ${item.description} - ${item.value} coronas`);
+      });
+  }
+
+  /**
+   * Añade un nuevo ítem al inventario.
+   */
+  async addItem() {
+      const answers = await inquirer.prompt([
+          { type: 'input', name: 'name', message: 'Nombre del bien:' },
+          { type: 'input', name: 'description', message: 'Descripción:' },
+          { type: 'input', name: 'material', message: 'Material:' },
+          { type: 'number', name: 'weight', message: 'Peso:' },
+          { type: 'number', name: 'value', message: 'Valor en coronas:' }
+      ]);
+      
+      const newItem: Item = {
+          id: uuidv4(),
+          ...answers
+      };
+      
+      this.repository.addItem(newItem);
+      console.log("Bien añadido exitosamente.");
+  }
+}
+
+/**
+ * Función principal que muestra el menú principal.
+ */
+async function mainMenu() {
+  const inventory = new InventoryRepository(db.data);
+  const service = new InventoryService(inventory);
+
+  while (true) {
+      const { action } = await inquirer.prompt([
+          {
+              type: 'list',
+              name: 'action',
+              message: 'Seleccione una opción:',
+              choices: ['Listar bienes', 'Añadir bien', 'Salir']
+          }
+      ]);
+
+      if (action === 'Listar bienes') {
+          service.listItems();
+      } else if (action === 'Añadir bien') {
+          await service.addItem();
+      } else {
+          break;
+      }
+  }
+}
+
+mainMenu();
