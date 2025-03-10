@@ -1,13 +1,36 @@
 {
-  "items": [],
-  "merchants": [],
-  "clients": [],
+  "items": [
+    {
+      "id": "1",
+      "name": "Sword",
+      "description": "A sharp blade",
+      "material": "Steel",
+      "weight": 3,
+      "value": 100
+    }
+  ],
+  "merchants": [
+    {
+      "id": "1",
+      "name": "John",
+      "location": "Market",
+      "type": "Blacksmith"
+    }
+  ],
+  "clients": [
+    {
+      "id": "1",
+      "name": "Doe",
+      "location": "City",
+      "race": "Human"
+    }
+  ],
   "transactions": [
     {
       "id": "1",
       "clientId": "1",
       "merchantId": "1",
-      "date": "2025-03-10T18:21:00.142Z",
+      "date": "2025-03-10T18:31:38.194Z",
       "total": 100,
       "type": "sale",
       "items": []

@@ -3,19 +3,11 @@ import { Item, Merchant, Client, Transaction } from '../src/interfaces';
 import { InventoryRepository } from '../src/invent-repository';
 import fs from 'fs';
 
-// Ruta del archivo JSON de Lowdb
-const DB_PATH = './db.json';
-
-// Función para limpiar la base de datos antes de cada prueba
-function resetDatabase() {
-  fs.writeFileSync(DB_PATH, JSON.stringify({ items: [], merchants: [], clients: [], transactions: [] }, null, 2));
-}
 
 describe('InventoryRepository', () => {
   let repository: InventoryRepository;
 
   beforeEach(() => {
-    resetDatabase(); // Limpiar la base de datos antes de cada prueba
     repository = new InventoryRepository();
   });
 
@@ -23,7 +15,7 @@ describe('InventoryRepository', () => {
     const item: Item = { id: '1', name: 'Sword', description: 'A sharp blade', material: 'Steel', weight: 3, value: 100 };
     repository.addItem(item);
     const items = repository.getItems();
-    expect(items).toContainEqual(item); // Cambiado a toContainEqual para comparar objetos
+    expect(items).toContainEqual(item);
   });
 
   it('should add and get merchants', () => {
