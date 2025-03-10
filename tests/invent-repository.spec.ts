@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Item, Merchant, Client, Transaction } from '../src/interfaces';
 import { InventoryRepository } from '../src/invent-repository';
-import fs from 'fs';
 
 
 describe('InventoryRepository', () => {
