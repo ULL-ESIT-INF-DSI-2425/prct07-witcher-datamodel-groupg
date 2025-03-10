@@ -7,27 +7,21 @@ import { Item, Merchant, Client, Transaction, DatabaseSchema } from './interface
 const db = new LowSync<DatabaseSchema>(new JSONFileSync("db.json"), { items: [], merchants: [], clients: [], transactions: [] });
 db.read();
 db.data ||= { items: [], merchants: [], clients: [], transactions: [] };
+db.write();
 
 /**
  * Clase que representa un repositorio de inventario.
  */
 export class InventoryRepository {
-  private db: DatabaseSchema;
-
-  /**
-   * Crea una instancia de InventoryRepository.
-   * @param database - La base de datos a utilizar.
-   */
-  constructor(database: DatabaseSchema) {
-    this.db = database;
-  }
 
   /**
    * Añade un nuevo ítem al inventario.
    * @param item - El ítem a añadir.
    */
   addItem(item: Item) {
-    this.db.items.push(item);
+    db.read();
+    db.data.items.push(item);
+    db.write();
   }
 
   /**
@@ -35,7 +29,8 @@ export class InventoryRepository {
    * @returns Una lista de ítems.
    */
   getItems(): Item[] {
-    return this.db.items;
+    db.read();
+    return db.data.items;
   }
 
   /**
@@ -43,7 +38,9 @@ export class InventoryRepository {
    * @param merchant - El comerciante a añadir.
    */
   addMerchant(merchant: Merchant) {
-    this.db.merchants.push(merchant);
+    db.read();
+    db.data.merchants.push(merchant);
+    db.write();
   }
 
   /**
@@ -51,15 +48,17 @@ export class InventoryRepository {
    * @returns Una lista de comerciantes.
    */
   getMerchants(): Merchant[] {
-    return this.db.merchants;
+    db.read();
+    return db.data.merchants;
   }
-
   /**
    * Añade un nuevo cliente.
    * @param client - El cliente a añadir.
    */
   addClient(client: Client) {
-    this.db.clients.push(client);
+    db.read();
+    db.data.clients.push(client);
+    db.write();
   }
 
   /**
@@ -67,7 +66,8 @@ export class InventoryRepository {
    * @returns Una lista de clientes.
    */
   getClients(): Client[] {
-    return this.db.clients;
+    db.read();
+    return db.data.clients;
   }
 
   /**
@@ -75,7 +75,9 @@ export class InventoryRepository {
    * @param transaction - La transacción a añadir.
    */
   addTransaction(transaction: Transaction) {
-    this.db.transactions.push(transaction);
+    db.read();
+    db.data.transactions.push(transaction);
+    db.write();
   }
 
   /**
@@ -83,7 +85,11 @@ export class InventoryRepository {
    * @returns Una lista de transacciones.
    */
   getTransactions(): Transaction[] {
-    return this.db.transactions;
+    db.read();
+    return db.data.transactions.map(transaction => ({
+        ...transaction,
+        date: new Date(transaction.date) // Convertir la fecha almacenada en string de nuevo a Date
+    }));
   }
 }
 
@@ -101,16 +107,21 @@ class InventoryService {
    * Lista todos los ítems del inventario.
    */
   listItems(): void {
-      console.log("Lista de bienes:");
-      this.repository.getItems().forEach(item => {
-          console.log(`${item.name} - ${item.description} - ${item.value} coronas`);
-      });
+    console.log("Lista de bienes:");
+    const items = this.repository.getItems();
+    if (items.length === 0) {
+        console.log("No hay bienes en el inventario.");
+    } else {
+        items.forEach(item => {
+            console.log(`${item.name} - ${item.description} - ${item.value} coronas`);
+        });
+    }
   }
 
   /**
    * Añade un nuevo ítem al inventario.
    */
-  async addItem() {
+    async addItem() {
       const answers = await inquirer.prompt([
           { type: 'input', name: 'name', message: 'Nombre del bien:' },
           { type: 'input', name: 'description', message: 'Descripción:' },
@@ -133,7 +144,7 @@ class InventoryService {
  * Función principal que muestra el menú principal.
  */
 async function mainMenu() {
-  const inventory = new InventoryRepository(db.data);
+  const inventory = new InventoryRepository();
   const service = new InventoryService(inventory);
 
   while (true) {

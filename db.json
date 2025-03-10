@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": "6f6dc4af-728d-496d-a07c-96ce11149684",
+      "name": "Espada",
+      "description": "Espada forjada a mano",
+      "material": "Hierro",
+      "weight": 5,
+      "value": 100
+    }
+  ],
+  "merchants": [],
+  "clients": [],
+  "transactions": []
+}

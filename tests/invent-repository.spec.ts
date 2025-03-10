@@ -1,77 +1,49 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { Item, Merchant, Client, Transaction } from '../src/interfaces';
 import { InventoryRepository } from '../src/invent-repository';
+import fs from 'fs';
 
-const mockDb = {
-  items: [] as Item[],
-  merchants: [] as Merchant[],
-  clients: [] as Client[],
-  transactions: [] as Transaction[],
-};
+// Ruta del archivo JSON de Lowdb
+const DB_PATH = './db.json';
+
+// Función para limpiar la base de datos antes de cada prueba
+function resetDatabase() {
+  fs.writeFileSync(DB_PATH, JSON.stringify({ items: [], merchants: [], clients: [], transactions: [] }, null, 2));
+}
 
 describe('InventoryRepository', () => {
-  let inventoryRepository: InventoryRepository;
+  let repository: InventoryRepository;
 
   beforeEach(() => {
-    // Reset mock database before each test
-    mockDb.items = [];
-    mockDb.merchants = [];
-    mockDb.clients = [];
-    mockDb.transactions = [];
-    
-    // Inject mockDb into repository
-    inventoryRepository = new InventoryRepository(mockDb);
+    resetDatabase(); // Limpiar la base de datos antes de cada prueba
+    repository = new InventoryRepository();
   });
 
-  it('should add an item', () => {
-    const item: Item = { id: '1', name: 'Sword', value: 100, description: 'A sharp blade', material: 'steel', weight: 3.5 };
-    inventoryRepository.addItem(item);
-    expect(mockDb.items).toContain(item);
+  it('should add and get items', () => {
+    const item: Item = { id: '1', name: 'Sword', description: 'A sharp blade', material: 'Steel', weight: 3, value: 100 };
+    repository.addItem(item);
+    const items = repository.getItems();
+    expect(items).toContainEqual(item); // Cambiado a toContainEqual para comparar objetos
   });
 
-  it('should get items', () => {
-    const item: Item = { id: '1', name: 'Sword', value: 100, description: 'A sharp blade', material: 'steel', weight: 3.5 };
-    mockDb.items.push(item);
-    const items = inventoryRepository.getItems();
-    expect(items).toContain(item);
+  it('should add and get merchants', () => {
+    const merchant: Merchant = { id: '1', name: 'John', location: 'Market', type: 'Blacksmith' };
+    repository.addMerchant(merchant);
+    const merchants = repository.getMerchants();
+    expect(merchants).toContainEqual(merchant);
   });
 
-  it('should add a merchant', () => {
-    const merchant: Merchant = { id: '1', name: 'Geralt', type: 'blacksmith', location: 'Novigrad' };
-    inventoryRepository.addMerchant(merchant);
-    expect(mockDb.merchants).toContain(merchant);
+  it('should add and get clients', () => {
+    const client: Client = { id: '1', name: 'Doe', location: 'City', race: 'Human' };
+    repository.addClient(client);
+    const clients = repository.getClients();
+    expect(clients).toContainEqual(client);
   });
 
-  it('should get merchants', () => {
-    const merchant: Merchant = { id: '1', name: 'Geralt', type: 'blacksmith', location: 'Novigrad' };
-    mockDb.merchants.push(merchant);
-    const merchants = inventoryRepository.getMerchants();
-    expect(merchants).toContain(merchant);
-  });
-
-  it('should add a client', () => {
-    const client: Client = { id: '1', name: 'Yennefer', race: 'human', location: 'Vengerberg' };
-    inventoryRepository.addClient(client);
-    expect(mockDb.clients).toContain(client);
-  });
-
-  it('should get clients', () => {
-    const client: Client = { id: '1', name: 'Yennefer', race: 'human', location: 'Vengerberg' };
-    mockDb.clients.push(client);
-    const clients = inventoryRepository.getClients();
-    expect(clients).toContain(client);
-  });
-
-  it('should add a transaction', () => {
-    const transaction: Transaction = { id: '1', date: new Date(), items: [], total: 0, type: 'sale', merchantId: '1', clientId: '1' };
-    inventoryRepository.addTransaction(transaction);
-    expect(mockDb.transactions).toContain(transaction);
-  });
-
-  it('should get transactions', () => {
-    const transaction: Transaction = { id: '1', date: new Date(), items: [], total: 0, type: 'sale', merchantId: '1', clientId: '1' };
-    mockDb.transactions.push(transaction);
-    const transactions = inventoryRepository.getTransactions();
-    expect(transactions).toContain(transaction);
+  it('should add and get transactions', () => {
+    const transaction: Transaction = { id: '1', clientId: '1', merchantId: '1', date: new Date(), total: 100, type: 'sale', items: [] };
+    repository.addTransaction(transaction);
+    const transactions = repository.getTransactions();
+    expect(transactions).toContainEqual(transaction);
   });
 });
