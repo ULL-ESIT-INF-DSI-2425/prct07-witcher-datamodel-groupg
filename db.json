@@ -1,12 +1,20 @@
 {
   "items": [
     {
-      "id": "1",
+      "id": "c7f02ca8-1bec-4d86-8713-ceb190245544",
       "name": "Sword",
       "description": "A sharp blade",
       "material": "Steel",
       "weight": 3,
       "value": 100
+    },
+    {
+      "id": "c7f02ca8-1bec-4d86-8713-ceb1902b5a01",
+      "name": "Shield",
+      "description": "A strong shield",
+      "material": "Wood",
+      "weight": 10,
+      "value": 30
     }
   ],
   "merchants": [
