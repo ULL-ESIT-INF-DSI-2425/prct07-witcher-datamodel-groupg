@@ -4,24 +4,27 @@ import { JSONFileSync } from 'lowdb/node';
 import { v4 as uuidv4 } from 'uuid';
 import { Item, Merchant, Client, Transaction, DatabaseSchema } from './interfaces';
 
-const db = new LowSync<DatabaseSchema>(new JSONFileSync("db.json"), { items: [], merchants: [], clients: [], transactions: [] });
-db.read();
-db.data ||= { items: [], merchants: [], clients: [], transactions: [] };
-db.write();
 
 /**
  * Clase que representa un repositorio de inventario.
  */
 export class InventoryRepository {
-
+  //meter la db en el constructor
+  private db: LowSync<DatabaseSchema>;
+  constructor() {
+    this.db = new LowSync<DatabaseSchema>(new JSONFileSync("test-db.json"), { items: [], merchants: [], clients: [], transactions: [] });
+    this.db.read();
+    this.db.data ||= { items: [], merchants: [], clients: [], transactions: [] };
+    this.db.write();
+  }
   /**
    * Añade un nuevo ítem al inventario.
    * @param item - El ítem a añadir.
    */
   addItem(item: Item) {
-    db.read();
-    db.data.items.push(item);
-    db.write();
+    this.db.read();
+    this.db.data.items.push(item);
+    this.db.write();
   }
 
   /**
@@ -29,8 +32,8 @@ export class InventoryRepository {
    * @returns Una lista de ítems.
    */
   getItems(): Item[] {
-    db.read();
-    return db.data.items;
+    this.db.read();
+    return this.db.data.items;
   }
 
   /**
@@ -38,9 +41,9 @@ export class InventoryRepository {
    * @param merchant - El comerciante a añadir.
    */
   addMerchant(merchant: Merchant) {
-    db.read();
-    db.data.merchants.push(merchant);
-    db.write();
+    this.db.read();
+    this.db.data.merchants.push(merchant);
+    this.db.write();
   }
 
   /**
@@ -48,17 +51,17 @@ export class InventoryRepository {
    * @returns Una lista de comerciantes.
    */
   getMerchants(): Merchant[] {
-    db.read();
-    return db.data.merchants;
+    this.db.read();
+    return this.db.data.merchants;
   }
   /**
    * Añade un nuevo cliente.
    * @param client - El cliente a añadir.
    */
   addClient(client: Client) {
-    db.read();
-    db.data.clients.push(client);
-    db.write();
+    this.db.read();
+    this.db.data.clients.push(client);
+    this.db.write();
   }
 
   /**
@@ -66,8 +69,8 @@ export class InventoryRepository {
    * @returns Una lista de clientes.
    */
   getClients(): Client[] {
-    db.read();
-    return db.data.clients;
+    this.db.read();
+    return this.db.data.clients;
   }
 
   /**
@@ -75,9 +78,9 @@ export class InventoryRepository {
    * @param transaction - La transacción a añadir.
    */
   addTransaction(transaction: Transaction) {
-    db.read();
-    db.data.transactions.push(transaction);
-    db.write();
+    this.db.read();
+    this.db.data.transactions.push(transaction);
+    this.db.write();
   }
 
   /**
@@ -85,8 +88,8 @@ export class InventoryRepository {
    * @returns Una lista de transacciones.
    */
   getTransactions(): Transaction[] {
-    db.read();
-    return db.data.transactions.map(transaction => ({
+    this.db.read();
+    return this.db.data.transactions.map(transaction => ({
         ...transaction,
         date: new Date(transaction.date) // Convertir la fecha almacenada en string de nuevo a Date
     }));

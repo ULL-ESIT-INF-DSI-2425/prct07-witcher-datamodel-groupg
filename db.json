@@ -17,31 +17,7 @@
       "value": 30
     }
   ],
-  "merchants": [
-    {
-      "id": "1",
-      "name": "John",
-      "location": "Market",
-      "type": "Blacksmith"
-    }
-  ],
-  "clients": [
-    {
-      "id": "1",
-      "name": "Doe",
-      "location": "City",
-      "race": "Human"
-    }
-  ],
-  "transactions": [
-    {
-      "id": "1",
-      "clientId": "1",
-      "merchantId": "1",
-      "date": "2025-03-10T18:31:38.194Z",
-      "total": 100,
-      "type": "sale",
-      "items": []
-    }
-  ]
+  "merchants": [],
+  "clients": [],
+  "transactions": []
 }

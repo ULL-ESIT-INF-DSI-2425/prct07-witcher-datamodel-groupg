@@ -1,12 +1,20 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Item, Merchant, Client, Transaction } from '../src/interfaces';
 import { InventoryRepository } from '../src/invent-repository';
+import fs from 'fs';
 
+const TEST_DB_PATH = 'test-db.json';
+
+// Función para limpiar la base de datos de pruebas antes de cada test
+function resetTestDatabase() {
+  fs.writeFileSync(TEST_DB_PATH, JSON.stringify({ items: [], merchants: [], clients: [], transactions: [] }, null, 2));
+}
 
 describe('InventoryRepository', () => {
   let repository: InventoryRepository;
 
-  beforeEach(() => {
+  beforeEach(() => { 
+    resetTestDatabase(); // Limpia test-db.json antes de cada prueba
     repository = new InventoryRepository();
   });
 
@@ -36,5 +44,6 @@ describe('InventoryRepository', () => {
     repository.addTransaction(transaction);
     const transactions = repository.getTransactions();
     expect(transactions).toContainEqual(transaction);
+    resetTestDatabase();
   });
 });
