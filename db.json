@@ -1,15 +1,16 @@
 {
-  "items": [
-    {
-      "id": "6f6dc4af-728d-496d-a07c-96ce11149684",
-      "name": "Espada",
-      "description": "Espada forjada a mano",
-      "material": "Hierro",
-      "weight": 5,
-      "value": 100
-    }
-  ],
+  "items": [],
   "merchants": [],
   "clients": [],
-  "transactions": []
+  "transactions": [
+    {
+      "id": "1",
+      "clientId": "1",
+      "merchantId": "1",
+      "date": "2025-03-10T18:21:00.142Z",
+      "total": 100,
+      "type": "sale",
+      "items": []
+    }
+  ]
 }
