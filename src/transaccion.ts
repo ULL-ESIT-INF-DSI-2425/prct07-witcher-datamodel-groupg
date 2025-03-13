@@ -1,7 +1,11 @@
+import { Bien, IBien } from "../src/bien";
+import { Mercader, IMercader } from "../src/mercader";
+import { Cliente, ICliente } from "../src/cliente";
+
 /**
  * Representa una transacción en el sistema.
  */
-interface ITransaccion {
+export interface ITransaccion {
   id: string;
   tipo: "compra" | "venta" | "devolución";
   fecha: Date;
@@ -13,7 +17,7 @@ interface ITransaccion {
 /**
  * Implementación de la clase Transacción.
  */
-class Transaccion implements ITransaccion {
+export class Transaccion implements ITransaccion {
   constructor(
     public id: string,
     public tipo: "compra" | "venta" | "devolución",

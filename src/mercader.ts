@@ -1,7 +1,7 @@
 /**
  * Representa a un mercader.
  */
-interface IMercader {
+export interface IMercader {
   id: string;
   nombre: string;
   tipo: string;
@@ -11,7 +11,7 @@ interface IMercader {
 /**
  * Implementación de la clase Mercader.
  */
-class Mercader implements IMercader {
+export class Mercader implements IMercader {
   constructor(
     public id: string,
     public nombre: string,

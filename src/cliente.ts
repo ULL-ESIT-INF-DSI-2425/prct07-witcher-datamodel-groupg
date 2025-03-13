@@ -1,7 +1,7 @@
 /**
  * Representa a un cliente que compra bienes.
  */
-interface ICliente {
+export interface ICliente {
   id: string;
   nombre: string;
   raza: string;
@@ -11,7 +11,7 @@ interface ICliente {
 /**
  * Implementación de la clase Cliente.
  */
-class Cliente implements ICliente {
+export class Cliente implements ICliente {
   constructor(
     public id: string,
     public nombre: string,

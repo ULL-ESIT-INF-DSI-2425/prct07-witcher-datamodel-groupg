@@ -1,7 +1,7 @@
 /**
  * Representa un bien en el inventario.
  */
-interface IBien {
+export interface IBien {
   id: string;
   nombre: string;
   descripcion: string;
