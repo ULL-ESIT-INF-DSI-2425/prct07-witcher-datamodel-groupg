@@ -4,7 +4,7 @@ import { JSONFileSync } from 'lowdb/node';
 /**
  * Esquema de datos de la base de datos
  */
-type DataSchema = {
+export type DataSchema = {
   bienes: any[];
   mercaderes: any[];
   clientes: any[];
