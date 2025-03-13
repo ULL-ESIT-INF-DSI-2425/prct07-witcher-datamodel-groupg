@@ -13,7 +13,7 @@ interface IBien {
 /**
  * Implementación de la clase Bien.
  */
-class Bien implements IBien {
+export class Bien implements IBien {
   constructor(
     public id: string,
     public nombre: string,
