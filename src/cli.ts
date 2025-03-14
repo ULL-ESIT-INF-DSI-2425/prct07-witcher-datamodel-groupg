@@ -27,7 +27,8 @@ async function mainMenu() {
 
   switch (action) {
     case "Mostrar bienes":
-      showBienes();
+      inventario.showBienes();
+      mainMenu();
       break;
     case "Añadir bien":
       addBien();
@@ -39,7 +40,8 @@ async function mainMenu() {
       registerTransaction();
       break;
     case "Mostrar transacciones":
-      showTransacciones();
+      inventario.showTransacciones();
+      mainMenu();
       break;
     case "Salir":
       console.log("Saliendo...");
@@ -47,7 +49,7 @@ async function mainMenu() {
   }
 }
 
-function showBienes() {
+/* function showBienes() {
   const bienes = inventario.getBienes();
   if (bienes && bienes.length > 0) {
     console.table(bienes);
@@ -55,7 +57,7 @@ function showBienes() {
     console.log("No hay bienes en el inventario.");
   }
   mainMenu();
-}
+} */
 
 async function addBien() {
   const answers = await inquirer.prompt([
@@ -169,7 +171,7 @@ async function registerTransaction() {
   mainMenu();
 }
 
-function showTransacciones() {
+/* function showTransacciones() {
   const transacciones = inventario.getTransacciones();
   if (transacciones && transacciones.length > 0) {
     console.table(transacciones);
@@ -177,7 +179,7 @@ function showTransacciones() {
     console.log("No hay transacciones registradas.");
   }
   mainMenu();
-}
+} */
 
 // Iniciar el CLI
 mainMenu();
