@@ -13,14 +13,6 @@ export class Inventario {
   private db: LowSync<DataSchema>;
 
   constructor() {
-
-    /* No se le pueden pasar 2 argumentos al constructor de LowSync
-      this.db = new LowSync<DataSchema>(new JSONFileSync("test-db.json"), {
-      bienes: [],
-      mercaderes: [],
-      clientes: [],
-      transacciones: [],
-    });*/
     this.db = new LowSync<DataSchema>(new JSONFileSync("test-db.json"));
     this.db.read();
     this.db.data ||= {
@@ -50,6 +42,10 @@ export class Inventario {
     return this.db.data?.bienes || null;
   }
 
+  /**
+   * Elimina un bien.
+   * @param bien - Bien a eliminar.
+   */
   removeBien(bien: Bien) {
     this.db.read();
     if (!this.db.data) {
@@ -70,8 +66,20 @@ export class Inventario {
   }
 
   /**
-   * Añade un nuevo mercader
-   * @param bien - bien a mercader
+   * Muestra por pantalla los bienes almacenados.
+   */
+  showBienes() {
+    const bienes = this.getBienes();
+    if (bienes && bienes.length > 0) {
+      console.table(bienes);
+    } else {
+      console.log("No hay bienes en el inventario.");
+    }
+  }
+
+  /**
+   * Añade un nuevo mercader.
+   * @param bien - bien a añadir.
    */
   addMercader(mercader: Mercader) {
     this.db.data?.mercaderes.push(mercader);
@@ -87,6 +95,10 @@ export class Inventario {
     return this.db.data?.mercaderes || null;
   }
 
+  /**
+   * Elimina un mercader.
+   * @param mercader - mercader a eliminar.
+   */
   removeMercader(mercader: Mercader) {
     this.db.read();
     if (!this.db.data) {
@@ -106,16 +118,28 @@ export class Inventario {
     this.db.write();
   }
 
+  /**
+   * Añade un nuevo cliente
+   * @param bien - cliente a añadir
+   */
   addCliente(cliente: Cliente) {
     this.db.data?.clientes.push(cliente);
     this.db.write();
   }
 
+  /**
+   * Obtiene los clientes almacenados.
+   * @returns lista de clientes
+   */
   getClientes(): Cliente[] | null {
     this.db.read();
     return this.db.data?.clientes || null;
   }
 
+  /**
+   * Elimina un cliente.
+   * @param cliente - cliente a eliminar.
+   */
   removeCliente(cliente: Cliente) {
     this.db.read();
     if (!this.db.data) {
@@ -135,16 +159,28 @@ export class Inventario {
     this.db.write();
   }
 
+  /**
+   * Añade una nueva transacción
+   * @param transaccion - transacción a añadir
+   */
   addTransaccion(transaccion: Transaccion) {
     this.db.data?.transacciones.push(transaccion);
     this.db.write();
   }
 
+  /**
+   * Obtiene las transacciones registradas.
+   * @returns lista de transacciones.
+   */
   getTransacciones(): Transaccion[] | null {
     this.db.read();
     return this.db.data?.transacciones || null;
   }
 
+  /**
+   * Elimina una transaccion.
+   * @param transaccion - transaccion a eliminar.
+   */
   removeTransaccion(transaccion: Transaccion) {
     this.db.read();
     if (!this.db.data) {
@@ -162,5 +198,17 @@ export class Inventario {
     }
     this.db.data?.transacciones.splice(index, 1);
     this.db.write();
+  }
+
+  /**
+   * Muestra por pantalla las transacciones almacenadas.
+   */
+  showTransacciones() {
+    const transacciones = this.getTransacciones();
+    if (transacciones && transacciones.length > 0) {
+      console.table(transacciones);
+    } else {
+      console.log("No hay transacciones registradas.");
+    }
   }
 }
