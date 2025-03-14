@@ -1,6 +1,15 @@
 {
-  "items": [],
-  "merchants": [],
-  "clients": [],
-  "transactions": []
+  "bienes": [
+    {
+      "id": "2323",
+      "nombre": "ewrwer",
+      "descripcion": "wreewrr",
+      "material": "dsfswdf",
+      "peso": 3,
+      "valor": 2
+    }
+  ],
+  "mercaderes": [],
+  "clientes": [],
+  "transacciones": []
 }
