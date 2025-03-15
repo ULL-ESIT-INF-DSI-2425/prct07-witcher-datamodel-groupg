@@ -1,6 +1,6 @@
-import { Bien, IBien } from "../src/bien.js";
-import { Mercader, IMercader } from "../src/mercader.js";
-import { Cliente, ICliente } from "../src/cliente.js";
+import { IBien } from "../src/bien.js";
+import { IMercader } from "../src/mercader.js";
+import { ICliente } from "../src/cliente.js";
 
 /**
  * Representa una transacción en el sistema.
