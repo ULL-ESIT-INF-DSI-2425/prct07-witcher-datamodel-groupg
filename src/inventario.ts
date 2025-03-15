@@ -118,7 +118,7 @@ export class Inventario {
    * @param orden - orden de la lista.
    * @returns Lista de bienes ordenada
    */
-  buscarBienNombre(
+  searchBienNombre(
     nombre: string,
     ordenarPor: "nombre" | "valor" = "nombre",
     orden: "asc" | "desc" = "asc",
@@ -156,7 +156,7 @@ export class Inventario {
    * @param orden - orden de la lista.
    * @returns Lista de bienes ordenada
    */
-  buscarBienDescripcion(
+  searchBienDescripcion(
     descripcion: string,
     ordenarPor: "descripcion" | "valor" = "descripcion",
     orden: "asc" | "desc" = "asc",
@@ -196,7 +196,7 @@ export class Inventario {
    * @param orden - orden de la lista.
    * @returns Lista de bienes ordenada
    */
-  buscarBienMaterial(
+  searchBienMaterial(
     material: string,
     ordenarPor: "material" | "valor" = "material",
     orden: "asc" | "desc" = "asc",
@@ -334,7 +334,7 @@ export class Inventario {
    * @param nombre - nombre del mercader a buscar.
    * @returns Lista de mercaderes
    */
-  buscarMercaderNombre(nombre: string): Mercader[] {
+  searchMercaderNombre(nombre: string): Mercader[] {
     this.db.read();
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
@@ -355,7 +355,7 @@ export class Inventario {
    * @param ubicacion - ubicación del mercader a buscar.
    * @returns Lista de mercaderes
    */
-  buscarMercaderUbicacion(ubicacion: string): Mercader[] {
+  searchMercaderUbicacion(ubicacion: string): Mercader[] {
     this.db.read();
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
@@ -376,7 +376,7 @@ export class Inventario {
    * @param tipo - tipo del mercader a buscar.
    * @returns Lista de mercaderes
    */
-  buscarMercaderTipo(tipo: string): Mercader[] {
+  searchMercaderTipo(tipo: string): Mercader[] {
     this.db.read();
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
@@ -489,7 +489,7 @@ export class Inventario {
    * @param nombre - nombre del cliente a buscar.
    * @returns Lista de clientes
    */
-  buscarClienteNombre(nombre: string): Cliente[] {
+  searchClienteNombre(nombre: string): Cliente[] {
     this.db.read();
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
@@ -506,7 +506,7 @@ export class Inventario {
    * @param raza - raza del cliente a buscar.
    * @returns Lista de clientes
    */
-  buscarClienteRaza(raza: string): Cliente[] {
+  searchClienteRaza(raza: string): Cliente[] {
     this.db.read();
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
@@ -523,7 +523,7 @@ export class Inventario {
    * @param ubicacion - ubicación del cliente a buscar.
    * @returns Lista de clientes
    */
-  buscarClienteUbicacion(ubicacion: string): Cliente[] {
+  searchClienteUbicacion(ubicacion: string): Cliente[] {
     this.db.read();
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
