@@ -27,7 +27,8 @@ async function mainMenu() {
 
   switch (action) {
     case "Mostrar bienes":
-      inventario.showBienes();
+      //inventario.showBienes();
+      inventario.getBienManager().showBienes();
       mainMenu();
       break;
     case "Añadir bien":
@@ -40,7 +41,8 @@ async function mainMenu() {
       registerTransaction();
       break;
     case "Mostrar transacciones":
-      inventario.showTransacciones();
+      //inventario.showTransacciones();
+      inventario.getTransaccionManager().showTransacciones();
       mainMenu();
       break;
     case "Salir":
@@ -76,13 +78,15 @@ async function addBien() {
     answers.valor
   );
 
-  inventario.addBien(bien);
+  //inventario.addBien(bien);
+  inventario.getBienManager().addBien(bien);
   console.log("Bien añadido con éxito.");
   mainMenu();
 }
 
 async function removeBien() {
-  const bienes = inventario.getBienes();
+  //const bienes = inventario.getBienes();
+  const bienes = inventario.getBienManager().getBienes();
   if (!bienes || bienes.length === 0) {
     console.log("No hay bienes en el inventario para eliminar.");
     return mainMenu();
@@ -99,7 +103,8 @@ async function removeBien() {
 
   const bien = bienes.find((b) => b.id === bienId);
   if (bien) {
-    inventario.removeBien(bien.id);
+    //inventario.removeBien(bien.id);
+    inventario.getBienManager().removeBien(bien.id);
     console.log("Bien eliminado con éxito.");
   } else {
     console.log("No se encontró el bien especificado.");
@@ -108,8 +113,10 @@ async function removeBien() {
 }
 
 async function registerTransaction() {
-  const bienes = inventario.getBienes();
-  const clientes = inventario.getClientes();
+  //const bienes = inventario.getBienes();
+  //const clientes = inventario.getClientes();
+  const bienes = inventario.getBienManager().getBienes();
+  const clientes = inventario.getClienteManager().getClientes();
 
   if (!bienes || bienes.length === 0) {
     console.log("No hay bienes disponibles para la transacción.");
@@ -163,7 +170,8 @@ async function registerTransaction() {
     cliente
   );
 
-  inventario.addTransaccion(transaccion);
+  //inventario.addTransaccion(transaccion);
+  inventario.getTransaccionManager().addTransaccion(transaccion);
   console.log("Transacción registrada con éxito.");
   mainMenu();
 }
