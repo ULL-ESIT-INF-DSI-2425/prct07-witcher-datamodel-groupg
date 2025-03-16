@@ -20,6 +20,10 @@ export class ClienteManager {
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
     }
+    //si esta ducpliado
+    if (this.db.data.clientes.find((c) => c.id === cliente.id)) {
+      throw new Error("El cliente ya existe.");
+    }
     if (!this.db.data.clientes) {
       throw new Error("La base de datos no contiene la propiedad 'clientes'.");
     }
