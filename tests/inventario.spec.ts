@@ -13,7 +13,7 @@ describe('Inventario', () => {
   });
 
   it('should add and get bienes', () => {
-    const bien = new Bien('1', 'Bien1', 'desc1', 'mat1', 1, 1);
+    const bien = new Bien('Bien1', 'desc1', 'mat1', 1, 1);
     inventario.addBien(bien);
     const bienes = inventario.getBienes();
     expect(bienes).toContainEqual(bien);
@@ -28,7 +28,7 @@ describe('Inventario', () => {
   }); */
 
   it('should add and get mercaderes', () => {
-    const mercader = new Mercader('1', 'Mercader1', 'tipo1', 'ubi1');
+    const mercader = new Mercader('Mercader1', 'tipo1', 'ubi1');
     inventario.addMercader(mercader);
     const mercaderes = inventario.getMercaderes();
     expect(mercaderes).toContainEqual(mercader);
@@ -43,7 +43,7 @@ describe('Inventario', () => {
   }); */
 
   it('should add and get clientes', () => {
-    const cliente = new Cliente('1', 'Cliente1', 'raza1', 'uni1');
+    const cliente = new Cliente('Cliente1', 'raza1', 'uni1');
     inventario.addCliente(cliente);
     const clientes = inventario.getClientes();
     expect(clientes).toContainEqual(cliente);
@@ -67,11 +67,11 @@ describe('Inventario', () => {
   }); */
 
   it('should remove a transaccion', () => {
-    const bien = new Bien('1', 'Bien1', 'desc1', 'mat1', 1, 1);
-    const mercader = new Mercader('1', 'Mercader1', 'tipo1', 'ubi1');
-    const transaccion = new Transaccion('1', 'compra', new Date(), [bien], 1, mercader)
+    const bien = new Bien('Bien1', 'desc1', 'mat1', 1, 1);
+    const mercader = new Mercader('Mercader1', 'tipo1', 'ubi1');
+    const transaccion = new Transaccion('compra', new Date(), [bien], 1, mercader)
     inventario.addTransaccion(transaccion);
-    inventario.removeTransaccion(transaccion);
+    inventario.removeTransaccion(transaccion.id);
     const transacciones = inventario.getTransacciones();
     expect(transacciones).not.toContainEqual(transaccion);
   });

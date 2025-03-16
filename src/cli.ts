@@ -61,7 +61,6 @@ async function mainMenu() {
 
 async function addBien() {
   const answers = await inquirer.prompt([
-    { type: "input", name: "id", message: "ID del bien:" },
     { type: "input", name: "nombre", message: "Nombre del bien:" },
     { type: "input", name: "descripcion", message: "Descripción del bien:" },
     { type: "input", name: "material", message: "Material del bien:" },
@@ -70,7 +69,6 @@ async function addBien() {
   ]);
 
   const bien = new Bien(
-    answers.id,
     answers.nombre,
     answers.descripcion,
     answers.material,
@@ -158,7 +156,6 @@ async function registerTransaction() {
   }
 
   const transaccion = new Transaccion(
-    Date.now().toString(),
     tipo,
     new Date(),
     bienesInvolucrados,

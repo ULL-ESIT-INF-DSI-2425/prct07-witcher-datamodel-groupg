@@ -1,20 +1,20 @@
 {
   "bienes": [
     {
-      "id": "2323",
-      "nombre": "ewrwer",
-      "descripcion": "wreewrr",
-      "material": "dsfswdf",
-      "peso": 3,
-      "valor": 2
-    },
-    {
-      "id": "1",
+      "id": "1d2d7c03-920f-4687-bab4-fa31f20714a0",
       "nombre": "Bien1",
       "descripcion": "desc1",
       "material": "mat1",
       "peso": 1,
       "valor": 1
+    },
+    {
+      "nombre": "Mazo",
+      "descripcion": "Gran mazo",
+      "material": "madera",
+      "peso": 2,
+      "valor": 13,
+      "id": "765217c2-8637-4ead-97a6-5ee002ba2971"
     }
   ],
   "mercaderes": [
@@ -23,11 +23,23 @@
       "nombre": "Mercader1",
       "tipo": "tipo1",
       "ubicacion": "ubi1"
+    },
+    {
+      "id": "57753e8b-261c-4315-b3da-6d76b5097dbf",
+      "nombre": "Mercader1",
+      "tipo": "tipo1",
+      "ubicacion": "ubi1"
     }
   ],
   "clientes": [
     {
       "id": "1",
+      "nombre": "Cliente1",
+      "raza": "raza1",
+      "ubicacion": "uni1"
+    },
+    {
+      "id": "dcb09172-293b-4673-a942-c457e547f171",
       "nombre": "Cliente1",
       "raza": "raza1",
       "ubicacion": "uni1"

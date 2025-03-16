@@ -3,7 +3,7 @@ import { Mercader } from '../src/mercader';
 
 describe('Mercader', () => {
   it('should create a mercader instance', () => {
-    const mercader = new Mercader('1', 'Juan', 'Armero', 'Novigrado');
+    const mercader = new Mercader('Juan', 'Armero', 'Novigrado');
     expect(mercader).toBeInstanceOf(Mercader);
     expect(mercader.id).toBe('1');
     expect(mercader.nombre).toBe('Juan');
@@ -12,7 +12,7 @@ describe('Mercader', () => {
   });
 
   it('should have correct properties', () => {
-    const mercader = new Mercader('2', 'Pedro', 'Herrero', 'Oxenfurt');
+    const mercader = new Mercader('Pedro', 'Herrero', 'Oxenfurt');
     expect(mercader.id).toBe('2');
     expect(mercader.nombre).toBe('Pedro');
     expect(mercader.tipo).toBe('Herrero');
@@ -20,7 +20,7 @@ describe('Mercader', () => {
   });
 
   it('should allow updating properties', () => {
-    const mercader = new Mercader('3', 'Luis', 'Alquimista', 'Vizima');
+    const mercader = new Mercader('Luis', 'Alquimista', 'Vizima');
     mercader.nombre = 'Carlos';
     mercader.tipo = 'Herbolario';
     mercader.ubicacion = 'Kaer Morhen';

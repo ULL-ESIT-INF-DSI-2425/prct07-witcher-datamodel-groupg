@@ -3,12 +3,12 @@ import { Bien } from '../src/bien';
 
 describe('Bien', () => {
   it('should create an instance of Bien', () => {
-    const bien = new Bien('1', 'Espada', 'Espada de acero', 'Acero', 3.5, 150);
+    const bien = new Bien('Espada', 'Espada de acero', 'Acero', 3.5, 150);
     expect(bien).toBeInstanceOf(Bien);
   });
 
   it('should have correct properties', () => {
-    const bien = new Bien('1', 'Espada', 'Espada de acero', 'Acero', 3.5, 150);
+    const bien = new Bien('Espada', 'Espada de acero', 'Acero', 3.5, 150);
     expect(bien.id).toBe('1');
     expect(bien.nombre).toBe('Espada');
     expect(bien.descripcion).toBe('Espada de acero');
@@ -18,7 +18,7 @@ describe('Bien', () => {
   });
 
   it('should allow updating properties', () => {
-    const bien = new Bien('1', 'Espada', 'Espada de acero', 'Acero', 3.5, 150);
+    const bien = new Bien('Espada', 'Espada de acero', 'Acero', 3.5, 150);
     bien.nombre = 'Espada de plata';
     bien.descripcion = 'Espada de plata para monstruos';
     bien.material = 'Plata';
@@ -33,7 +33,7 @@ describe('Bien', () => {
   });
 
   it('should handle negative values for peso and valor', () => {
-    const bien = new Bien('1', 'Espada', 'Espada de acero', 'Acero', -3.5, -150);
+    const bien = new Bien('Espada', 'Espada de acero', 'Acero', -3.5, -150);
     expect(bien.peso).toBe(-3.5);
     expect(bien.valor).toBe(-150);
   });
