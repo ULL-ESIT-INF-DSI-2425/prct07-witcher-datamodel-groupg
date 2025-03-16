@@ -1,43 +1,42 @@
 import { TransaccionManager } from "../src/transaccionManager.js";
 import { Transaccion } from "../src/transaccion.js";
 import { db, initDB } from "../src/database.js";
-import { LowSync } from "lowdb";
-import { DataSchema } from "../src/database.js";
 import { describe, expect, vi, beforeEach, it , afterEach } from "vitest";
 
 describe("TransaccionManager", () => {
   let transaccionManager: TransaccionManager;
-  let transaccion1: Transaccion;
-  let transaccion2: Transaccion;
+  const transaccion1: Transaccion = new Transaccion(
+    "compra",
+    new Date(),
+    [],
+    100,
+    { id: "cliente1", nombre: "Cliente1" } as any
+  );
+  const transaccion2: Transaccion = new Transaccion(
+    "venta",
+    new Date(),
+    [],
+    200,
+    { id: "mercader1", nombre: "Mercader1" } as any
+  );
 
   beforeEach(async () => {
+    transaccionManager = new TransaccionManager(db);
     await initDB();
-    transaccionManager = new TransaccionManager(db as LowSync<DataSchema>);
-    transaccion1 = new Transaccion(
-      "compra",
-      new Date(),
-      [],
-      100,
-      { id: "cliente1", nombre: "Cliente1" } as any
-    );
-    transaccion2 = new Transaccion(
-      "venta",
-      new Date(),
-      [],
-      200,
-      { id: "mercader1", nombre: "Mercader1" } as any
-    );
     transaccionManager.addTransaccion(transaccion1);
     transaccionManager.addTransaccion(transaccion2);
   });
 
   afterEach(() => {
-    if (db.data) {
-      db.data.transacciones = [];
-      db.write();
+    const transacciones = transaccionManager.getTransacciones();
+    if (transacciones.some((c) => c.id === transaccion1.id)) {
+      transaccionManager.removeTransaccion(transaccion1.id);
+    }
+    if (transacciones.some((c) => c.id === transaccion2.id)) {
+      transaccionManager.removeTransaccion(transaccion2.id);
     }
   });
-
+  
   it("should add a new transaction", () => {
     const transaccion3 = new Transaccion(
       "devolución",
@@ -67,6 +66,7 @@ describe("TransaccionManager", () => {
         }),
       ])
     );
+    transaccionManager.removeTransaccion(transaccion3.id);
   });
 
   it("should retrieve all transactions", () => {
@@ -137,9 +137,11 @@ describe("TransaccionManager", () => {
 
   it("should throw an error when the database is not initialized (addTransaccion)", () => {
     db.data = null;
+    vi.spyOn(db, "read").mockImplementation(() => {});
     expect(() => transaccionManager.addTransaccion(transaccion1)).toThrowError(
       "La base de datos no está inicializada."
     );
+    vi.restoreAllMocks();
   });
 
   it("should throw an error when the database is not initialized (getTransacciones)", () => {
