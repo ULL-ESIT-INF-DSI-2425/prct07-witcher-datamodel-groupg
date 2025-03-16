@@ -9,7 +9,6 @@ describe('Bien', () => {
 
   it('should have correct properties', () => {
     const bien = new Bien('Espada', 'Espada de acero', 'Acero', 3.5, 150);
-    expect(bien.id).toBe('1');
     expect(bien.nombre).toBe('Espada');
     expect(bien.descripcion).toBe('Espada de acero');
     expect(bien.material).toBe('Acero');

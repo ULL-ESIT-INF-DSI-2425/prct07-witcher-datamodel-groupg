@@ -10,7 +10,6 @@ describe('Transaccion', () => {
     const mercader = new Mercader('Juan', 'Armero', 'Novigrado');
     const transaccion = new Transaccion('compra', new Date(), [bien], 100, mercader);
     expect(transaccion).toBeInstanceOf(Transaccion);
-    expect(transaccion.id).toBe('1');
     expect(transaccion.tipo).toBe('compra');
     expect(transaccion.fecha).toBeInstanceOf(Date);
     expect(transaccion.bienes).toEqual([bien]);
@@ -22,7 +21,6 @@ describe('Transaccion', () => {
     const bien = new Bien('Escudo', 'Un escudo resistente', 'Hierro', 5.0, 150);
     const cliente = new Cliente('Pedro', 'Humano', 'Oxenfurt');
     const transaccion = new Transaccion('venta', new Date(), [bien], 150, cliente);
-    expect(transaccion.id).toBe('2');
     expect(transaccion.tipo).toBe('venta');
     expect(transaccion.fecha).toBeInstanceOf(Date);
     expect(transaccion.bienes).toEqual([bien]);

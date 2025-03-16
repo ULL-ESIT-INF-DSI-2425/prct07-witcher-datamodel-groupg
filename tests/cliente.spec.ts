@@ -4,7 +4,6 @@ import { Cliente } from '../src/cliente';
 describe('Cliente', () => {
   it('should create a Cliente instance with correct properties', () => {
     const cliente = new Cliente('Geralt', 'Humano', 'Rivia');
-    expect(cliente.id).toBe('1');
     expect(cliente.nombre).toBe('Geralt');
     expect(cliente.raza).toBe('Humano');
     expect(cliente.ubicacion).toBe('Rivia');

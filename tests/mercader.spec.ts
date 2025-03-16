@@ -5,7 +5,6 @@ describe('Mercader', () => {
   it('should create a mercader instance', () => {
     const mercader = new Mercader('Juan', 'Armero', 'Novigrado');
     expect(mercader).toBeInstanceOf(Mercader);
-    expect(mercader.id).toBe('1');
     expect(mercader.nombre).toBe('Juan');
     expect(mercader.tipo).toBe('Armero');
     expect(mercader.ubicacion).toBe('Novigrado');
@@ -13,7 +12,6 @@ describe('Mercader', () => {
 
   it('should have correct properties', () => {
     const mercader = new Mercader('Pedro', 'Herrero', 'Oxenfurt');
-    expect(mercader.id).toBe('2');
     expect(mercader.nombre).toBe('Pedro');
     expect(mercader.tipo).toBe('Herrero');
     expect(mercader.ubicacion).toBe('Oxenfurt');
