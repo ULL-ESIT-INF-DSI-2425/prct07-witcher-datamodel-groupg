@@ -101,7 +101,7 @@ async function removeBien() {
 
   const bien = bienes.find((b) => b.id === bienId);
   if (bien) {
-    inventario.removeBien(bien);
+    inventario.removeBien(bien.id);
     console.log("Bien eliminado con éxito.");
   } else {
     console.log("No se encontró el bien especificado.");

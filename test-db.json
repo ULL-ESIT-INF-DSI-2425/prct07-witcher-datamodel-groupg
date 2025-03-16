@@ -7,9 +7,54 @@
       "material": "dsfswdf",
       "peso": 3,
       "valor": 2
+    },
+    {
+      "id": "1",
+      "nombre": "Bien1",
+      "descripcion": "desc1",
+      "material": "mat1",
+      "peso": 1,
+      "valor": 1
     }
   ],
-  "mercaderes": [],
-  "clientes": [],
-  "transacciones": []
+  "mercaderes": [
+    {
+      "id": "1",
+      "nombre": "Mercader1",
+      "tipo": "tipo1",
+      "ubicacion": "ubi1"
+    }
+  ],
+  "clientes": [
+    {
+      "id": "1",
+      "nombre": "Cliente1",
+      "raza": "raza1",
+      "ubicacion": "uni1"
+    }
+  ],
+  "transacciones": [
+    {
+      "id": "1",
+      "tipo": "compra",
+      "fecha": "2025-03-16T02:03:19.630Z",
+      "bienes": [
+        {
+          "id": "1",
+          "nombre": "Bien1",
+          "descripcion": "desc1",
+          "material": "mat1",
+          "peso": 1,
+          "valor": 1
+        }
+      ],
+      "cantidadCoronas": 1,
+      "involucrado": {
+        "id": "1",
+        "nombre": "Mercader1",
+        "tipo": "tipo1",
+        "ubicacion": "ubi1"
+      }
+    }
+  ]
 }
