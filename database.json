@@ -1,0 +1,95 @@
+{
+  "bienes": [],
+  "mercaderes": [],
+  "clientes": [],
+  "transacciones": [
+    {
+      "id": "a4db1097-e2ff-46ca-9223-c3ee49e25c8e",
+      "tipo": "compra",
+      "fecha": "2025-03-16T17:51:00.480Z",
+      "bienes": [],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "id": "cliente1",
+        "nombre": "Cliente1"
+      }
+    },
+    {
+      "id": "d3797cf1-b637-445b-a3c4-dbde2dd2204c",
+      "tipo": "venta",
+      "fecha": "2025-03-16T17:51:00.480Z",
+      "bienes": [],
+      "cantidadCoronas": 200,
+      "involucrado": {
+        "id": "mercader1",
+        "nombre": "Mercader1"
+      }
+    },
+    {
+      "id": "be76702b-f364-4933-bc33-bb1ab79fd320",
+      "tipo": "compra",
+      "fecha": "2025-03-16T17:51:00.483Z",
+      "bienes": [],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "id": "cliente1",
+        "nombre": "Cliente1"
+      }
+    },
+    {
+      "id": "608e1167-9f81-4b39-81a5-1a7bd5aa8e4b",
+      "tipo": "venta",
+      "fecha": "2025-03-16T17:51:00.483Z",
+      "bienes": [],
+      "cantidadCoronas": 200,
+      "involucrado": {
+        "id": "mercader1",
+        "nombre": "Mercader1"
+      }
+    },
+    {
+      "id": "c13c404b-599b-452d-b03d-05e765457938",
+      "tipo": "compra",
+      "fecha": "2025-03-16T17:51:00.485Z",
+      "bienes": [],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "id": "cliente1",
+        "nombre": "Cliente1"
+      }
+    },
+    {
+      "id": "b15b27ea-40e0-4eec-abd6-5a8f52734bd2",
+      "tipo": "venta",
+      "fecha": "2025-03-16T17:51:00.485Z",
+      "bienes": [],
+      "cantidadCoronas": 200,
+      "involucrado": {
+        "id": "mercader1",
+        "nombre": "Mercader1"
+      }
+    },
+    {
+      "id": "ad55668c-9406-433e-8760-2b128ec9c591",
+      "tipo": "compra",
+      "fecha": "2025-03-16T17:51:00.487Z",
+      "bienes": [],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "id": "cliente1",
+        "nombre": "Cliente1"
+      }
+    },
+    {
+      "id": "742ccf5f-5968-4b84-9037-aadcacfd2956",
+      "tipo": "venta",
+      "fecha": "2025-03-16T17:51:00.487Z",
+      "bienes": [],
+      "cantidadCoronas": 200,
+      "involucrado": {
+        "id": "mercader1",
+        "nombre": "Mercader1"
+      }
+    }
+  ]
+}
