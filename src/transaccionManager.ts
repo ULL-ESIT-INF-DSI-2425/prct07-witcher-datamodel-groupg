@@ -8,13 +8,18 @@ import { DataSchema } from "./database.js";
 export class TransaccionManager {
   private db: LowSync<DataSchema>;
 
+  /**
+   * Crea una instancia de TransaccionManager.
+   * @param db - Instancia de la base de datos.
+   */
   constructor(db: LowSync<DataSchema>) {
     this.db = db;
   }
 
   /**
-   * Añade una nueva transacción
-   * @param transaccion - transacción a añadir
+   * Añade una nueva transacción.
+   * @param transaccion - Transacción a añadir.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'transacciones'.
    */
   addTransaccion(transaccion: Transaccion) {
     if (!this.db.data) {
@@ -31,7 +36,8 @@ export class TransaccionManager {
 
   /**
    * Obtiene las transacciones registradas.
-   * @returns lista de transacciones.
+   * @returns Lista de transacciones.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'transacciones'.
    */
   getTransacciones(): Transaccion[] {
     this.db.read();
@@ -47,8 +53,10 @@ export class TransaccionManager {
   }
 
   /**
-   * Elimina una transaccion.
-   * @param id - id de la transacción a eliminar.
+   * Elimina una transacción.
+   * @param id - Identificador único de la transacción a eliminar.
+   * @returns `true` si la transacción fue eliminada, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'transacciones'.
    */
   removeTransaccion(id: string): boolean {
     this.db.read();
@@ -74,8 +82,10 @@ export class TransaccionManager {
 
   /**
    * Actualiza una transacción.
-   * @param id - id de la transacción a actualizar.
-   * @param datos - datos a actualizar.
+   * @param id - Identificador único de la transacción a actualizar.
+   * @param datos - Objeto con los datos a actualizar.
+   * @returns `true` si la transacción fue actualizada, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'transacciones'.
    */
   updateTransaccion(id: string, datos: Partial<ITransaccion>): boolean {
     this.db.read();
@@ -104,6 +114,7 @@ export class TransaccionManager {
 
   /**
    * Muestra por pantalla las transacciones almacenadas.
+   * Si no hay transacciones, muestra un mensaje indicando que no hay registros.
    */
   showTransacciones() {
     const transacciones = this.getTransacciones();

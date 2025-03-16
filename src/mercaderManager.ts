@@ -8,13 +8,18 @@ import { DataSchema } from "./database.js";
 export class MercaderManager {
   private db: LowSync<DataSchema>;
 
+  /**
+   * Crea una instancia de MercaderManager.
+   * @param db - Instancia de la base de datos.
+   */
   constructor(db: LowSync<DataSchema>) {
     this.db = db;
   }
 
   /**
    * Añade un nuevo mercader.
-   * @param bien - bien a añadir.
+   * @param mercader - Mercader a añadir.
+   * @throws Error si la base de datos no está inicializada, no contiene la propiedad 'mercaderes' o si el mercader ya existe.
    */
   addMercader(mercader: Mercader) {
     if (!this.db.data) {
@@ -34,7 +39,8 @@ export class MercaderManager {
 
   /**
    * Obtiene todos los mercaderes.
-   * @returns Lista de los mercaderes
+   * @returns Lista de los mercaderes.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'mercaderes'.
    */
   getMercaderes(): Mercader[] {
     this.db.read();
@@ -51,7 +57,9 @@ export class MercaderManager {
 
   /**
    * Elimina un mercader.
-   * @param id - id del mercader a eliminar.
+   * @param id - Identificador único del mercader a eliminar.
+   * @returns `true` si el mercader fue eliminado, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'mercaderes'.
    */
   removeMercader(id: string): boolean {
     this.db.read();
@@ -77,8 +85,10 @@ export class MercaderManager {
 
   /**
    * Actualiza un mercader.
-   * @param id - id del mercader a actualizar.
-   * @param datos - datos a actualizar.
+   * @param id - Identificador único del mercader a actualizar.
+   * @param datos - Objeto con los datos a actualizar.
+   * @returns `true` si el mercader fue actualizado, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'mercaderes'.
    */
   updateMercader(id: string, datos: Partial<IMercader>): boolean {
     this.db.read();
@@ -107,6 +117,7 @@ export class MercaderManager {
 
   /**
    * Muestra por pantalla los mercaderes almacenados.
+   * Si no hay mercaderes, muestra un mensaje indicando que no hay registros.
    */
   showMercaderes() {
     const mercaderes = this.getMercaderes();
@@ -118,9 +129,10 @@ export class MercaderManager {
   }
 
   /**
-   * Busca un mercader dado del nombre.
-   * @param nombre - nombre del mercader a buscar.
-   * @returns Lista de mercaderes
+   * Busca mercaderes por nombre.
+   * @param nombre - Nombre del mercader a buscar.
+   * @returns Lista de mercaderes que coinciden con el nombre.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'mercaderes'.
    */
   searchMercaderNombre(nombre: string): Mercader[] {
     this.db.read();
@@ -139,9 +151,10 @@ export class MercaderManager {
   }
 
   /**
-   * Busca un mercader dado de la ubicación.
-   * @param ubicacion - ubicación del mercader a buscar.
-   * @returns Lista de mercaderes
+   * Busca mercaderes por ubicación.
+   * @param ubicacion - Ubicación del mercader a buscar.
+   * @returns Lista de mercaderes que coinciden con la ubicación.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'mercaderes'.
    */
   searchMercaderUbicacion(ubicacion: string): Mercader[] {
     this.db.read();
@@ -160,9 +173,10 @@ export class MercaderManager {
   }
 
   /**
-   * Busca un mercader dado del tipo.
-   * @param tipo - tipo del mercader a buscar.
-   * @returns Lista de mercaderes
+   * Busca mercaderes por tipo.
+   * @param tipo - Tipo del mercader a buscar.
+   * @returns Lista de mercaderes que coinciden con el tipo.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'mercaderes'.
    */
   searchMercaderTipo(tipo: string): Mercader[] {
     this.db.read();

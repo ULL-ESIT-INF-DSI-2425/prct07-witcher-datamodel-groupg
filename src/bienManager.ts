@@ -8,14 +8,19 @@ import { Bien, IBien } from "./bien.js";
 export class BienManager {
   private db: LowSync<DataSchema>;
 
+  /**
+   * Crea una instancia de BienManager.
+   * @param db - Instancia de la base de datos.
+   */
   constructor(db: LowSync<DataSchema>) {
     this.db = db;
   }
 
   /**
-   * Añade un nuevo bien
-   * @param bien - bien a añadir
-   */
+  * Añade un nuevo bien al inventario.
+  * @param bien - Objeto de tipo Bien que se desea añadir.
+  * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
+  */
   addBien(bien: Bien) {
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
@@ -28,8 +33,9 @@ export class BienManager {
   }
 
   /**
-   * Obtiene todos los bienes.
-   * @returns Lista de los bienes
+   * Obtiene todos los bienes almacenados en la base de datos.
+   * @returns Lista de objetos de tipo Bien.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
   getBienes(): Bien[] {
     this.db.read();
@@ -43,8 +49,10 @@ export class BienManager {
   }
 
   /**
-   * Elimina un bien.
-   * @param id - id del bien a eliminar.
+   * Elimina un bien del inventario.
+   * @param id - Identificador único del bien a eliminar.
+   * @returns `true` si el bien fue eliminado, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
   removeBien(id: string): boolean {
     this.db.read();
@@ -65,9 +73,11 @@ export class BienManager {
   }
 
   /**
-   * Actualiza un bien.
-   * @param id - id del bien a actualizar.
-   * @param datos - datos a actualizar.
+   * Actualiza un bien existente en el inventario.
+   * @param id - Identificador único del bien a actualizar.
+   * @param datos - Objeto con los datos a actualizar.
+   * @returns `true` si el bien fue actualizado, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
   updateBien(id: string, datos: Partial<IBien>): boolean {
     this.db.read();
@@ -88,7 +98,8 @@ export class BienManager {
   }
 
   /**
-   * Muestra por pantalla los bienes almacenados.
+   * Muestra por consola los bienes almacenados en el inventario.
+   * Si no hay bienes, muestra un mensaje indicando que el inventario está vacío.
    */
   showBienes() {
     const bienes = this.getBienes();
@@ -100,11 +111,12 @@ export class BienManager {
   }
 
   /**
-   * Busca un bienes dado del nombre y un orden.
-   * @param nombre - nombre del bien a buscar.
-   * @param ordenarPor - campo por el que ordenar.
-   * @param orden - orden de la lista.
-   * @returns Lista de bienes ordenada
+   * Busca bienes por nombre y los ordena.
+   * @param nombre - Nombre del bien a buscar.
+   * @param ordenarPor - Campo por el que ordenar los resultados. Por defecto, "nombre".
+   * @param orden - Orden de la lista: "asc" (ascendente) o "desc" (descendente). Por defecto, "asc".
+   * @returns Lista de bienes ordenada.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
   searchBienNombre(
     nombre: string,
@@ -138,11 +150,12 @@ export class BienManager {
   }
 
   /**
-   * Busca un bienes dado de la descripción y un orden.
-   * @param descripcion - descripción del bien a buscar.
-   * @param ordenarPor - campo por el que ordenar.
-   * @param orden - orden de la lista.
-   * @returns Lista de bienes ordenada
+   * Busca bienes por descripción y los ordena.
+   * @param descripcion - Descripción del bien a buscar.
+   * @param ordenarPor - Campo por el que ordenar los resultados. Por defecto, "descripcion".
+   * @param orden - Orden de la lista: "asc" (ascendente) o "desc" (descendente). Por defecto, "asc".
+   * @returns Lista de bienes ordenada.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
   searchBienDescripcion(
     descripcion: string,
@@ -178,11 +191,12 @@ export class BienManager {
   }
 
   /**
-   * Busca un bienes dado del material y un orden.
-   * @param material - material del bien a buscar.
-   * @param ordenarPor - campo por el que ordenar.
-   * @param orden - orden de la lista.
-   * @returns Lista de bienes ordenada
+   * Busca bienes por material y los ordena.
+   * @param material - Material del bien a buscar.
+   * @param ordenarPor - Campo por el que ordenar los resultados. Por defecto, "material".
+   * @param orden - Orden de la lista: "asc" (ascendente) o "desc" (descendente). Por defecto, "asc".
+   * @returns Lista de bienes ordenada.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
   searchBienMaterial(
     material: string,

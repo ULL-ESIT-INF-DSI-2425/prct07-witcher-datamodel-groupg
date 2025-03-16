@@ -8,7 +8,8 @@ import { DataSchema } from "../src/database.js";
 import path from "path";
 
 /**
- * Clase que representa el inventario
+ * Clase que representa el inventario.
+ * Gestiona los bienes, mercaderes, clientes y transacciones utilizando sus respectivos managers.
  */
 export class Inventario {
   private db: LowSync<DataSchema>;
@@ -17,6 +18,10 @@ export class Inventario {
   private clienteManager: ClienteManager;
   private transaccionManager: TransaccionManager;
 
+  /**
+   * Crea una nueva instancia de la clase Inventario.
+   * @param dbFileName - Nombre del archivo de la base de datos. Si no se proporciona, se usará "./database.json".
+   */
   constructor(dbFileName?: string) {
     const fileName = dbFileName || "./database.json";
     this.db = new LowSync<DataSchema>(new JSONFileSync(fileName));
@@ -38,7 +43,7 @@ export class Inventario {
 
   /**
    * Getter del manager de bienes.
-   * @returns manager de bienes.
+   * @returns Instancia del manager de bienes.
    */
   getBienManager(): BienManager {
     return this.bienManager;
@@ -46,7 +51,7 @@ export class Inventario {
 
   /**
    * Getter del manager de mercaderes.
-   * @returns manager de mercaderes.
+   * @returns Instancia del manager de mercaderes.
    */
   getMercaderManager(): MercaderManager {
     return this.mercaderManager;
@@ -54,7 +59,7 @@ export class Inventario {
 
   /**
    * Getter del manager de clientes.
-   * @returns manager de clientes.
+   * @returns Instancia del manager de clientes.
    */
   getClienteManager(): ClienteManager {
     return this.clienteManager;
@@ -62,7 +67,7 @@ export class Inventario {
 
   /**
    * Getter del manager de transacciones.
-   * @returns manager de transacciones.
+   * @returns Instancia del manager de transacciones.
    */
   getTransaccionManager(): TransaccionManager {
     return this.transaccionManager;

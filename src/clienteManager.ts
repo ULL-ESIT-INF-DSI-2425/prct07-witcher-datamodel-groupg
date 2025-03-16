@@ -8,13 +8,18 @@ import { DataSchema } from "./database.js";
 export class ClienteManager {
   private db: LowSync<DataSchema>;
 
+  /**
+   * Crea una instancia de ClienteManager.
+   * @param db - Instancia de la base de datos.
+   */
   constructor(db: LowSync<DataSchema>) {
     this.db = db;
   }
 
   /**
-   * Añade un nuevo cliente
-   * @param bien - cliente a añadir
+   * Añade un nuevo cliente al sistema.
+   * @param cliente - Cliente a añadir.
+   * @throws Error si la base de datos no está inicializada, no contiene la propiedad 'clientes' o si el cliente ya existe.
    */
   addCliente(cliente: Cliente) {
     if (!this.db.data) {
@@ -32,8 +37,9 @@ export class ClienteManager {
   }
 
   /**
-   * Obtiene los clientes almacenados.
-   * @returns lista de clientes
+   * Obtiene todos los clientes almacenados en la base de datos.
+   * @returns Lista de clientes.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'clientes'.
    */
   getClientes(): Cliente[] {
     this.db.read();
@@ -47,8 +53,10 @@ export class ClienteManager {
   }
 
   /**
-   * Elimina un cliente.
-   * @param id - id del cliente a eliminar.
+   * Elimina un cliente del sistema.
+   * @param id - Identificador único del cliente a eliminar.
+   * @returns `true` si el cliente fue eliminado, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'clientes'.
    */
   removeCliente(id: string): boolean {
     this.db.read();
@@ -71,9 +79,11 @@ export class ClienteManager {
   }
 
   /**
-   * Actualiza un cliente.
-   * @param id - id del cliente a actualizar.
-   * @param datos - datos a actualizar.
+   * Actualiza los datos de un cliente existente.
+   * @param id - Identificador único del cliente a actualizar.
+   * @param datos - Objeto con los datos a actualizar.
+   * @returns `true` si el cliente fue actualizado, `false` si no se encontró.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'clientes'.
    */
   updateCliente(id: string, datos: Partial<ICliente>): boolean {
     this.db.read();
@@ -99,7 +109,8 @@ export class ClienteManager {
   }
 
   /**
-   * Muestra por pantalla los clientes almacenados.
+   * Muestra por consola los clientes almacenados en el sistema.
+   * Si no hay clientes, muestra un mensaje indicando que no hay registros.
    */
   showClientes() {
     const clientes = this.getClientes();
@@ -111,9 +122,10 @@ export class ClienteManager {
   }
 
   /**
-   * Busca un cliente dado del nombre.
-   * @param nombre - nombre del cliente a buscar.
-   * @returns Lista de clientes
+   * Busca clientes por nombre.
+   * @param nombre - Nombre del cliente a buscar.
+   * @returns Lista de clientes que coinciden con el nombre.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'clientes'.
    */
   searchClienteNombre(nombre: string): Cliente[] {
     this.db.read();
@@ -128,9 +140,10 @@ export class ClienteManager {
   }
 
   /**
-   * Busca un cliente dado de la raza.
-   * @param raza - raza del cliente a buscar.
-   * @returns Lista de clientes
+   * Busca clientes por raza.
+   * @param raza - Raza del cliente a buscar.
+   * @returns Lista de clientes que coinciden con la raza.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'clientes'.
    */
   searchClienteRaza(raza: string): Cliente[] {
     this.db.read();
@@ -145,9 +158,10 @@ export class ClienteManager {
   }
 
   /**
-   * Busca un cliente dado de la ubicación.
-   * @param ubicacion - ubicación del cliente a buscar.
-   * @returns Lista de clientes
+   * Busca clientes por ubicación.
+   * @param ubicacion - Ubicación del cliente a buscar.
+   * @returns Lista de clientes que coinciden con la ubicación.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'clientes'.
    */
   searchClienteUbicacion(ubicacion: string): Cliente[] {
     this.db.read();
