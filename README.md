@@ -3,3 +3,4 @@
 
 [![Tests](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/actions/workflows/ci.yml/badge.svg?branch=desarrollo)](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/actions/workflows/ci.yml?query=branch:desarrollo)
 [![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/badge.svg?branch=desarrollo)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg?branch=desarrollo) 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2425_prct07-witcher-datamodel-groupg&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2425_prct07-witcher-datamodel-groupg)
