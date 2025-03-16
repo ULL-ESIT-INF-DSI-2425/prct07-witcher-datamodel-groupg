@@ -108,7 +108,15 @@ export class TransaccionManager {
   showTransacciones() {
     const transacciones = this.getTransacciones();
     if (transacciones && transacciones.length > 0) {
-      console.table(transacciones);
+      const transaccionesProcesadas = transacciones.map((t) => ({
+        tipo: t.tipo,
+        fecha: new Date(t.fecha).toLocaleString(), // Formatear la fecha
+        bienes: t.bienes.map((b) => b.nombre).join(", "), // Extraer nombres de los bienes
+        cantidadCoronas: t.cantidadCoronas,
+        involucrado: t.involucrado.nombre, // Extraer el nombre del cliente o mercader
+        id: t.id,
+      }));
+      console.table(transaccionesProcesadas);
     } else {
       console.log("No hay transacciones registradas.");
     }
