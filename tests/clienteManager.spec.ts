@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { Inventario } from '../src/inventario';
 import { Cliente } from '../src/cliente';
+import path from 'path';
 
 describe('ClienteManager', () => {
   let inventario: Inventario;
@@ -8,7 +9,7 @@ describe('ClienteManager', () => {
   const cliente2 = new Cliente('Cliente2', 'Raza2', 'Ciudad2');
 
   beforeEach(() => {
-    inventario = new Inventario('test-clientes.json');
+    inventario =  new Inventario(path.resolve(__dirname, '../databases/test-clientes.json'));
     inventario.getClienteManager().addCliente(cliente1);
     inventario.getClienteManager().addCliente(cliente2);
   });

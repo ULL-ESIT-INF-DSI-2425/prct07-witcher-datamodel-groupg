@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { Inventario } from '../src/inventario';
 import { Bien } from '../src/bien';
+import path from 'path';
 
 describe('BienManager', () => {
   let inventario: Inventario;
@@ -9,7 +10,7 @@ describe('BienManager', () => {
   let bien3: Bien;
 
   beforeEach(() => {
-    inventario = new Inventario('test-bienes.json');
+    inventario  = new Inventario(path.resolve(__dirname, '../databases/test-bienes.json'));
     inventario.getBienManager().addBien(bien1);
     inventario.getBienManager().addBien(bien2);
   });

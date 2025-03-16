@@ -1,6 +1,124 @@
 {
-  "bienes": [],
-  "mercaderes": [],
-  "clientes": [],
-  "transacciones": []
+  "bienes": [
+    {
+      "nombre": "Hierbas",
+      "descripcion": "Hierbas sospechosas",
+      "material": "Droga",
+      "peso": 1,
+      "valor": 200,
+      "id": "9673a451-e8b1-454a-a23b-94560562cb00"
+    }
+  ],
+  "mercaderes": [
+    {
+      "nombre": "camello",
+      "tipo": "sdffadfs",
+      "ubicacion": "dsafasdf",
+      "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+    }
+  ],
+  "clientes": [
+    {
+      "nombre": "Juan",
+      "raza": "Humano",
+      "ubicacion": "Novigrad",
+      "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+    },
+    {
+      "nombre": "Antonio",
+      "raza": "hshss",
+      "ubicacion": "sfasdsf",
+      "id": "ff6b1d38-b5c3-4f4c-9843-d4f7a697e422"
+    }
+  ],
+  "transacciones": [
+    {
+      "tipo": "devolución",
+      "fecha": "2025-03-16T19:21:31.557Z",
+      "bienes": [
+        {
+          "nombre": "Arc",
+          "descripcion": "Arco antiguo",
+          "material": "Madera",
+          "peso": 1,
+          "valor": 70,
+          "id": "395b37dd-53d7-40b5-ae1b-e2fcab28f380"
+        }
+      ],
+      "cantidadCoronas": 70,
+      "involucrado": {
+        "nombre": "camello",
+        "tipo": "sdffadfs",
+        "ubicacion": "dsafasdf",
+        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+      },
+      "id": "a469f02b-eb7d-45d4-942e-5422e2773f9e"
+    },
+    {
+      "tipo": "devolución",
+      "fecha": "2025-03-16T19:22:17.549Z",
+      "bienes": [
+        {
+          "nombre": "Espada",
+          "descripcion": "Espada larga",
+          "material": "Hierro",
+          "peso": 3,
+          "valor": 100,
+          "id": "67eaaf5c-3f92-496f-a4a7-d68b30da0e0e"
+        }
+      ],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "nombre": "Juan",
+        "raza": "Humano",
+        "ubicacion": "Novigrad",
+        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+      },
+      "id": "559adad5-83f8-4dec-80e8-b2930e159642"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-16T19:22:45.568Z",
+      "bienes": [
+        {
+          "nombre": "Espada",
+          "descripcion": "Espada larga",
+          "material": "Hierro",
+          "peso": 3,
+          "valor": 100,
+          "id": "67eaaf5c-3f92-496f-a4a7-d68b30da0e0e"
+        }
+      ],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "nombre": "Juan",
+        "raza": "Humano",
+        "ubicacion": "Novigrad",
+        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+      },
+      "id": "fcc04160-599c-417c-aff7-30cb554d06fe"
+    },
+    {
+      "tipo": "compra",
+      "fecha": "2025-03-16T19:23:47.514Z",
+      "bienes": [
+        {
+          "nombre": "Hierbas",
+          "descripcion": "Hierbas sospechosas",
+          "material": "Droga",
+          "peso": 1,
+          "valor": 200,
+          "id": "9673a451-e8b1-454a-a23b-94560562cb00"
+        }
+      ],
+      "cantidadCoronas": 200,
+      "involucrado": {
+        "nombre": "camello",
+        "tipo": "sdffadfs",
+        "ubicacion": "dsafasdf",
+        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+      },
+      "id": "815582d5-80ce-4ce2-89b1-7064a2292912"
+    }
+  ]
 }

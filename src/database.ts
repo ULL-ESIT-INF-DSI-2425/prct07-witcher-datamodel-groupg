@@ -4,6 +4,7 @@ import { Bien } from './bien.js';
 import { Mercader } from './mercader.js';
 import { Cliente } from './cliente.js';
 import { Transaccion } from './transaccion.js';
+import path from 'path';
 
 /**
  * Esquema de datos de la base de datos
@@ -16,7 +17,7 @@ export type DataSchema = {
 };
 
 // Archivo JSON donde se guardarán los datos
-const file = "database.json";
+const file = path.resolve(__dirname, '../databases/test-transacciones.json');
 const adapter = new JSONFileSync<DataSchema>(file);
 const db = new LowSync<DataSchema>(adapter);
 /**
