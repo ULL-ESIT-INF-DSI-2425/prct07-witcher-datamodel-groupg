@@ -16,8 +16,10 @@ export class Inventario {
   private clienteManager: ClienteManager;
   private transaccionManager: TransaccionManager;
 
-  constructor() {
-    this.db = new LowSync<DataSchema>(new JSONFileSync("test-db.json"));
+  constructor(dbFileName?: string) {
+    const fileName = dbFileName || "test-db.json";
+    this.db = new LowSync<DataSchema>(new JSONFileSync(fileName));
+    
     this.db.read();
     this.db.data ||= {
       bienes: [],

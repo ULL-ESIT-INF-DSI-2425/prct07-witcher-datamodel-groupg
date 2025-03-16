@@ -9,7 +9,7 @@ describe('BienManager', () => {
   let bien3: Bien;
 
   beforeEach(() => {
-    inventario = new Inventario();
+    inventario = new Inventario('test-bienes.json');
     inventario.getBienManager().addBien(bien1);
     inventario.getBienManager().addBien(bien2);
   });
@@ -45,7 +45,7 @@ describe('BienManager', () => {
     const result = inventario.getBienManager().updateBien(bien1.id, { valor: 150 });
     expect(result).toBe(true);
     const bienes = inventario.getBienManager().searchBienNombre(bien1.nombre, 'nombre', 'desc');
-    expect(bienes[0].valor).toBe(1);
+    expect(bienes[0].valor).toBe(150);
   });
 
   it('should remove a bien by id', () => {
@@ -110,7 +110,7 @@ describe('BienManager', () => {
     inventario.getBienManager().removeBien(bien1.id);
     inventario.getBienManager().removeBien(bien2.id);
     const bienes = inventario.getBienManager().getBienes();
-    expect(bienes).toHaveLength(2);
+    expect(bienes).toHaveLength(0);
   });
 
   it('should handle adding a bien when the database is not initialized', () => {
