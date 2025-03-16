@@ -1,14 +1,6 @@
 {
   "bienes": [
     {
-      "id": "1d2d7c03-920f-4687-bab4-fa31f20714a0",
-      "nombre": "Bien1",
-      "descripcion": "desc1",
-      "material": "mat1",
-      "peso": 1,
-      "valor": 1
-    },
-    {
       "nombre": "Mazo",
       "descripcion": "Gran mazo",
       "material": "madera",
@@ -17,116 +9,30 @@
       "id": "765217c2-8637-4ead-97a6-5ee002ba2971"
     },
     {
-      "id": "32752fdc-5e73-4f57-bd71-15499c2fac1b",
-      "nombre": "Bien1",
-      "descripcion": "desc1",
-      "material": "mat1",
-      "peso": 1,
-      "valor": 1
+      "nombre": "Espada",
+      "descripcion": "Espada larga",
+      "material": "Acero",
+      "peso": 5,
+      "valor": 10,
+      "id": "25d386c1-4e3b-44ff-ae4f-62a0e6e3eac6"
     },
     {
-      "id": "67031373-988c-4901-a303-9c331ee9b1dc",
-      "nombre": "Bien1",
-      "descripcion": "desc1",
-      "material": "mat1",
-      "peso": 1,
-      "valor": 1
-    },
-    {
-      "id": "75f17dbe-7b47-414f-a807-989f0e3ae221",
-      "nombre": "Bien1",
-      "descripcion": "desc1",
-      "material": "mat1",
-      "peso": 1,
-      "valor": 1
+      "nombre": "Arco",
+      "descripcion": "Arco de madera",
+      "material": "madera",
+      "peso": 3,
+      "valor": 10,
+      "id": "2c74674b-7be8-4e6c-9e4d-a7c3bc531576"
     }
   ],
   "mercaderes": [
-    {
-      "id": "1",
-      "nombre": "Mercader1",
-      "tipo": "tipo1",
-      "ubicacion": "ubi1"
-    },
     {
       "id": "57753e8b-261c-4315-b3da-6d76b5097dbf",
       "nombre": "Mercader1",
       "tipo": "tipo1",
       "ubicacion": "ubi1"
-    },
-    {
-      "id": "55187cec-43e5-4d73-80dd-d2d73ba9a144",
-      "nombre": "Mercader1",
-      "tipo": "tipo1",
-      "ubicacion": "ubi1"
-    },
-    {
-      "id": "f97c5efc-031a-43b4-bf60-b10bea376d14",
-      "nombre": "Mercader1",
-      "tipo": "tipo1",
-      "ubicacion": "ubi1"
-    },
-    {
-      "id": "9403ee35-7a32-4352-99ef-f6c232a9c041",
-      "nombre": "Mercader1",
-      "tipo": "tipo1",
-      "ubicacion": "ubi1"
     }
   ],
-  "clientes": [
-    {
-      "id": "1",
-      "nombre": "Cliente1",
-      "raza": "raza1",
-      "ubicacion": "uni1"
-    },
-    {
-      "id": "dcb09172-293b-4673-a942-c457e547f171",
-      "nombre": "Cliente1",
-      "raza": "raza1",
-      "ubicacion": "uni1"
-    },
-    {
-      "id": "a10a9200-13f2-44e2-bb0f-ae7ba972b10b",
-      "nombre": "Cliente1",
-      "raza": "raza1",
-      "ubicacion": "uni1"
-    },
-    {
-      "id": "1cc48386-dc2e-495f-ba26-e72db0d69cc0",
-      "nombre": "Cliente1",
-      "raza": "raza1",
-      "ubicacion": "uni1"
-    },
-    {
-      "id": "7f677d9f-a8f0-4c21-a114-497e3436cbb0",
-      "nombre": "Cliente1",
-      "raza": "raza1",
-      "ubicacion": "uni1"
-    }
-  ],
-  "transacciones": [
-    {
-      "id": "1",
-      "tipo": "compra",
-      "fecha": "2025-03-16T02:03:19.630Z",
-      "bienes": [
-        {
-          "id": "1",
-          "nombre": "Bien1",
-          "descripcion": "desc1",
-          "material": "mat1",
-          "peso": 1,
-          "valor": 1
-        }
-      ],
-      "cantidadCoronas": 1,
-      "involucrado": {
-        "id": "1",
-        "nombre": "Mercader1",
-        "tipo": "tipo1",
-        "ubicacion": "ubi1"
-      }
-    }
-  ]
+  "clientes": [],
+  "transacciones": []
 }
