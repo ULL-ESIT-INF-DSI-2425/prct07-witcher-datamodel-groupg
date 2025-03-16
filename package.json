@@ -7,7 +7,7 @@
     "dev": "tsc-watch --onSuccess \"node dist/cli.js\"",
     "doc": "typedoc",
     "test": "vitest run",
-    "coverage": "vitest run --coverage --coverage.include src/* tests/*"
+    "coverage": "vitest run --coverage --coverage.include '**/src/*'"
   },
   "keywords": [],
   "author": "",
