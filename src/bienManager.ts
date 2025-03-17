@@ -26,7 +26,7 @@ export class BienManager {
       throw new Error("La base de datos no está inicializada.");
     }
     if (!this.db.data.bienes) {
-      throw new Error("La base de datos no contiene la propiedad 'bienes'.");
+      throw new Error("La base de datos no contiene la propiedad 'bienes.");
     }
     this.db.data.bienes.push(bien);
     this.db.write();

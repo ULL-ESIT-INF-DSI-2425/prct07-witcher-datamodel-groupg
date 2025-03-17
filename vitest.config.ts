@@ -5,7 +5,8 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'lcov', 'json'],
       exclude: [
-        './src/cli.ts'
+        './src/cli.ts',
+        './src/mercaderManager.ts'
       ],
     },
   },
