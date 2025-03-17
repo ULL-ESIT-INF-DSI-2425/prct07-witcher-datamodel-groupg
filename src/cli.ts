@@ -8,7 +8,7 @@ import { Mercader } from "./mercader.js";
 // Inicializar el inventario
 const inventario = new Inventario();
 
-async function mainMenu() {
+export async function mainMenu() {
   const choices = [
     "Mostrar bienes",
     "Añadir bien",
@@ -31,7 +31,6 @@ async function mainMenu() {
 
   switch (action) {
     case "Mostrar bienes":
-      //inventario.showBienes();
       inventario.getBienManager().showBienes();
       mainMenu();
       break;
@@ -51,7 +50,6 @@ async function mainMenu() {
       addMercader();
       break;
     case "Mostrar transacciones":
-      //inventario.showTransacciones();
       inventario.getTransaccionManager().showTransacciones();
       mainMenu();
       break;
@@ -61,17 +59,8 @@ async function mainMenu() {
   }
 }
 
-/* function showBienes() {
-  const bienes = inventario.getBienes();
-  if (bienes && bienes.length > 0) {
-    console.table(bienes);
-  } else {
-    console.log("No hay bienes en el inventario.");
-  }
-  mainMenu();
-} */
-
 async function addBien() {
+
   const answers = await inquirer.prompt([
     { type: "input", name: "nombre", message: "Nombre del bien:" },
     { type: "input", name: "descripcion", message: "Descripción del bien:" },
@@ -95,7 +84,6 @@ async function addBien() {
 }
 
 async function removeBien() {
-  //const bienes = inventario.getBienes();
   const bienes = inventario.getBienManager().getBienes();
   if (!bienes || bienes.length === 0) {
     console.log("No hay bienes en el inventario para eliminar.");
@@ -113,7 +101,6 @@ async function removeBien() {
 
   const bien = bienes.find((b) => b.id === bienId);
   if (bien) {
-    //inventario.removeBien(bien.id);
     inventario.getBienManager().removeBien(bien.id);
     console.log("Bien eliminado con éxito.");
   } else {
@@ -360,16 +347,6 @@ async function registerTransaction() {
 
   mainMenu();
 }
-
-/* function showTransacciones() {
-  const transacciones = inventario.getTransacciones();
-  if (transacciones && transacciones.length > 0) {
-    console.table(transacciones);
-  } else {
-    console.log("No hay transacciones registradas.");
-  }
-  mainMenu();
-} */
 
 // Iniciar el CLI
 mainMenu();
