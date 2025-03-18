@@ -15,6 +15,14 @@
       "peso": 2,
       "valor": 40,
       "id": "af3ace9f-7cc0-423a-bdec-ee0ffeadf80f"
+    },
+    {
+      "nombre": "dsaf",
+      "descripcion": "sdafsadff",
+      "material": "asdfafsd",
+      "peso": 4,
+      "valor": 4,
+      "id": "af825afc-8e60-48f6-8f21-124ba0b9802b"
     }
   ],
   "mercaderes": [

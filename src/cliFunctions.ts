@@ -17,7 +17,7 @@ export async function addBien() {
     { type: "input", name: "material", message: "Material del bien:" },
     { type: "number", name: "peso", message: "Peso del bien:" },
     { type: "number", name: "valor", message: "Valor del bien:" },
-    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal?", choices: ["Continuar", "Salir al menú principal"] },
+    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal?", choices: ["Continuar", "Salir al menú principal y no añadir bien"] },
   ]);
 
   if (answers.exit === "Salir al menú principal y no añadir bien") {
@@ -79,10 +79,10 @@ export async function addCliente() {
     { type: "input", name: "nombre", message: "Nombre del cliente:" },
     { type: "input", name: "raza", message: "Raza del cliente:" },
     { type: "input", name: "ubicacion", message: "Ubicación del cliente:" },
-    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal?", choices: ["Continuar", "Salir al menú principal"] },
+    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal sin añadir el cliente?", choices: ["Continuar", "Salir al menú principal y no añadir cliente"] },
   ]);
 
-  if (answers.exit === "exit") {
+  if (answers.exit === "Salir al menú principal y no añadir cliente") {
     return mainMenu();
   }
 
@@ -106,10 +106,10 @@ export async function addMercader() {
     { type: "input", name: "nombre", message: "Nombre del mercader:" },
     { type: "input", name: "raza", message: "Raza del mercader:" },
     { type: "input", name: "ubicacion", message: "Ubicación del mercader:" },
-    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal?", choices: ["Continuar", "Salir al menú principal"] },
+    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal sin añadir el mercader?", choices: ["Continuar", "Salir al menú principal y no añadir mercader"] },
   ]);
 
-  if (answers.exit === "exit") {
+  if (answers.exit === "Salir al menú principal y no añadir mercader") {
     return mainMenu();
   }
 
@@ -180,9 +180,13 @@ export async function registerTransaction() {
         choices: transaccionesValidas.map((t) => ({
           name: `${t.tipo} - ${new Date(t.fecha).toLocaleString()} - ${t.bienes.map((b) => b.nombre).join(", ")}`,
           value: t.id,
-        })),
+        })).concat({ name: "Salir al menú principal", value: "exit" }),
       },
     ]);
+
+    if (transaccionId === "exit") {
+      return mainMenu();
+    }
   
     const transaccionOriginal = transacciones.find((t) => t.id === transaccionId);
     if (!transaccionOriginal) {
@@ -205,11 +209,15 @@ export async function registerTransaction() {
             type: "checkbox",
             name: "bienesSeleccionados",
             message: "Seleccione los bienes a devolver:",
-            choices: transaccionOriginal.bienes.map((b) => ({ name: b.nombre, value: b.id })),
+            choices: transaccionOriginal.bienes.map((b) => ({ name: b.nombre, value: b.id })).concat({ name: "Salir al menú principal", value: "exit" }),
           },
         ]).then((res) =>
           transaccionOriginal.bienes.filter((b) => res.bienesSeleccionados.includes(b.id))
         );
+    
+    if (bienesDevueltos.some(bien => bien.id === "exit")) {
+      return mainMenu();
+    }
   
     if (bienesDevueltos.length === 0) {
       console.log("No se seleccionaron bienes para devolver.");
@@ -387,7 +395,6 @@ else if (tipo === "venta") {
       {
         type: "number",
         name: "precio",
-        //pner nmbre en lugar de id
         message: `Ingrese el precio de venta para el bien con id ${bienId}:`,
       },
     ]);
@@ -482,7 +489,7 @@ export function reportHistoricoTransacciones(nombre: string) {
   const historico = transacciones.filter((t) => t.involucrado.nombre === nombre);
 
   if (historico.length === 0) {
-    console.log(`No se encontraron transacciones para el ID "${nombre}".`);
+    console.log(`No se encontraron transacciones para el cliente o mercader "${nombre}".`);
   } else {
     console.table(
       historico.map((t) => ({
