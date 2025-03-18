@@ -1,12 +1,20 @@
 {
   "bienes": [
     {
-      "nombre": "Hierbas",
-      "descripcion": "Hierbas sospechosas",
-      "material": "Droga",
-      "peso": 1,
-      "valor": 200,
-      "id": "9673a451-e8b1-454a-a23b-94560562cb00"
+      "nombre": "item1",
+      "descripcion": "fdsafa",
+      "material": "asdfasdf",
+      "peso": 3,
+      "valor": 100,
+      "id": "95f726e3-14a7-4be2-a2db-f490069b4921"
+    },
+    {
+      "nombre": "item3",
+      "descripcion": "adafadsf",
+      "material": "asdfasd",
+      "peso": 2,
+      "valor": 40,
+      "id": "af3ace9f-7cc0-423a-bdec-ee0ffeadf80f"
     }
   ],
   "mercaderes": [
@@ -15,6 +23,12 @@
       "tipo": "sdffadfs",
       "ubicacion": "dsafasdf",
       "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+    },
+    {
+      "nombre": "asdfasdf",
+      "tipo": "asdfasdf",
+      "ubicacion": "sdafasdf",
+      "id": "64288b2c-4c32-42e9-8eac-8ab0d2a343f3"
     }
   ],
   "clientes": [
@@ -29,6 +43,12 @@
       "raza": "hshss",
       "ubicacion": "sfasdsf",
       "id": "ff6b1d38-b5c3-4f4c-9843-d4f7a697e422"
+    },
+    {
+      "nombre": "sdafdsf",
+      "raza": "sadfsdaffasdfasd",
+      "ubicacion": "sdafasdf",
+      "id": "3c8b3262-2d33-427c-8e18-0daf7c607e0f"
     }
   ],
   "transacciones": [
@@ -121,70 +141,86 @@
       "id": "7569d829-8eef-4578-ab9b-3409c44da227"
     },
     {
-      "tipo": "venta",
-      "fecha": "2025-03-18T18:44:53.305Z",
+      "tipo": "compra",
+      "fecha": "2025-03-18T19:25:40.758Z",
       "bienes": [
         {
-          "nombre": "Espada",
-          "descripcion": "Espada larga",
-          "material": "Hierro",
+          "nombre": "item1",
+          "descripcion": "fdsafa",
+          "material": "asdfasdf",
           "peso": 3,
           "valor": 100,
-          "id": "67eaaf5c-3f92-496f-a4a7-d68b30da0e0e"
-        }
-      ],
-      "cantidadCoronas": 100,
-      "involucrado": {
-        "nombre": "Juan",
-        "raza": "Humano",
-        "ubicacion": "Novigrad",
-        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
-      },
-      "id": "1b4affc2-d69c-4d43-8912-f142a12fbced"
-    },
-    {
-      "tipo": "devolución",
-      "fecha": "2025-03-18T18:53:22.774Z",
-      "bienes": [
+          "id": "95f726e3-14a7-4be2-a2db-f490069b4921"
+        },
         {
-          "nombre": "dshfjksad",
-          "descripcion": "adfadf",
-          "material": "afdsfa",
-          "peso": 3,
-          "valor": 3,
-          "id": "0eaf5e58-9a4e-46c9-adc2-b89ac3d95ae9"
+          "nombre": "item3",
+          "descripcion": "adafadsf",
+          "material": "asdfasd",
+          "peso": 2,
+          "valor": 40,
+          "id": "af3ace9f-7cc0-423a-bdec-ee0ffeadf80f"
         }
       ],
-      "cantidadCoronas": 555,
-      "involucrado": {
-        "nombre": "Antonio",
-        "raza": "hshss",
-        "ubicacion": "sfasdsf",
-        "id": "ff6b1d38-b5c3-4f4c-9843-d4f7a697e422"
-      },
-      "id": "d02d0593-520e-49ea-87dc-c6ebaf6ee9e3"
-    },
-    {
-      "tipo": "devolución",
-      "fecha": "2025-03-18T18:53:43.482Z",
-      "bienes": [
-        {
-          "nombre": "dshfjksad",
-          "descripcion": "adfadf",
-          "material": "afdsfa",
-          "peso": 3,
-          "valor": 3,
-          "id": "0eaf5e58-9a4e-46c9-adc2-b89ac3d95ae9"
-        }
-      ],
-      "cantidadCoronas": 3,
+      "cantidadCoronas": 120,
       "involucrado": {
         "nombre": "camello",
         "tipo": "sdffadfs",
         "ubicacion": "dsafasdf",
         "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
       },
-      "id": "bdecfd5f-e451-4fb8-adfa-840851f0c2d7"
+      "id": "11b236b8-a832-48eb-af18-659497049ba4"
+    },
+    {
+      "tipo": "devolución",
+      "fecha": "2025-03-18T20:13:48.163Z",
+      "bienes": [
+        {
+          "nombre": "item2",
+          "descripcion": "sdafasddfa",
+          "material": "sadfasd",
+          "peso": 110,
+          "valor": 100,
+          "id": "7ff7c6d4-a5c6-4b86-814a-ad95dcec1ac9"
+        }
+      ],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "nombre": "camello",
+        "tipo": "sdffadfs",
+        "ubicacion": "dsafasdf",
+        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+      },
+      "id": "a7262886-86d0-46b3-851a-f008a456652b"
+    },
+    {
+      "tipo": "compra",
+      "fecha": "2025-03-18T20:14:17.881Z",
+      "bienes": [
+        {
+          "nombre": "ssdgdfgfsdfg",
+          "descripcion": "sdfgsdfg",
+          "material": "sdfgsdfg",
+          "peso": 4,
+          "valor": 4,
+          "id": "6d0eb7cd-1f34-4810-be20-80d970bab1c4"
+        },
+        {
+          "nombre": "gfsdgdsf",
+          "descripcion": "dsafadsf",
+          "material": "sdfgfsdg",
+          "peso": 4,
+          "valor": 4,
+          "id": "b0d2366d-28b8-4a4b-8eb0-ad3588599b02"
+        }
+      ],
+      "cantidadCoronas": 44,
+      "involucrado": {
+        "nombre": "camello",
+        "tipo": "sdffadfs",
+        "ubicacion": "dsafasdf",
+        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+      },
+      "id": "97603c65-86aa-4122-a11b-d271cc90dfcf"
     }
   ]
 }

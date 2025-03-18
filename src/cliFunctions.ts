@@ -147,17 +147,16 @@ export async function registerTransaction() {
     return mainMenu();
   }
 
-  // Caso especial: devolución
   if (involucradoTipo === "devolución") {
     const transaccionesValidas = transacciones.filter(
       (t) => t.tipo === "compra" || t.tipo === "venta"
     );
-
+  
     if (!transaccionesValidas || transaccionesValidas.length === 0) {
       console.log("No hay transacciones de compra o venta disponibles para devolución.");
       return mainMenu();
     }
-
+  
     const { transaccionId } = await inquirer.prompt([
       {
         type: "list",
@@ -166,44 +165,112 @@ export async function registerTransaction() {
         choices: transaccionesValidas.map((t) => ({
           name: `${t.tipo} - ${new Date(t.fecha).toLocaleString()} - ${t.bienes.map((b) => b.nombre).join(", ")}`,
           value: t.id,
-        })).concat({ name: "Salir al menú principal", value: "exit" }),
+        })),
       },
     ]);
-
-    if (transaccionId === "exit") {
-      return mainMenu();
-    }
-
+  
     const transaccionOriginal = transacciones.find((t) => t.id === transaccionId);
     if (!transaccionOriginal) {
       console.log("Transacción no encontrada.");
       return mainMenu();
     }
-
-    const bienesDevueltos = transaccionOriginal.bienes;
-
-    if (transaccionOriginal.tipo === "compra") {
-      bienesDevueltos.forEach((bien) => {
-        inventario.getBienManager().removeBien(bien.id);
-      });
-    } else if (transaccionOriginal.tipo === "venta") {
-      bienesDevueltos.forEach((bien) => {
-        inventario.getBienManager().addBien(bien);
-      });
+  
+    const { devolverTodos } = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "devolverTodos",
+        message: "¿Desea devolver todos los bienes de esta transacción?",
+      },
+    ]);
+  
+    const bienesDevueltos: Bien[] = devolverTodos
+      ? transaccionOriginal.bienes
+      : await inquirer.prompt([
+          {
+            type: "checkbox",
+            name: "bienesSeleccionados",
+            message: "Seleccione los bienes a devolver:",
+            choices: transaccionOriginal.bienes.map((b) => ({ name: b.nombre, value: b.id })),
+          },
+        ]).then((res) =>
+          transaccionOriginal.bienes.filter((b) => res.bienesSeleccionados.includes(b.id))
+        );
+  
+    if (bienesDevueltos.length === 0) {
+      console.log("No se seleccionaron bienes para devolver.");
+      return mainMenu();
     }
-
-    const transaccionDevolucion = new Transaccion(
-      "devolución",
-      new Date(),
-      bienesDevueltos,
-      transaccionOriginal.cantidadCoronas,
-      transaccionOriginal.involucrado
+  
+    // Calcular el valor total de los bienes devueltos
+    const valorDevuelto = bienesDevueltos.reduce((total, bien) => total + bien.valor, 0);
+  
+    // Actualizar inventario según el tipo de transacción original
+    if (transaccionOriginal.tipo === "compra") {
+      for (const bien of bienesDevueltos) {
+        await inventario.getBienManager().removeBien(bien.id);
+      }
+    } else if (transaccionOriginal.tipo === "venta") {
+      for (const bien of bienesDevueltos) {
+        await inventario.getBienManager().addBien(bien);
+      }
+    }
+  
+    // Actualizar la transacción original eliminando los bienes devueltos
+    transaccionOriginal.bienes = transaccionOriginal.bienes.filter(
+      (bien) => !bienesDevueltos.some((bDevuelto) => bDevuelto.id === bien.id)
     );
+  
+    // Actualizar la cantidad total de la transacción original
+    transaccionOriginal.cantidadCoronas -= valorDevuelto;
+  
+    if (transaccionOriginal.bienes.length === 0) {
+      await inventario.getTransaccionManager().removeTransaccion(transaccionOriginal.id);
+      console.log("Todos los bienes fueron devueltos. La transacción original ha sido eliminada.");
+    } else {
+      // Si quedan bienes, actualizar la transacción original
+      const actualizado = await inventario.getTransaccionManager().updateTransaccion(
+        transaccionOriginal.id,
+        {
+          bienes: transaccionOriginal.bienes,
+          cantidadCoronas: transaccionOriginal.cantidadCoronas,
+        }
+      );
+    
+      if (actualizado) {
+        console.log(`La transacción original ahora tiene un valor total de ${transaccionOriginal.cantidadCoronas} coronas.`);
+        console.log(`Los bienes restantes en la transacción original son: ${transaccionOriginal.bienes.map((b) => b.nombre).join(", ")}`);
+      } else {
+        console.error("Error al actualizar la transacción original.");
+      }
+    }
+  
+  // Registrar la nueva transacción de devolución
+  const transaccionDevolucion = new Transaccion(
+    "devolución",
+    new Date(),
+    bienesDevueltos,
+    valorDevuelto,
+    transaccionOriginal.involucrado
+  );
 
-    inventario.getTransaccionManager().addTransaccion(transaccionDevolucion);
-    inventario.getTransaccionManager().removeTransaccion(transaccionOriginal.id);
+  // Verificar si ya existe una devolución idéntica
+  const transaccionesExistentes = inventario.getTransaccionManager().getTransacciones();
+  const devolucionDuplicada = transaccionesExistentes.some(
+    (t) =>
+      t.tipo === "devolución" &&
+      t.cantidadCoronas === valorDevuelto &&
+      t.involucrado.id === transaccionOriginal.involucrado.id &&
+      t.bienes.length === bienesDevueltos.length &&
+      t.bienes.every((b, index) => b.id === bienesDevueltos[index].id)
+  );
 
+  if (devolucionDuplicada) {
+    console.log("Esta devolución ya ha sido registrada previamente.");
+  } else {
+    await inventario.getTransaccionManager().addTransaccion(transaccionDevolucion);
     console.log("Devolución registrada con éxito.");
+    console.log(`Se devolvieron bienes por un valor total de ${valorDevuelto} coronas.`);
+  }
     return mainMenu();
   }
 
@@ -234,21 +301,20 @@ export async function registerTransaction() {
     return mainMenu();
   }
 
-  // Manejar compra
-  if (tipo === "compra") {
+// Manejar compra
+if (tipo === "compra") {
+  const bienesComprados: Bien[] = [];
+  let continuar = true;
+
+  while (continuar) {
     const answers = await inquirer.prompt([
       { type: "input", name: "nombre", message: "Nombre del bien:" },
       { type: "input", name: "descripcion", message: "Descripción del bien:" },
       { type: "input", name: "material", message: "Material del bien:" },
       { type: "number", name: "peso", message: "Peso del bien:" },
       { type: "number", name: "valor", message: "Valor del bien:" },
-      { type: "number", name: "cantidadCoronas", message: "Cantidad de coronas:" },
-      { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal?", choices: ["Continuar", "Salir al menú principal"] },
+      { type: "confirm", name: "continuar", message: "¿Desea añadir otro bien?" },
     ]);
-
-    if (answers.exit === "Salir al menú principal") {
-      return mainMenu();
-    }
 
     const bien = new Bien(
       answers.nombre,
@@ -259,63 +325,81 @@ export async function registerTransaction() {
     );
 
     inventario.getBienManager().addBien(bien);
+    bienesComprados.push(bien);
 
-    const transaccion = new Transaccion(
-      tipo,
-      new Date(),
-      [bien],
-      answers.cantidadCoronas,
-      involucrado
-    );
-
-    inventario.getTransaccionManager().addTransaccion(transaccion);
-    console.log("Transacción de compra registrada con éxito.");
+    continuar = answers.continuar;
   }
 
-  // Manejar venta
-  else if (tipo === "venta") {
-    if (!bienes || bienes.length === 0) {
-      console.log("No hay bienes disponibles para la venta.");
-      return mainMenu();
-    }
+  const { cantidadCoronas } = await inquirer.prompt([
+    { type: "number", name: "cantidadCoronas", message: "Cantidad total de coronas pagadas:" },
+  ]);
 
-    const { bienId, cantidadCoronas } = await inquirer.prompt([
-      {
-        type: "list",
-        name: "bienId",
-        message: "Seleccione el bien a vender:",
-        choices: bienes.map((b) => ({ name: b.nombre, value: b.id })).concat({ name: "Salir al menú principal", value: "exit" }),
-      },
+  const transaccion = new Transaccion(
+    tipo,
+    new Date(),
+    bienesComprados,
+    cantidadCoronas,
+    involucrado
+  );
+
+  inventario.getTransaccionManager().addTransaccion(transaccion);
+  console.log("Transacción de compra registrada con éxito.");
+}
+
+else if (tipo === "venta") {
+  if (!bienes || bienes.length === 0) {
+    console.log("No hay bienes disponibles para la venta.");
+    return mainMenu();
+  }
+
+  const { bienesSeleccionados } = await inquirer.prompt([
+    {
+      type: "checkbox",
+      name: "bienesSeleccionados",
+      message: "Seleccione los bienes a vender:",
+      choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
+    },
+  ]);
+
+  if (bienesSeleccionados.length === 0) {
+    console.log("No se seleccionaron bienes para la venta.");
+    return mainMenu();
+  }
+
+  const bienesVendidos: Bien[] = [];
+  for (const bienId of bienesSeleccionados) {
+    const { precio } = await inquirer.prompt([
       {
         type: "number",
-        name: "cantidadCoronas",
-        message: "Cantidad de coronas:",
+        name: "precio",
+        //pner nmbre en lugar de id
+        message: `Ingrese el precio de venta para el bien con id ${bienId}:`,
       },
     ]);
 
-    if (bienId === "exit") {
-      return mainMenu();
-    }
-
     const bien = bienes.find((b) => b.id === bienId);
-    if (!bien) {
-      console.log("Bien no encontrado.");
-      return mainMenu();
+    if (bien) {
+      inventario.getBienManager().removeBien(bien.id);
+      bienesVendidos.push({ ...bien, valor: precio });
     }
-
-    inventario.getBienManager().removeBien(bien.id);
-
-    const transaccion = new Transaccion(
-      tipo,
-      new Date(),
-      [bien],
-      cantidadCoronas,
-      involucrado
-    );
-
-    inventario.getTransaccionManager().addTransaccion(transaccion);
-    console.log("Transacción de venta registrada con éxito.");
   }
+
+  const { cantidadCoronas } = await inquirer.prompt([
+    { type: "number", name: "cantidadCoronas", message: "Cantidad total de coronas recibidas:" },
+  ]);
+
+  const transaccion = new Transaccion(
+    tipo,
+    new Date(),
+    bienesVendidos,
+    cantidadCoronas,
+    involucrado
+  );
+
+  inventario.getTransaccionManager().addTransaccion(transaccion);
+  console.log("Transacción de venta registrada con éxito.");
+  mainMenu();
+}
 
   mainMenu();
 }
