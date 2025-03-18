@@ -403,3 +403,79 @@ else if (tipo === "venta") {
 
   mainMenu();
 }
+
+/**
+ * Genera un informe del estado del stock de un tipo de bien o de un artículo en particular.
+ * @param nombre - Nombre del bien a consultar.
+ */
+export function reportStockEstado(nombre: string) {
+  const bienes = inventario.getBienManager().searchBienNombre(nombre);
+  if (bienes.length === 0) {
+    console.log(`No se encontraron bienes con el nombre "${nombre}".`);
+  } else {
+    console.table(bienes);
+  }
+}
+
+/**
+ * Genera un informe de los bienes más vendidos o más demandados.
+ * @param tipo - Tipo de informe: "vendidos" o "demandados".
+ */
+export function reportBienesPopulares(tipo: "vendidos" | "demandados") {
+  const transacciones = inventario.getTransaccionManager().getTransacciones();
+  const conteo: Record<string, number> = {};
+
+  transacciones.forEach((t) => {
+    if ((tipo === "vendidos" && t.tipo === "venta") || (tipo === "demandados" && t.tipo === "compra")) {
+      t.bienes.forEach((b) => {
+        conteo[b.nombre] = (conteo[b.nombre] || 0) + 1;
+      });
+    }
+  });
+
+  const populares = Object.entries(conteo).sort((a, b) => b[1] - a[1]);
+  console.table(populares.map(([nombre, cantidad]) => ({ nombre, cantidad })));
+}
+
+/**
+ * Calcula el total de ingresos por ventas a clientes y gastos en adquisiciones a mercaderes.
+ */
+export function reportIngresosGastos() {
+  const transacciones = inventario.getTransaccionManager().getTransacciones();
+  let ingresos = 0;
+  let gastos = 0;
+
+  transacciones.forEach((t) => {
+    if (t.tipo === "venta") {
+      ingresos += t.cantidadCoronas;
+    } else if (t.tipo === "compra") {
+      gastos += t.cantidadCoronas;
+    }
+  });
+
+  console.log("Informe de ingresos y gastos:");
+  console.log(`Total de ingresos por ventas: ${ingresos} coronas`);
+  console.log(`Total de gastos por adquisiciones: ${gastos} coronas`);
+}
+
+/**
+ * Genera un histórico de transacciones de un cliente o mercader específico.
+ * @param id - Identificador único del cliente o mercader.
+ */
+export function reportHistoricoTransacciones(nombre: string) {
+  const transacciones = inventario.getTransaccionManager().getTransacciones();
+  const historico = transacciones.filter((t) => t.involucrado.nombre === nombre);
+
+  if (historico.length === 0) {
+    console.log(`No se encontraron transacciones para el ID "${nombre}".`);
+  } else {
+    console.table(
+      historico.map((t) => ({
+        tipo: t.tipo,
+        fecha: new Date(t.fecha).toLocaleString(),
+        bienes: t.bienes.map((b) => b.nombre).join(", "),
+        cantidadCoronas: t.cantidadCoronas,
+      }))
+    );
+  }
+}
