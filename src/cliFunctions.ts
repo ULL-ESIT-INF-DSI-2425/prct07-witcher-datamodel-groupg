@@ -6,6 +6,9 @@ import { Mercader } from "./mercader.js";
 import inquirer from "inquirer";
 import { mainMenu, inventario } from "./cli.js";
 
+/**
+ * Añade un nuevo bien al inventario.
+ */
 export async function addBien() {
 
   const answers = await inquirer.prompt([
@@ -35,6 +38,9 @@ export async function addBien() {
   mainMenu();
 }
 
+/**
+ * Elimina un bien del inventario.
+ */
 export async function removeBien() {
   const bienes = inventario.getBienManager().getBienes();
   if (!bienes || bienes.length === 0) {
@@ -65,6 +71,9 @@ export async function removeBien() {
   mainMenu();
 }
 
+/**
+ * Añade un nuevo cliente al registro.
+ */
 export async function addCliente() {
   const answers = await inquirer.prompt([
     { type: "input", name: "nombre", message: "Nombre del cliente:" },
@@ -89,6 +98,9 @@ export async function addCliente() {
   mainMenu();
 }
 
+/**
+ * Añade un nuevo mercader al registro.
+ */
 export async function addMercader() {
   const answers = await inquirer.prompt([
     { type: "input", name: "nombre", message: "Nombre del mercader:" },
@@ -113,6 +125,9 @@ export async function addMercader() {
   mainMenu();
 }
 
+/**
+ * Registra tansacciones de compra, venta o devolución de bienes y gestiona el inventario.
+ */
 export async function registerTransaction() {
   const bienes = inventario.getBienManager().getBienes();
   const clientes = inventario.getClienteManager().getClientes();
@@ -460,7 +475,7 @@ export function reportIngresosGastos() {
 
 /**
  * Genera un histórico de transacciones de un cliente o mercader específico.
- * @param id - Identificador único del cliente o mercader.
+ * @param nombre - Identificador único del cliente o mercader.
  */
 export function reportHistoricoTransacciones(nombre: string) {
   const transacciones = inventario.getTransaccionManager().getTransacciones();
