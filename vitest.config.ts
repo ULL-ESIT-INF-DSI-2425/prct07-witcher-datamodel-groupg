@@ -6,7 +6,7 @@ export default defineConfig({
       reporter: ['text', 'lcov', 'json'],
       exclude: [
         './src/cli.ts',
-        './src/mercaderManager.ts'
+        './src/cliFunctions.ts'
       ],
     },
   },

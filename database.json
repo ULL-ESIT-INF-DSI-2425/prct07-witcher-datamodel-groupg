@@ -7,14 +7,6 @@
       "peso": 1,
       "valor": 200,
       "id": "9673a451-e8b1-454a-a23b-94560562cb00"
-    },
-    {
-      "nombre": "Espada",
-      "descripcion": "Espada larga",
-      "material": "Hierro",
-      "peso": 3,
-      "valor": 100,
-      "id": "67eaaf5c-3f92-496f-a4a7-d68b30da0e0e"
     }
   ],
   "mercaderes": [
@@ -127,6 +119,72 @@
         "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
       },
       "id": "7569d829-8eef-4578-ab9b-3409c44da227"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-18T18:44:53.305Z",
+      "bienes": [
+        {
+          "nombre": "Espada",
+          "descripcion": "Espada larga",
+          "material": "Hierro",
+          "peso": 3,
+          "valor": 100,
+          "id": "67eaaf5c-3f92-496f-a4a7-d68b30da0e0e"
+        }
+      ],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "nombre": "Juan",
+        "raza": "Humano",
+        "ubicacion": "Novigrad",
+        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+      },
+      "id": "1b4affc2-d69c-4d43-8912-f142a12fbced"
+    },
+    {
+      "tipo": "devolución",
+      "fecha": "2025-03-18T18:53:22.774Z",
+      "bienes": [
+        {
+          "nombre": "dshfjksad",
+          "descripcion": "adfadf",
+          "material": "afdsfa",
+          "peso": 3,
+          "valor": 3,
+          "id": "0eaf5e58-9a4e-46c9-adc2-b89ac3d95ae9"
+        }
+      ],
+      "cantidadCoronas": 555,
+      "involucrado": {
+        "nombre": "Antonio",
+        "raza": "hshss",
+        "ubicacion": "sfasdsf",
+        "id": "ff6b1d38-b5c3-4f4c-9843-d4f7a697e422"
+      },
+      "id": "d02d0593-520e-49ea-87dc-c6ebaf6ee9e3"
+    },
+    {
+      "tipo": "devolución",
+      "fecha": "2025-03-18T18:53:43.482Z",
+      "bienes": [
+        {
+          "nombre": "dshfjksad",
+          "descripcion": "adfadf",
+          "material": "afdsfa",
+          "peso": 3,
+          "valor": 3,
+          "id": "0eaf5e58-9a4e-46c9-adc2-b89ac3d95ae9"
+        }
+      ],
+      "cantidadCoronas": 3,
+      "involucrado": {
+        "nombre": "camello",
+        "tipo": "sdffadfs",
+        "ubicacion": "dsafasdf",
+        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+      },
+      "id": "bdecfd5f-e451-4fb8-adfa-840851f0c2d7"
     }
   ]
 }
