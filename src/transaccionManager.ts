@@ -17,7 +17,7 @@ export class TransaccionManager {
   }
 
   /**
-   * Añade una nueva transacción. Comprueba que el involucrado es correcto.
+   * Añade una nueva transacción.
    * @param transaccion - Transacción a añadir.
    * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'transacciones'.
    */
@@ -28,14 +28,6 @@ export class TransaccionManager {
     if (!this.db.data.transacciones) {
       throw new Error(
         "La base de datos no contiene la propiedad 'transacciones'.",
-      );
-    }
-    if (
-      (transaccion.tipo === "compra" && !("tipo" in transaccion.involucrado)) ||
-      (transaccion.tipo === "venta" && !("raza" in transaccion.involucrado))
-    ) {
-      throw new Error(
-        "El involucrado en la transacción no es correcto. En las compras el involucrado debe ser un mercader y en las ventas un cliente.",
       );
     }
     this.db.data.transacciones.push(transaccion);
