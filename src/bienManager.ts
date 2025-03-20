@@ -100,6 +100,9 @@ export class BienManager {
   /**
    * Muestra por consola los bienes almacenados en el inventario.
    * Si no hay bienes, muestra un mensaje indicando que el inventario está vacío.
+   * @param type - Tipo de ordenación: "Por coronas" o "Alfabeticamente".
+   * @param order - Orden de la lista: "Ascendente" o "Descendente".
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
   showBienes(type: "Por coronas" | "Alfabeticamente", order: "Ascendente" | "Descendente") {
     const bienes = this.getBienes();
