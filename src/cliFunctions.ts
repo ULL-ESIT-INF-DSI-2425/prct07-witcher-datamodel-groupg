@@ -20,8 +20,8 @@ export async function addBien() {
     { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal?", choices: ["Continuar", "Salir al menú principal y no añadir bien"] },
   ]);
 
-  if (answers.exit === "Salir al menú principal y no añadir bien") {
-    return mainMenu();
+  if (answers.exit === "Volver y no añadir bien") {
+    return;
   }
 
   const bien = new Bien(
@@ -35,7 +35,6 @@ export async function addBien() {
   //inventario.addBien(bien);
   inventario.getBienManager().addBien(bien);
   console.log("Bien añadido con éxito.");
-  //mainMenu();
 }
 
 /**
@@ -45,7 +44,7 @@ export async function removeBien() {
   const bienes = inventario.getBienManager().getBienes();
   if (!bienes || bienes.length === 0) {
     console.log("No hay bienes en el inventario para eliminar.");
-    return mainMenu();
+    return;
   }
 
   const { bienId } = await inquirer.prompt([
@@ -58,7 +57,7 @@ export async function removeBien() {
   ]);
 
   if (bienId === "exit") {
-    return mainMenu();
+    return;
   }
 
   const bien = bienes.find((b) => b.id === bienId);
@@ -142,8 +141,8 @@ export async function addCliente() {
     { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal sin añadir el cliente?", choices: ["Continuar", "Salir al menú principal y no añadir cliente"] },
   ]);
 
-  if (answers.exit === "Salir al menú principal y no añadir cliente") {
-    return mainMenu();
+  if (answers.exit === "Volver y no añadir cliente") {
+    return;
   }
 
   const cliente = new Cliente(answers.nombre, answers.raza, answers.ubicacion);
@@ -165,7 +164,7 @@ export async function removeCliente() {
   const clientes = inventario.getClienteManager().getClientes();
   if (!clientes || clientes.length === 0) {
     console.log("No hay clientes en el inventario para eliminar.");
-    return mainMenu();
+    return;
   }
 
   const { clienteId } = await inquirer.prompt([
@@ -178,7 +177,7 @@ export async function removeCliente() {
   ]);
 
   if (clienteId === "exit") {
-    return mainMenu();
+    return;
   }
 
   const cliente = clientes.find((b) => b.id === clienteId);
@@ -250,8 +249,8 @@ export async function addMercader() {
     { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal sin añadir el mercader?", choices: ["Continuar", "Salir al menú principal y no añadir mercader"] },
   ]);
 
-  if (answers.exit === "Salir al menú principal y no añadir mercader") {
-    return mainMenu();
+  if (answers.exit === "Volver y no añadir mercader") {
+    return;
   }
 
   const mercader = new Mercader(answers.nombre, answers.raza, answers.ubicacion);
@@ -262,8 +261,6 @@ export async function addMercader() {
   } catch (error) {
     console.error("Error al añadir el mercader:", error.message);
   }
-
-  //mainMenu();
 }
 
 /**
@@ -273,7 +270,7 @@ export async function removeMercader() {
   const mercaderes = inventario.getMercaderManager().getMercaderes();
   if (!mercaderes || mercaderes.length === 0) {
     console.log("No hay mercaderes en el inventario para eliminar.");
-    return mainMenu();
+    return;
   }
 
   const { mercaderId } = await inquirer.prompt([
@@ -286,7 +283,7 @@ export async function removeMercader() {
   ]);
 
   if (mercaderId === "exit") {
-    return mainMenu();
+    return;
   }
 
   const mercader = mercaderes.find((b) => b.id === mercaderId);
@@ -396,7 +393,7 @@ export async function filtrarClientes() {
   
   if (clientes.length === 0) {
     console.log("No se encontraron clientes con ese criterio.");
-    return mainMenu();
+    return;
   } else {
     console.table(clientes);
   }
@@ -451,7 +448,7 @@ export async function filtrarMercaderes() {
   
   if (mercaderes.length === 0) {
     console.log("No se encontraron mercaderes con ese criterio.");
-    return mainMenu();
+    return;
   } else {
     console.table(mercaderes);
   }
