@@ -35,7 +35,7 @@ export async function addBien() {
   //inventario.addBien(bien);
   inventario.getBienManager().addBien(bien);
   console.log("Bien añadido con éxito.");
-  mainMenu();
+  //mainMenu();
 }
 
 /**
@@ -68,7 +68,67 @@ export async function removeBien() {
   } else {
     console.log("No se encontró el bien especificado.");
   }
-  mainMenu();
+  //mainMenu();
+}
+
+/**
+ * Editar un bien del inventario
+ */
+export async function updateBien() {
+  const bienes = inventario.getBienManager().getBienes();
+  if (!bienes || bienes.length === 0) {
+    console.log("No hay bienes disponibles para actualizar.");
+    return;
+  }
+
+  const { bienId, nombre, descripcion, material, peso, valor } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "bienId",
+      message: "Seleccione el bien a actualizar:",
+      choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
+    },
+    {
+      type: "input",
+      name: "nombre",
+      message: "Nuevo nombre:",
+    },
+    {
+      type: "input",
+      name: "descripcion",
+      message: "Nueva descripción:",
+    },
+    {
+      type: "input",
+      name: "material",
+      message: "Nuevo material:",
+    },
+    {
+      type: "number",
+      name: "peso",
+      message: "Nuevo peso:",
+    },
+    {
+      type: "number",
+      name: "valor",
+      message: "Nuevo valor:",
+    },
+  ]);
+
+  const datosActualizados = {
+    nombre,
+    descripcion,
+    material,
+    peso,
+    valor,
+  };
+
+  const actualizado = inventario.getBienManager().updateBien(bienId, datosActualizados);
+  if (actualizado) {
+    console.log("Bien actualizado con éxito.");
+  } else {
+    console.log("No se encontró el bien a actualizar.");
+  }
 }
 
 /**
@@ -95,7 +155,88 @@ export async function addCliente() {
     console.error("Error al añadir el cliente:", error.message);
   }
 
-  mainMenu();
+  //mainMenu();
+}
+
+/**
+ * Elimina un cliente del inventario.
+ */
+export async function removeCliente() {
+  const clientes = inventario.getClienteManager().getClientes();
+  if (!clientes || clientes.length === 0) {
+    console.log("No hay clientes en el inventario para eliminar.");
+    return mainMenu();
+  }
+
+  const { clienteId } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "clienteId",
+      message: "Seleccione al cliente a eliminar:",
+      choices: [...clientes.map((b) => ({ name: b.nombre, value: b.id })), { name: "Salir al menú principal", value: "exit" }],
+    },
+  ]);
+
+  if (clienteId === "exit") {
+    return mainMenu();
+  }
+
+  const cliente = clientes.find((b) => b.id === clienteId);
+  if (cliente) {
+    inventario.getClienteManager().removeCliente(cliente.id);
+    console.log("Cliente eliminado con éxito.");
+  } else {
+    console.log("No se encontró al cliente especificado.");
+  }
+  //mainMenu();
+}
+
+/**
+ * Editar un cliente del inventario
+ */
+export async function updateCliente() {
+  const clientes = inventario.getClienteManager().getClientes();
+  if (!clientes || clientes.length === 0) {
+    console.log("No hay clientes disponibles para actualizar.");
+    return;
+  }
+
+  const { clienteId, nombre, raza, ubicacion } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "clienteId",
+      message: "Seleccione al cliente a actualizar:",
+      choices: clientes.map((b) => ({ name: b.nombre, value: b.id })),
+    },
+    {
+      type: "input",
+      name: "nombre",
+      message: "Nuevo nombre:",
+    },
+    {
+      type: "input",
+      name: "raza",
+      message: "Nueva raza:",
+    },
+    {
+      type: "input",
+      name: "ubicacion",
+      message: "Nueva ubicación:",
+    },
+  ]);
+
+  const datosActualizados = {
+    nombre,
+    raza,
+    ubicacion,
+  };
+
+  const actualizado = inventario.getClienteManager().updateCliente(clienteId, datosActualizados);
+  if (actualizado) {
+    console.log("Cliente actualizado con éxito.");
+  } else {
+    console.log("No se encontró al cliente a actualizar.");
+  }
 }
 
 /**
@@ -104,7 +245,7 @@ export async function addCliente() {
 export async function addMercader() {
   const answers = await inquirer.prompt([
     { type: "input", name: "nombre", message: "Nombre del mercader:" },
-    { type: "input", name: "raza", message: "Raza del mercader:" },
+    { type: "input", name: "raza", message: "Tipo del mercader:" },
     { type: "input", name: "ubicacion", message: "Ubicación del mercader:" },
     { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal sin añadir el mercader?", choices: ["Continuar", "Salir al menú principal y no añadir mercader"] },
   ]);
@@ -122,7 +263,198 @@ export async function addMercader() {
     console.error("Error al añadir el mercader:", error.message);
   }
 
-  mainMenu();
+  //mainMenu();
+}
+
+/**
+ * Elimina un mercader del inventario.
+ */
+export async function removeMercader() {
+  const mercaderes = inventario.getMercaderManager().getMercaderes();
+  if (!mercaderes || mercaderes.length === 0) {
+    console.log("No hay mercaderes en el inventario para eliminar.");
+    return mainMenu();
+  }
+
+  const { mercaderId } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "mercaderId",
+      message: "Seleccione al mercader a eliminar:",
+      choices: [...mercaderes.map((b) => ({ name: b.nombre, value: b.id })), { name: "Salir al menú principal", value: "exit" }],
+    },
+  ]);
+
+  if (mercaderId === "exit") {
+    return mainMenu();
+  }
+
+  const mercader = mercaderes.find((b) => b.id === mercaderId);
+  if (mercader) {
+    inventario.getMercaderManager().removeMercader(mercader.id);
+    console.log("Mercader eliminado con éxito.");
+  } else {
+    console.log("No se encontró al mercader especificado.");
+  }
+  //mainMenu();
+}
+
+/**
+ * Editar un cliente del inventario
+ */
+export async function updateMercader() {
+  const mercaderes = inventario.getMercaderManager().getMercaderes();
+  if (!mercaderes || mercaderes.length === 0) {
+    console.log("No hay mercaderes disponibles para actualizar.");
+    return;
+  }
+
+  const { mercaderId, nombre, tipo, ubicacion } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "mercaderId",
+      message: "Seleccione el mercader a actualizar:",
+      choices: mercaderes.map((b) => ({ name: b.nombre, value: b.id })),
+    },
+    {
+      type: "input",
+      name: "nombre",
+      message: "Nuevo nombre:",
+    },
+    {
+      type: "input",
+      name: "tipo",
+      message: "Nuevo tipo:",
+    },
+    {
+      type: "input",
+      name: "ubicacion",
+      message: "Nueva ubicación:",
+    },
+  ]);
+
+  const datosActualizados = {
+    nombre,
+    tipo,
+    ubicacion,
+  };
+
+  const actualizado = inventario.getMercaderManager().updateMercader(mercaderId, datosActualizados);
+  if (actualizado) {
+    console.log("Mercader actualizado con éxito.");
+  } else {
+    console.log("No se encontró al mercader a actualizar.");
+  }
+}
+
+/**
+ * Filtra los clientes por su nombre, raza o locaclizacion
+ */
+export async function filtrarClientes() {
+  const choices = [
+    "Nombre", 
+    "Raza", 
+    "Localización", 
+    "No filtrar",
+  ];
+
+  const { filter } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "filter",
+      message: "¿Cómo desea filtrar los clientes?",
+      choices,
+    },
+  ]);
+
+  if (filter === "No filtrar"){
+    inventario.getClienteManager().showClientes();
+    return mainMenu();
+  }
+
+  const { value } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "value",
+      message: `Ingrese el valor para filtrar:`,
+    },
+  ]);
+
+  let clientes: Cliente[] = [];
+
+  switch (filter) {
+    case "Nombre":
+    clientes = inventario.getClienteManager().searchClienteNombre(value);
+    break;
+    case "Raza":
+    clientes = inventario.getClienteManager().searchClienteRaza(value);
+    break;
+    case "Localización":
+    clientes = inventario.getClienteManager().searchClienteUbicacion(value);
+    break;
+  }
+  
+  if (clientes.length === 0) {
+    console.log("No se encontraron clientes con ese criterio.");
+    return mainMenu();
+  } else {
+    console.table(clientes);
+  }
+}
+
+/**
+ * Filtra los mercaderes por su nombre, raza o locaclizacion
+ */
+export async function filtrarMercaderes() {
+  const choices = [
+    "Nombre", 
+    "Tipo", 
+    "Localización", 
+    "No filtrar",
+  ];
+
+  const { filter } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "filter",
+      message: "¿Cómo desea filtrar los mercaderes?",
+      choices,
+    },
+  ]);
+
+  if (filter === "No filtrar"){
+    inventario.getMercaderManager().showMercaderes();
+    return mainMenu();
+  }
+
+  const { value } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "value",
+      message: `Ingrese el valor para filtrar:`,
+    },
+  ]);
+
+  let mercaderes: Mercader[] = [];
+
+  switch (filter) {
+    case "Nombre":
+      mercaderes = inventario.getMercaderManager().searchMercaderNombre(value);
+    break;
+    case "Tipo":
+      mercaderes = inventario.getMercaderManager().searchMercaderTipo(value);
+    break;
+    case "Localización":
+      mercaderes = inventario.getMercaderManager().searchMercaderUbicacion(value);
+    break;
+  }
+  
+  if (mercaderes.length === 0) {
+    console.log("No se encontraron mercaderes con ese criterio.");
+    return mainMenu();
+  } else {
+    console.table(mercaderes);
+  }
 }
 
 /**
