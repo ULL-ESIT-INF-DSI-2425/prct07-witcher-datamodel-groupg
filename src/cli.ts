@@ -1,10 +1,6 @@
 import inquirer from "inquirer";
 import { Inventario } from "./inventario.js";
-import { Bien } from "./bien.js";
-import { Transaccion } from "./transaccion.js";
-import { Cliente } from "./cliente.js";
-import { Mercader } from "./mercader.js";
-import { addBien, removeBien, addCliente, addMercader, registerTransaction, reportBienesPopulares, reportIngresosGastos, reportHistoricoTransacciones, reportStockEstado } from "./cliFunctions.js";
+import { addBien, removeBien, addCliente, addMercader, registerTransaction, reportBienesPopulares, reportIngresosGastos, reportHistoricoTransacciones, reportStockEstado, updateBien, filtrarClientes, filtrarMercaderes, removeCliente, removeMercader, updateCliente, updateMercader } from "./cliFunctions.js";
 
 // Inicializar el inventario
 export const inventario = new Inventario();
@@ -12,12 +8,11 @@ export const inventario = new Inventario();
 export async function mainMenu() {
   const choices = [
     "Mostrar bienes",
+    "Gestionar bienes",
+    "Mostrar clientes/mercaderes",
+    "Gestionar clientes/mercaderes",
     "Mostrar transacciones",
-    "Añadir bien",
-    "Añadir mercader",
-    "Añadir cliente",
     "Registrar transacción",
-    "Eliminar bien",
     "Generar informes",
     "Salir",
   ];
@@ -33,23 +28,162 @@ export async function mainMenu() {
 
   switch (action) {
     case "Mostrar bienes":
-      inventario.getBienManager().showBienes();
-      mainMenu();
+      mostrarBienesMenu();
       break;
-    case "Añadir bien":
-      addBien();
+
+      async function mostrarBienesMenu() {
+        const choices = [
+          "Por coronas", 
+          "Alfabeticamente", 
+          "Volver al menú principal",
+        ];
+
+        const { criterio } = await inquirer.prompt([
+          {
+            type: "list",
+            name: "criterio",
+            message: "¿Cómo desea ordenar los bienes?",
+            choices,
+          },
+        ]);
+      
+        if (criterio === "Volver al menú principal") {
+          return mainMenu();
+        }
+      
+        const { orden } = await inquirer.prompt([
+          {
+            type: "list",
+            name: "orden",
+            message: "Seleccione el orden:",
+            choices: ["Ascendente", "Descendente"],
+          },
+        ]);
+      
+        inventario.getBienManager().showBienes(criterio, orden);
+        await mostrarBienesMenu();
+      }
+    case "Gestionar bienes":
+      gestionarBienesMenu();
       break;
-    case "Eliminar bien":
-      removeBien();
+      
+      async function gestionarBienesMenu() {
+        const choices = [
+          "Añadir bien", 
+          "Eliminar bien", 
+          "Editar bien", 
+          "Volver al menú principal",
+        ];
+
+        const { action } = await inquirer.prompt([
+          {
+            type: "list",
+            name: "action",
+            message: "¿Qué desea hacer?",
+            choices,
+          },
+        ]);
+
+        switch (action) {
+          case "Añadir bien":
+            await addBien();
+            break;
+          case "Eliminar bien":
+            await removeBien();
+            break;
+          case "Editar bien":
+            await updateBien();
+            break;
+          case "Volver al menú principal":
+            mainMenu();
+            return;
+        }
+        await gestionarBienesMenu();
+      }
+    case "Mostrar clientes/mercaderes":
+      mostrarClientesMercaderesMenu();
       break;
+      
+      async function mostrarClientesMercaderesMenu() {
+        const choices = [
+          "Clientes", 
+          "Mercaderes", 
+          "Volver al menú principal",
+        ];
+
+        const { action } = await inquirer.prompt([
+          {
+            type: "list",
+            name: "action",
+            message: "¿Qué desea mostrar?",
+            choices,
+          },
+        ]);
+
+        switch (action) {
+          case "Clientes":
+            await filtrarClientes();
+            break;
+          case "Mercaderes":
+            await filtrarMercaderes();
+            break;
+          case "Volver al menú principal":
+            mainMenu();
+            return;
+        }
+        await mostrarClientesMercaderesMenu();
+      }
+    case "Gestionar clientes/mercaderes":
+      gestionarClientesMercaderesMenu();
+      break;
+
+      async function gestionarClientesMercaderesMenu() {
+        const choices = [
+          "Añadir cliente",
+          "Añadir mercader",
+          "Eliminar cliente",
+          "Eliminar mercader",
+          "Editar cliente",
+          "Editar mercader",
+          "Volver al menú principal",
+        ];
+
+        const { action } = await inquirer.prompt([
+          {
+            type: "list",
+            name: "action",
+            message: "¿Qué desea hacer?",
+            choices,
+          },
+        ]);
+
+        switch (action) {
+          case "Añadir cliente":
+            await addCliente();
+            break;
+          case "Añadir mercader":
+            await addMercader();
+            break;
+          case "Eliminar cliente":
+            await removeCliente();
+            break;
+          case "Eliminar mercader":
+            await removeMercader();
+            break;
+          case "Editar cliente":
+            await updateCliente();
+            break;
+          case "Editar mercader":
+            await updateMercader();
+            break;
+          case "Volver al menú principal":
+            mainMenu();
+            return;
+        }
+        await gestionarClientesMercaderesMenu();
+      }
     case "Registrar transacción":
       registerTransaction();
-      break;
-    case "Añadir cliente":
-      addCliente();
-      break;
-    case "Añadir mercader":
-      addMercader();
       break;
     case "Mostrar transacciones":
       inventario.getTransaccionManager().showTransacciones();
