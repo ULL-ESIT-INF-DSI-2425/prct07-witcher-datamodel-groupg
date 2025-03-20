@@ -82,7 +82,7 @@ describe('BienManager', () => {
 
   it('should show all bienes in the console', () => {
     const consoleSpy = vi.spyOn(console, 'table');
-    inventario.getBienManager().showBienes();
+    inventario.getBienManager().showBienes("Alfabeticamente", "Ascendente");
     expect(consoleSpy).toHaveBeenCalledWith(expect.arrayContaining([bien1, bien2]));
     consoleSpy.mockRestore();
   });
