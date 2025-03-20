@@ -369,7 +369,7 @@ export async function filtrarClientes() {
 
   if (filter === "No filtrar"){
     inventario.getClienteManager().showClientes();
-    return mainMenu();
+    return;
   }
 
   const { value } = await inquirer.prompt([
@@ -424,7 +424,7 @@ export async function filtrarMercaderes() {
 
   if (filter === "No filtrar"){
     inventario.getMercaderManager().showMercaderes();
-    return mainMenu();
+    return;
   }
 
   const { value } = await inquirer.prompt([
