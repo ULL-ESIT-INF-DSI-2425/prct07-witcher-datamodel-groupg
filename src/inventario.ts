@@ -5,7 +5,6 @@ import { MercaderManager } from "./mercaderManager.js";
 import { ClienteManager } from "./clienteManager.js";
 import { TransaccionManager } from "./transaccionManager.js";
 import { DataSchema } from "../src/database.js";
-import path from "path";
 
 /**
  * Clase que representa el inventario.
