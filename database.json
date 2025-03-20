@@ -23,6 +23,14 @@
       "peso": 4,
       "valor": 4,
       "id": "af825afc-8e60-48f6-8f21-124ba0b9802b"
+    },
+    {
+      "nombre": "NewT",
+      "descripcion": "NewT",
+      "material": "new",
+      "peso": 9,
+      "valor": 8,
+      "id": "179417b3-8bfd-4296-8505-327809d33366"
     }
   ],
   "mercaderes": [
@@ -37,6 +45,12 @@
       "tipo": "asdfasdf",
       "ubicacion": "sdafasdf",
       "id": "64288b2c-4c32-42e9-8eac-8ab0d2a343f3"
+    },
+    {
+      "nombre": "Jose",
+      "tipo": "No",
+      "ubicacion": "Ten",
+      "id": "9ea3ea4c-5ba4-4a79-ba04-9f95dec2e503"
     }
   ],
   "clientes": [
