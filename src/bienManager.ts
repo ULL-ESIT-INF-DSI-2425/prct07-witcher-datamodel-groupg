@@ -101,9 +101,18 @@ export class BienManager {
    * Muestra por consola los bienes almacenados en el inventario.
    * Si no hay bienes, muestra un mensaje indicando que el inventario está vacío.
    */
-  showBienes() {
+  showBienes(type: "Por coronas" | "Alfabeticamente", order: "Ascendente" | "Descendente") {
     const bienes = this.getBienes();
     if (bienes && bienes.length > 0) {
+      bienes.sort((a, b) => {
+        let comparison = 0;
+        if (type === "Por coronas") {
+          comparison = a.valor - b.valor;
+        } else if (type === "Alfabeticamente") {
+          comparison = a.nombre.localeCompare(b.nombre);
+        }
+        return order === "Ascendente" ? comparison : -comparison;
+      });
       console.table(bienes);
     } else {
       console.log("No hay bienes en el inventario.");
