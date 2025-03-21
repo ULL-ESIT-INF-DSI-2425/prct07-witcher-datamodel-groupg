@@ -484,29 +484,29 @@ export async function registerTransaction() {
 
     if (tipo === "devolución") {
       await handleDevolucion();
+    } else if(tipo ==="Volver al menú principal"){
+      await mainMenu();
+      return;
     } else {
       await handleCompraVenta(tipo);
     }
-
-    console.log("Transacción registrada con éxito.");
   } catch (error) {
     console.error("Error al registrar la transacción:", error.message);
-  } finally {
-    await mainMenu();
   }
+  await mainMenu();
 }
 
 /**
  * Muestra un menú para seleccionar el tipo de transacción a registrar.
  * @returns El tipo de transacción seleccionado.
  */
-async function promptTransactionType(): Promise<"compra" | "venta" | "devolución"> {
+async function promptTransactionType(): Promise<"compra" | "venta" | "devolución" | "Volver al menú principal"> {
   const { tipo } = await inquirer.prompt([
     {
       type: "list",
       name: "tipo",
       message: "Seleccione el tipo de transacción:",
-      choices: ["compra", "venta", "devolución"],
+      choices: ["compra", "venta", "devolución", "Volver al menú principal"],
     },
   ]);
   return tipo;
@@ -518,6 +518,10 @@ async function promptTransactionType(): Promise<"compra" | "venta" | "devolució
  */
 async function handleCompraVenta(tipo: "compra" | "venta") {
   const involucrado = await promptInvolucrado(tipo);
+  if (!involucrado) {
+    console.log("Retrocediendo...");
+    return;
+  }
   const bienes: Bien[] = [];
   let cantidadCoronas = 0;
 
@@ -748,11 +752,11 @@ async function processPartialDevolucion(transaccion: Transaccion) {
 }
 
 /**
- * 
+ * Prompt para seleccionar un cliente o mercader involucrado en una transacción de compra o venta.
  * @param tipo si es compra o venta
  * @returns los involucrados
  */
-async function promptInvolucrado(tipo: "compra" | "venta"): Promise<Cliente | Mercader> {
+async function promptInvolucrado(tipo: "compra" | "venta"): Promise<Cliente | Mercader | null> {
   const manager =
     tipo === "compra"
       ? inventario.getMercaderManager()
@@ -772,9 +776,16 @@ async function promptInvolucrado(tipo: "compra" | "venta"): Promise<Cliente | Me
       type: "list",
       name: "involucradoId",
       message: `Seleccione el ${tipo === "compra" ? "mercader" : "cliente"} involucrado:`,
-      choices: involucrados.map((i) => ({ name: i.nombre, value: i.id })),
+      choices: [
+        ...involucrados.map((i) => ({ name: i.nombre, value: i.id })),
+        { name: "[RETROCEDER]", value: "back" },
+      ],
     },
   ]);
+
+  if (involucradoId === "back") {
+    return null; // Indica que el usuario desea retroceder
+  }
 
   return involucrados.find((i) => i.id === involucradoId)!;
 }
