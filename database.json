@@ -1,38 +1,5 @@
 {
-  "bienes": [
-    {
-      "nombre": "item1",
-      "descripcion": "fdsafa",
-      "material": "asdfasdf",
-      "peso": 3,
-      "valor": 100,
-      "id": "95f726e3-14a7-4be2-a2db-f490069b4921"
-    },
-    {
-      "nombre": "item3",
-      "descripcion": "adafadsf",
-      "material": "asdfasd",
-      "peso": 2,
-      "valor": 40,
-      "id": "af3ace9f-7cc0-423a-bdec-ee0ffeadf80f"
-    },
-    {
-      "nombre": "dsaf",
-      "descripcion": "sdafsadff",
-      "material": "asdfafsd",
-      "peso": 4,
-      "valor": 4,
-      "id": "af825afc-8e60-48f6-8f21-124ba0b9802b"
-    },
-    {
-      "nombre": "NewT",
-      "descripcion": "NewT",
-      "material": "new",
-      "peso": 9,
-      "valor": 8,
-      "id": "179417b3-8bfd-4296-8505-327809d33366"
-    }
-  ],
+  "bienes": [],
   "mercaderes": [
     {
       "nombre": "camello",
@@ -237,6 +204,116 @@
         "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
       },
       "id": "97603c65-86aa-4122-a11b-d271cc90dfcf"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-21T17:56:19.782Z",
+      "bienes": [
+        {
+          "nombre": "item3",
+          "descripcion": "adafadsf",
+          "material": "asdfasd",
+          "peso": 2,
+          "valor": 32,
+          "id": "af3ace9f-7cc0-423a-bdec-ee0ffeadf80f"
+        }
+      ],
+      "cantidadCoronas": 100,
+      "involucrado": {
+        "nombre": "Juan",
+        "raza": "Humano",
+        "ubicacion": "Novigrad",
+        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+      },
+      "id": "a45baa60-7e97-461b-be2a-a0f3efb4af3c"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-21T17:57:04.058Z",
+      "bienes": [
+        {
+          "nombre": "item1",
+          "descripcion": "fdsafa",
+          "material": "asdfasdf",
+          "peso": 3,
+          "valor": 32,
+          "id": "95f726e3-14a7-4be2-a2db-f490069b4921"
+        }
+      ],
+      "cantidadCoronas": 32,
+      "involucrado": {
+        "nombre": "Juan",
+        "raza": "Humano",
+        "ubicacion": "Novigrad",
+        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+      },
+      "id": "d68c654e-d865-405c-8fad-776554eab806"
+    },
+    {
+      "tipo": "devolución",
+      "fecha": "2025-03-21T17:59:37.813Z",
+      "bienes": [
+        {
+          "nombre": "test",
+          "descripcion": "es una prueba",
+          "material": "iron",
+          "peso": 1,
+          "valor": 20,
+          "id": "5dbe0e67-a8e5-4b43-bd7c-d031d28c2150"
+        }
+      ],
+      "cantidadCoronas": 20,
+      "involucrado": {
+        "nombre": "camello",
+        "tipo": "sdffadfs",
+        "ubicacion": "dsafasdf",
+        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+      },
+      "id": "428cd73f-7dd9-48ed-8d86-b9ac55252c73"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-21T18:00:08.666Z",
+      "bienes": [
+        {
+          "nombre": "NewT",
+          "descripcion": "NewT",
+          "material": "new",
+          "peso": 9,
+          "valor": 20,
+          "id": "179417b3-8bfd-4296-8505-327809d33366"
+        }
+      ],
+      "cantidadCoronas": 20,
+      "involucrado": {
+        "nombre": "Juan",
+        "raza": "Humano",
+        "ubicacion": "Novigrad",
+        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+      },
+      "id": "2c0aa3ed-bc5c-4b15-a49f-1e835e645c9e"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-21T18:06:18.494Z",
+      "bienes": [
+        {
+          "nombre": "dsaf",
+          "descripcion": "sdafsadff",
+          "material": "asdfafsd",
+          "peso": 4,
+          "valor": 20,
+          "id": "af825afc-8e60-48f6-8f21-124ba0b9802b"
+        }
+      ],
+      "cantidadCoronas": 20,
+      "involucrado": {
+        "nombre": "Antonio",
+        "raza": "hshss",
+        "ubicacion": "sfasdsf",
+        "id": "ff6b1d38-b5c3-4f4c-9843-d4f7a697e422"
+      },
+      "id": "565f1750-2e59-4471-81cd-99a6045f7137"
     }
   ]
 }

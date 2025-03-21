@@ -599,7 +599,7 @@ export async function registerTransaction() {
       }
     } else if (transaccionOriginal.tipo === "venta") {
       for (const bien of bienesDevueltos) {
-        await inventario.getBienManager().addBien(bien);
+        inventario.getBienManager().addBien(bien);
       }
     }
 
@@ -664,9 +664,7 @@ export async function registerTransaction() {
     if (devolucionDuplicada) {
       console.log("Esta devolución ya ha sido registrada previamente.");
     } else {
-      await inventario
-        .getTransaccionManager()
-        .addTransaccion(transaccionDevolucion);
+      inventario.getTransaccionManager().addTransaccion(transaccionDevolucion);
       console.log("Devolución registrada con éxito.");
       console.log(
         `Se devolvieron bienes por un valor total de ${valorDevuelto} coronas.`,
@@ -814,9 +812,7 @@ export async function registerTransaction() {
 
     inventario.getTransaccionManager().addTransaccion(transaccion);
     console.log("Transacción de venta registrada con éxito.");
-    mainMenu();
   }
-
   mainMenu();
 }
 
