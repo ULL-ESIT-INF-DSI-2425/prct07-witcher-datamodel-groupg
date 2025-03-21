@@ -4,6 +4,8 @@ import { Cliente } from "./cliente.js";
 import { Mercader } from "./mercader.js";
 import inquirer from "inquirer";
 import { mainMenu, inventario } from "./cli.js";
+import { MercaderManager } from "./mercaderManager.js";
+import { ClienteManager } from "./clienteManager.js";
 
 /**
  * Añade un nuevo bien al inventario.
@@ -35,6 +37,7 @@ export async function addBien() {
     answers.valor,
   );
 
+  //inventario.addBien(bien);
   inventario.getBienManager().addBien(bien);
   console.log("Bien añadido con éxito.");
 }
@@ -72,6 +75,7 @@ export async function removeBien() {
   } else {
     console.log("No se encontró el bien especificado.");
   }
+  //mainMenu();
 }
 
 /**
@@ -166,6 +170,8 @@ export async function addCliente() {
   } catch (error) {
     console.error("Error al añadir el cliente:", error.message);
   }
+
+  //mainMenu();
 }
 
 /**
@@ -201,6 +207,7 @@ export async function removeCliente() {
   } else {
     console.log("No se encontró al cliente especificado.");
   }
+  //mainMenu();
 }
 
 /**
@@ -321,6 +328,7 @@ export async function removeMercader() {
   } else {
     console.log("No se encontró al mercader especificado.");
   }
+  //mainMenu();
 }
 
 /**
@@ -417,6 +425,7 @@ export async function filtrarClientes() {
 
   if (clientes.length === 0) {
     console.log("No se encontraron clientes con ese criterio.");
+    return;
   } else {
     console.table(clientes);
   }
@@ -468,352 +477,363 @@ export async function filtrarMercaderes() {
 
   if (mercaderes.length === 0) {
     console.log("No se encontraron mercaderes con ese criterio.");
+    return;
   } else {
     console.table(mercaderes);
   }
 }
 
 /**
- * Registra tansacciones de compra, venta o devolución de bienes y gestiona el inventario.
+ * Registra transacciones de compra, venta o devolución de bienes y gestiona el inventario.
  */
 export async function registerTransaction() {
-  const bienes = inventario.getBienManager().getBienes();
-  const clientes = inventario.getClienteManager().getClientes();
-  const mercaderes = inventario.getMercaderManager().getMercaderes();
-  const transacciones = inventario.getTransaccionManager().getTransacciones();
+  try {
+    const tipo = await promptTransactionType();
 
-  // Preguntar el tipo de transacción
+    if (tipo === "devolución") {
+      await handleDevolucion();
+    } else {
+      await handleCompraVenta(tipo);
+    }
+
+    console.log("Transacción registrada con éxito.");
+  } catch (error) {
+    console.error("Error al registrar la transacción:", error.message);
+  } finally {
+    await mainMenu();
+  }
+}
+
+/**
+ * Muestra un menú para seleccionar el tipo de transacción a registrar.
+ * @returns El tipo de transacción seleccionado.
+ */
+async function promptTransactionType(): Promise<"compra" | "venta" | "devolución"> {
   const { tipo } = await inquirer.prompt([
     {
       type: "list",
       name: "tipo",
-      message: "Tipo de transacción:",
-      choices: ["venta", "compra", "devolución", "Salir al menú principal"],
+      message: "Seleccione el tipo de transacción:",
+      choices: ["compra", "venta", "devolución"],
+    },
+  ]);
+  return tipo;
+}
+
+/**
+ * Gestiona la creación de una transacción de compra o venta de bienes.
+ * @param tipo si es compra o venta
+ */
+async function handleCompraVenta(tipo: "compra" | "venta") {
+  const involucrado = await promptInvolucrado(tipo);
+  const bienes: Bien[] = [];
+  let cantidadCoronas = 0;
+
+  if (tipo === "compra") {
+    let continuar = true;
+    while (continuar) {
+      const nuevoBien = await promptNuevoBien();
+      bienes.push(nuevoBien);
+
+      const { agregarOtro } = await inquirer.prompt([
+        {
+          type: "confirm",
+          name: "agregarOtro",
+          message: "¿Desea añadir otro bien a la compra?",
+        },
+      ]);
+      continuar = agregarOtro;
+    }
+  } else {
+    const bienesSeleccionados = await promptBienes();
+    bienes.push(...bienesSeleccionados);
+  }
+
+  // Solicitar el monto total de la transacción (compra o venta)
+  const { montoTotal } = await inquirer.prompt([
+    {
+      type: "number",
+      name: "montoTotal",
+      message: `Ingrese el monto total de la ${tipo} (en coronas):`,
+      validate: (value) =>
+        (value ?? 0) > 0 ? true : "El monto total debe ser mayor a 0.",
+    },
+  ]);
+  cantidadCoronas = montoTotal;
+
+  const transaccion = new Transaccion(
+    tipo,
+    new Date(),
+    bienes,
+    cantidadCoronas,
+    involucrado,
+  );
+
+  inventario.getTransaccionManager().addTransaccion(transaccion);
+
+  if (tipo === "compra") {
+    bienes.forEach((bien) => inventario.getBienManager().addBien(bien));
+  } else if (tipo === "venta") {
+    bienes.forEach((bien) => inventario.getBienManager().removeBien(bien.id));
+  }
+
+  console.log(
+    `Transacción de ${tipo} registrada con éxito. Monto total: ${cantidadCoronas} coronas.`,
+  );
+}
+
+/**
+ * Gestiona una transaccion de devolución de bienes.
+ */
+async function handleDevolucion() {
+  const transacciones = inventario
+    .getTransaccionManager()
+    .getTransacciones()
+    .filter((t) => t.tipo === "compra" || t.tipo === "venta"); // Filtrar solo compras y ventas
+
+  if (transacciones.length === 0) {
+    console.log("No hay transacciones de compra o venta registradas para realizar devoluciones.");
+    return;
+  }
+
+  const { transaccionId } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "transaccionId",
+      message: "Seleccione la transacción a devolver:",
+      choices: [
+        ...transacciones.map((t) => ({
+          name: `${t.tipo.toUpperCase()} - ${t.involucrado.nombre} - ${t.fecha.toLocaleString()} - Bienes: ${t.bienes
+            .map((b) => b.nombre)
+            .join(", ")}`,
+          value: t.id,
+        })),
+        { name: "Retroceder", value: "back" }, // Opción para retroceder
+      ],
     },
   ]);
 
-  if (tipo === "Salir al menú principal") {
-    return mainMenu();
+  if (transaccionId === "back") {
+    return; // Retroceder al nivel anterior
   }
 
-  // Determinar el tipo de involucrado
-  let involucradoTipo: string | undefined;
+  const transaccion = transacciones.find((t) => t.id === transaccionId)!;
 
-  if (tipo === "venta" && clientes.length > 0) {
-    involucradoTipo = "cliente";
-  } else if (tipo === "compra" && mercaderes.length > 0) {
-    involucradoTipo = "mercader";
-  } else if (tipo === "devolución") {
-    involucradoTipo = "devolución"; // No se necesita cliente o mercader para devolución
+  const { devolverTodo } = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "devolverTodo",
+      message: "¿Desea devolver toda la transacción?",
+    },
+  ]);
+
+  if (devolverTodo) {
+    processFullDevolucion(transaccion);
   } else {
+    await processPartialDevolucion(transaccion);
+  }
+}
+
+/**
+ * Procesa una devolución completa de una transacción de compra o venta.
+ * @param transaccion - La transacción a devolver.
+ */
+function processFullDevolucion(transaccion: Transaccion) {
+  if (transaccion.tipo === "compra") {
+    // Validar que los bienes existan en el inventario antes de eliminarlos
+    const bienesNoDisponibles = transaccion.bienes.filter(
+      (bien) => !inventario.getBienManager().getBienes().some((b) => b.id === bien.id),
+    );
+
+    if (bienesNoDisponibles.length > 0) {
+      console.log(
+        "No se puede realizar la devolución completa. Los siguientes bienes no están disponibles en el inventario:",
+      );
+      console.table(bienesNoDisponibles.map((b) => b.nombre));
+      return;
+    }
+
+    transaccion.bienes.forEach((bien) =>
+      inventario.getBienManager().removeBien(bien.id),
+    );
+  } else if (transaccion.tipo === "venta") {
+    transaccion.bienes.forEach((bien) =>
+      inventario.getBienManager().addBien(bien),
+    );
+  }
+
+  inventario.getTransaccionManager().removeTransaccion(transaccion.id);
+
+  // Registrar la devolución como una nueva transacción
+  const devolucion = new Transaccion(
+    "devolución",
+    new Date(),
+    transaccion.bienes,
+    transaccion.cantidadCoronas,
+    transaccion.involucrado,
+  );
+  inventario.getTransaccionManager().addTransaccion(devolucion);
+
+  console.log("Devolución completa registrada con éxito.");
+}
+
+/**
+ * Procesa una devolución parcial de una transacción de compra o venta.
+ * @param transaccion - La transacción a devolver.
+ */
+async function processPartialDevolucion(transaccion: Transaccion) {
+  const { bienesSeleccionados } = await inquirer.prompt([
+    {
+      type: "checkbox",
+      name: "bienesSeleccionados",
+      message: "Seleccione los bienes a devolver:",
+      choices: transaccion.bienes.map((b) => ({ name: b.nombre, value: b.id })),
+    },
+  ]);
+
+  const bienesDevueltos = transaccion.bienes.filter((b) =>
+    bienesSeleccionados.includes(b.id),
+  );
+
+  // Validar que los bienes seleccionados existan en el inventario
+  const bienesNoDisponibles = bienesDevueltos.filter(
+    (bien) => !inventario.getBienManager().getBienes().some((b) => b.id === bien.id),
+  );
+
+  if (bienesNoDisponibles.length > 0) {
     console.log(
-      `No hay ${tipo === "venta" ? "clientes" : "mercaderes"} disponibles para esta transacción.`,
+      "No se puede realizar la devolución parcial. Los siguientes bienes no están disponibles en el inventario:",
     );
-    return mainMenu();
+    console.table(bienesNoDisponibles.map((b) => b.nombre));
+    return;
   }
 
-  if (involucradoTipo === "devolución") {
-    const transaccionesValidas = transacciones.filter(
-      (t) => t.tipo === "compra" || t.tipo === "venta",
-    );
-
-    if (!transaccionesValidas || transaccionesValidas.length === 0) {
-      console.log(
-        "No hay transacciones de compra o venta disponibles para devolución.",
-      );
-      return mainMenu();
-    }
-
-    const { transaccionId } = await inquirer.prompt([
-      {
-        type: "list",
-        name: "transaccionId",
-        message: "Seleccione la transacción para la devolución:",
-        choices: transaccionesValidas
-          .map((t) => ({
-            name: `${t.tipo} - ${new Date(t.fecha).toLocaleString()} - ${t.bienes.map((b) => b.nombre).join(", ")}`,
-            value: t.id,
-          }))
-          .concat({ name: "Salir al menú principal", value: "exit" }),
-      },
-    ]);
-
-    if (transaccionId === "exit") {
-      return mainMenu();
-    }
-
-    const transaccionOriginal = transacciones.find(
-      (t) => t.id === transaccionId,
-    );
-    if (!transaccionOriginal) {
-      console.log("Transacción no encontrada.");
-      return mainMenu();
-    }
-
-    const { devolverTodos } = await inquirer.prompt([
-      {
-        type: "confirm",
-        name: "devolverTodos",
-        message: "¿Desea devolver todos los bienes de esta transacción?",
-      },
-    ]);
-
-    const bienesDevueltos: Bien[] = devolverTodos
-      ? transaccionOriginal.bienes
-      : await inquirer
-          .prompt([
-            {
-              type: "checkbox",
-              name: "bienesSeleccionados",
-              message: "Seleccione los bienes a devolver:",
-              choices: transaccionOriginal.bienes
-                .map((b) => ({ name: b.nombre, value: b.id }))
-                .concat({ name: "Salir al menú principal", value: "exit" }),
-            },
-          ])
-          .then((res) =>
-            transaccionOriginal.bienes.filter((b) =>
-              res.bienesSeleccionados.includes(b.id),
-            ),
-          );
-
-    if (bienesDevueltos.some((bien) => bien.id === "exit")) {
-      return mainMenu();
-    }
-
-    if (bienesDevueltos.length === 0) {
-      console.log("No se seleccionaron bienes para devolver.");
-      return mainMenu();
-    }
-
-    // Calcular el valor total de los bienes devueltos
-    const valorDevuelto = bienesDevueltos.reduce(
-      (total, bien) => total + bien.valor,
-      0,
-    );
-
-    // Actualizar inventario según el tipo de transacción original
-    if (transaccionOriginal.tipo === "compra") {
-      for (const bien of bienesDevueltos) {
-        await inventario.getBienManager().removeBien(bien.id);
-      }
-    } else if (transaccionOriginal.tipo === "venta") {
-      for (const bien of bienesDevueltos) {
-        inventario.getBienManager().addBien(bien);
-      }
-    }
-
-    // Actualizar la transacción original eliminando los bienes devueltos
-    transaccionOriginal.bienes = transaccionOriginal.bienes.filter(
-      (bien) => !bienesDevueltos.some((bDevuelto) => bDevuelto.id === bien.id),
-    );
-
-    // Actualizar la cantidad total de la transacción original
-    transaccionOriginal.cantidadCoronas -= valorDevuelto;
-
-    if (transaccionOriginal.bienes.length === 0) {
-      await inventario
-        .getTransaccionManager()
-        .removeTransaccion(transaccionOriginal.id);
-      console.log(
-        "Todos los bienes fueron devueltos. La transacción original ha sido eliminada.",
-      );
-    } else {
-      // Si quedan bienes, actualizar la transacción original
-      const actualizado = await inventario
-        .getTransaccionManager()
-        .updateTransaccion(transaccionOriginal.id, {
-          bienes: transaccionOriginal.bienes,
-          cantidadCoronas: transaccionOriginal.cantidadCoronas,
-        });
-
-      if (actualizado) {
-        console.log(
-          `La transacción original ahora tiene un valor total de ${transaccionOriginal.cantidadCoronas} coronas.`,
-        );
-        console.log(
-          `Los bienes restantes en la transacción original son: ${transaccionOriginal.bienes.map((b) => b.nombre).join(", ")}`,
-        );
-      } else {
-        console.error("Error al actualizar la transacción original.");
-      }
-    }
-
-    // Registrar la nueva transacción de devolución
-    const transaccionDevolucion = new Transaccion(
-      "devolución",
-      new Date(),
-      bienesDevueltos,
-      valorDevuelto,
-      transaccionOriginal.involucrado,
-    );
-
-    // Verificar si ya existe una devolución idéntica
-    const transaccionesExistentes = inventario
-      .getTransaccionManager()
-      .getTransacciones();
-    const devolucionDuplicada = transaccionesExistentes.some(
-      (t) =>
-        t.tipo === "devolución" &&
-        t.cantidadCoronas === valorDevuelto &&
-        t.involucrado.id === transaccionOriginal.involucrado.id &&
-        t.bienes.length === bienesDevueltos.length &&
-        t.bienes.every((b, index) => b.id === bienesDevueltos[index].id),
-    );
-
-    if (devolucionDuplicada) {
-      console.log("Esta devolución ya ha sido registrada previamente.");
-    } else {
-      inventario.getTransaccionManager().addTransaccion(transaccionDevolucion);
-      console.log("Devolución registrada con éxito.");
-      console.log(
-        `Se devolvieron bienes por un valor total de ${valorDevuelto} coronas.`,
-      );
-    }
-    return mainMenu();
+  if (bienesDevueltos.length === transaccion.bienes.length) {
+    // Si todos los bienes son seleccionados, procesar como devolución completa
+    processFullDevolucion(transaccion);
+    return;
   }
 
-  // Seleccionar cliente o mercader para venta o compra
+  if (transaccion.tipo === "compra") {
+    bienesDevueltos.forEach((bien) =>
+      inventario.getBienManager().removeBien(bien.id),
+    );
+  } else if (transaccion.tipo === "venta") {
+    bienesDevueltos.forEach((bien) =>
+      inventario.getBienManager().addBien(bien),
+    );
+  }
+
+  // Actualizar la transacción original
+  transaccion.bienes = transaccion.bienes.filter(
+    (b) => !bienesSeleccionados.includes(b.id),
+  );
+  transaccion.cantidadCoronas -= bienesDevueltos.reduce(
+    (total, bien) => total + bien.valor,
+    0,
+  );
+
+  if (transaccion.bienes.length === 0) {
+    inventario.getTransaccionManager().removeTransaccion(transaccion.id);
+  } else {
+    inventario.getTransaccionManager().updateTransaccion(transaccion.id, {
+      bienes: transaccion.bienes,
+      cantidadCoronas: transaccion.cantidadCoronas,
+    });
+  }
+
+  // Registrar la devolución parcial como una nueva transacción
+  const devolucion = new Transaccion(
+    "devolución",
+    new Date(),
+    bienesDevueltos,
+    bienesDevueltos.reduce((total, bien) => total + bien.valor, 0),
+    transaccion.involucrado,
+  );
+  inventario.getTransaccionManager().addTransaccion(devolucion);
+
+  console.log("Devolución parcial registrada con éxito.");
+}
+
+/**
+ * 
+ * @param tipo si es compra o venta
+ * @returns los involucrados
+ */
+async function promptInvolucrado(tipo: "compra" | "venta"): Promise<Cliente | Mercader> {
+  const manager =
+    tipo === "compra"
+      ? inventario.getMercaderManager()
+      : inventario.getClienteManager();
+
+  const involucrados =
+    tipo === "compra"
+      ? (manager as MercaderManager).getMercaderes()
+      : (manager as ClienteManager).getClientes();
+
+  if (!involucrados || involucrados.length === 0) {
+    throw new Error(`No hay ${tipo === "compra" ? "mercaderes" : "clientes"} registrados.`);
+  }
+
   const { involucradoId } = await inquirer.prompt([
     {
       type: "list",
       name: "involucradoId",
-      message: `Seleccione el ${involucradoTipo}:`,
-      choices: (involucradoTipo === "cliente" ? clientes : mercaderes)
-        .map((i) => ({
-          name: i.nombre,
-          value: i.id,
-        }))
-        .concat({ name: "Salir al menú principal", value: "exit" }),
+      message: `Seleccione el ${tipo === "compra" ? "mercader" : "cliente"} involucrado:`,
+      choices: involucrados.map((i) => ({ name: i.nombre, value: i.id })),
     },
   ]);
 
-  if (involucradoId === "exit") {
-    return mainMenu();
+  return involucrados.find((i) => i.id === involucradoId)!;
+}
+
+/**
+ * Prompt para seleccionar los bienes involucrados en una transacción de venta.
+ * @returns los bienes seleccionados
+ */
+async function promptBienes(): Promise<Bien[]> {
+  const bienes = inventario.getBienManager().getBienes();
+
+  if (!bienes || bienes.length === 0) {
+    throw new Error("No hay bienes registrados en el inventario.");
   }
 
-  const involucrado =
-    involucradoTipo === "cliente"
-      ? clientes.find((c) => c.id === involucradoId)
-      : mercaderes.find((m) => m.id === involucradoId);
+  const { bienesSeleccionados } = await inquirer.prompt([
+    {
+      type: "checkbox",
+      name: "bienesSeleccionados",
+      message: "Seleccione los bienes involucrados en la transacción:",
+      choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
+    },
+  ]);
 
-  if (!involucrado) {
-    console.log("Involucrado no encontrado.");
-    return mainMenu();
+  if (bienesSeleccionados.length === 0) {
+    throw new Error("Debe seleccionar al menos un bien para la transacción.");
   }
 
-  // Manejar compra
-  if (tipo === "compra") {
-    const bienesComprados: Bien[] = [];
-    let continuar = true;
+  return bienes.filter((b) => bienesSeleccionados.includes(b.id));
+}
 
-    while (continuar) {
-      const answers = await inquirer.prompt([
-        { type: "input", name: "nombre", message: "Nombre del bien:" },
-        {
-          type: "input",
-          name: "descripcion",
-          message: "Descripción del bien:",
-        },
-        { type: "input", name: "material", message: "Material del bien:" },
-        { type: "number", name: "peso", message: "Peso del bien:" },
-        { type: "number", name: "valor", message: "Valor del bien:" },
-        {
-          type: "confirm",
-          name: "continuar",
-          message: "¿Desea añadir otro bien?",
-        },
-      ]);
+/**
+ * Prompt para añadir un nuevo bien al inventario.
+ * @returns el nuevo bien
+ */
+async function promptNuevoBien(): Promise<Bien> {
+  const answers = await inquirer.prompt([
+    { type: "input", name: "nombre", message: "Nombre del bien:" },
+    { type: "input", name: "descripcion", message: "Descripción del bien:" },
+    { type: "input", name: "material", message: "Material del bien:" },
+    { type: "number", name: "peso", message: "Peso del bien (kg):" },
+    { type: "number", name: "valor", message: "Valor del bien (coronas):" },
+  ]);
 
-      const bien = new Bien(
-        answers.nombre,
-        answers.descripcion,
-        answers.material,
-        answers.peso,
-        answers.valor,
-      );
-
-      inventario.getBienManager().addBien(bien);
-      bienesComprados.push(bien);
-
-      continuar = answers.continuar;
-    }
-
-    const { cantidadCoronas } = await inquirer.prompt([
-      {
-        type: "number",
-        name: "cantidadCoronas",
-        message: "Cantidad total de coronas pagadas:",
-      },
-    ]);
-
-    const transaccion = new Transaccion(
-      tipo,
-      new Date(),
-      bienesComprados,
-      cantidadCoronas,
-      involucrado,
-    );
-
-    inventario.getTransaccionManager().addTransaccion(transaccion);
-    console.log("Transacción de compra registrada con éxito.");
-  } else if (tipo === "venta") {
-    if (!bienes || bienes.length === 0) {
-      console.log("No hay bienes disponibles para la venta.");
-      return mainMenu();
-    }
-
-    const { bienesSeleccionados } = await inquirer.prompt([
-      {
-        type: "checkbox",
-        name: "bienesSeleccionados",
-        message: "Seleccione los bienes a vender:",
-        choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
-      },
-    ]);
-
-    if (bienesSeleccionados.length === 0) {
-      console.log("No se seleccionaron bienes para la venta.");
-      return mainMenu();
-    }
-
-    const bienesVendidos: Bien[] = [];
-    for (const bienId of bienesSeleccionados) {
-      const { precio } = await inquirer.prompt([
-        {
-          type: "number",
-          name: "precio",
-          message: `Ingrese el precio de venta para el bien con id ${bienId}:`,
-        },
-      ]);
-
-      const bien = bienes.find((b) => b.id === bienId);
-      if (bien) {
-        inventario.getBienManager().removeBien(bien.id);
-        bienesVendidos.push({ ...bien, valor: precio });
-      }
-    }
-
-    const { cantidadCoronas } = await inquirer.prompt([
-      {
-        type: "number",
-        name: "cantidadCoronas",
-        message: "Cantidad total de coronas recibidas:",
-      },
-    ]);
-
-    const transaccion = new Transaccion(
-      tipo,
-      new Date(),
-      bienesVendidos,
-      cantidadCoronas,
-      involucrado,
-    );
-
-    inventario.getTransaccionManager().addTransaccion(transaccion);
-    console.log("Transacción de venta registrada con éxito.");
-  }
-  mainMenu();
+  return new Bien(
+    answers.nombre,
+    answers.descripcion,
+    answers.material,
+    answers.peso,
+    answers.valor,
+  );
 }
 
 /**
