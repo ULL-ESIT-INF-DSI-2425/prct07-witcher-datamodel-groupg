@@ -37,7 +37,6 @@ export async function addBien() {
     answers.valor,
   );
 
-  //inventario.addBien(bien);
   inventario.getBienManager().addBien(bien);
   console.log("Bien añadido con éxito.");
 }
@@ -75,7 +74,6 @@ export async function removeBien() {
   } else {
     console.log("No se encontró el bien especificado.");
   }
-  //mainMenu();
 }
 
 /**
@@ -170,8 +168,6 @@ export async function addCliente() {
   } catch (error) {
     console.error("Error al añadir el cliente:", error.message);
   }
-
-  //mainMenu();
 }
 
 /**
@@ -207,7 +203,6 @@ export async function removeCliente() {
   } else {
     console.log("No se encontró al cliente especificado.");
   }
-  //mainMenu();
 }
 
 /**
@@ -328,7 +323,6 @@ export async function removeMercader() {
   } else {
     console.log("No se encontró al mercader especificado.");
   }
-  //mainMenu();
 }
 
 /**
@@ -608,13 +602,13 @@ async function handleDevolucion() {
             .join(", ")}`,
           value: t.id,
         })),
-        { name: "Retroceder", value: "back" }, // Opción para retroceder
+        { name: "Retroceder", value: "back" },
       ],
     },
   ]);
 
   if (transaccionId === "back") {
-    return; // Retroceder al nivel anterior
+    return;
   }
 
   const transaccion = transacciones.find((t) => t.id === transaccionId)!;
