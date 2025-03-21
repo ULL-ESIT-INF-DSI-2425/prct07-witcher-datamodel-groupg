@@ -837,6 +837,7 @@ export function reportStockEstado(nombre: string) {
   if (bienes.length === 0) {
     console.log(`No se encontraron bienes con el nombre "${nombre}".`);
   } else {
+    console.log(`Este bien tiene ${bienes.length} unidades en stock:`);
     console.table(bienes);
   }
 }

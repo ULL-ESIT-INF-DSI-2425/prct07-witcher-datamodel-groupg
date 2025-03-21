@@ -41,6 +41,14 @@
       "id": "5e6f7g8h-9012-1314-1516-718192031425"
     },
     {
+      "nombre": "Espada de plata",
+      "descripcion": "Espada forjada para combatir monstruos desgastada",
+      "material": "Plata",
+      "peso": 3,
+      "valor": 450,
+      "id": "1a2b3c4d-5678-9101-1121-314195717181"
+    },
+    {
       "nombre": "Runa de Quen",
       "descripcion": "Runa mágica que mejora el signo Quen",
       "material": "Cristal encantado",
@@ -55,6 +63,14 @@
       "peso": 15,
       "valor": 1200,
       "id": "7g8h9i0j-1234-1516-1718-920314253647"
+    },
+    {
+      "nombre": "Espada de plata",
+      "descripcion": "Espada forjada para combatir monstruos",
+      "material": "Plata",
+      "peso": 3,
+      "valor": 500,
+      "id": "1a2b3c4d-5678-9101-3231-314151617181"
     },
     {
       "nombre": "Botas de cazador",
