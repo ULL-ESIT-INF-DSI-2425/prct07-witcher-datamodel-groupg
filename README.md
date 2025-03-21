@@ -1,17 +1,17 @@
-# Práctica 7 - The Witcher
+# ⚔️ Práctica 7 - The Witcher ⚔️
 
-## Autores
-- **Jonathan Martínez Pérez - alu0101254098@ull.edu.es**
-- **José Ángel Mederos Rivas - alu0101368832@ull.edu.es**
-- **Joel Saavedra Páez - alu0101437415@ull.edu.es**
+## ✍️ Autores
+- 👤 **Jonathan Martínez Pérez - alu0101254098@ull.edu.es**
+- 👤 **José Ángel Mederos Rivas - alu0101368832@ull.edu.es**
+- 👤 **Joel Saavedra Páez - alu0101437415@ull.edu.es**
 
-## Descripción del Proyecto  
+## 📜 Descripción del Proyecto  
 Este sistema se encarga de gestionar el inventario de la Posada del Lobo Blanco, del mundo de The Witcher. Su objetivo es facilitar la administración de recursos, permitiendo el registro, consulta y control de bienes, mercaderes, clientes y transacciones.   
 Se utiliza **Inquirer.js** para ofrecer una interfaz interactiva en la que el usuario puede gestionar el inventario, gestionar las transacciones y generar informes.   
 Se hace uso de **LowDB** para ofrecer una base de datos ligera donde almacenar el inventario y las transacciones.
 
-## Elementos del Sistema
-### Inventario
+## 🔍 Elementos del Sistema
+### 📂 Inventario
 El inventario almacena bienes, mercaderes y clientes. A través de este se gestionarán los elementos del sistema.  
 El inventario se encarga de:
 - Generar **informes**:
@@ -22,7 +22,7 @@ El inventario se encarga de:
 - Registrar **transacciones**. 
 - Gestionar los **bienes**.
 
-### Bien
+### 📦 Bien
 Un bien consta de los siguientes atributos:
 - Un **ID** único que permita identificarlo.
 - Su **nombre**.
@@ -31,21 +31,21 @@ Un bien consta de los siguientes atributos:
 - Su **peso**.
 - Su **valor** en coronas.
 
-### Cliente
+### 🧒 Cliente
 Un cliente tiene los siguientes atributos:
 - Un **ID** único que permita identificarlo.
 - Su **nombre**.
 - Su **raza**(humano, elfo, enano...).
 - La **ubicación** en la que se encuentra.
 
-### Mercader
+### 🧒 Mercader
 Un mercader tiene los siguientes atributos:
 - Un **ID** único que permita identificarlo.
 - Su **nombre**.
 - Su **tipo**(herrero, alquimista, general...).
 - La **ubicación** en la que se encuentra.
 
-### Transacción
+### 💰 Transacción
 Una transacción deberá contemplar los siguientes atributos:
 - El **tipo** de transacción. Podemos diferenciar 3 tipos:
   - Compra realizada a un mercader.
@@ -56,16 +56,18 @@ Una transacción deberá contemplar los siguientes atributos:
 - La cantidad de **coronas** involucradas en la transacción.
 - El **involucrado**, siendo este el mercader en caso de compra, el cliente en caso de venta y el cliente o mercader de la devolución. 
 
-## Requisitos del Sistema  
+## ⚙️ Requisitos del Sistema  
 Antes de proceder con la instalación, asegúrate de contar con los siguientes requisitos:  
 
-- **Node.js**
-- **npm** 
-- **TypeScript**  
+| Requisito  | Versión Recomendada |
+|------------|---------------------|
+| 🟢 **Node.js**  | `>= 22.0.0` |
+| 🔴 **npm**  | `>= 9.0.0` |
+| 🔵 **TypeScript** | `>= 5.0.0` |
 
 ---
 
-## Obtener el Código 
+## </> Obtener el Código 
 Para obtener el código fuente debes clonar este repositorio, para ello ejecuta el siguiente comando:  
 
 ```sh
@@ -75,7 +77,7 @@ cd prct07-witcher-datamodel-groupg
 
 ---
 
-## Dependencias 
+## 🛠 Dependencias 
 Este programa necesita una serie de dependencias para funcionar, entre ellas se encuentran: TSDoc, Inquirer.js, Vitest, LowDB, entre otras.
 Ejecuta el siguiente comando para instalar todas las dependencias necesarias:  
 
@@ -85,10 +87,10 @@ npm install
 
 ---
 
-## Base de Datos
+## 💾 Base de Datos
 En el fichero `database.json` encontraremos todos los elementos de nuestro sistema, siendo estos: clientes, mercaderes, bienes y transacciones.
 
-## Ejecución
+## 🚀 Ejecución
 Para compilar y ejecutar el sistema ejecuta el siguiente comando:  
 
 ```sh
@@ -99,7 +101,7 @@ Esto ejecutará automáticamente el archivo `dist/cli.js` cada vez que se compil
 
 ---
 
-## Menú Interactivo
+## 📋 Menú Interactivo
 Una vez ejecutemos el programa nos encontraremos con el menú interactivo que nos permitirá gestionar el inventario. Para movernos en este menú tenemos que usar las flechas de nuestro teclado.  
 La estructura de este menú es:
 - Mostrar bienes:
@@ -152,7 +154,7 @@ La estructura de este menú es:
 
 ---
 
-## Documentación  
+## 📝 Documentación  
 El proyecto utiliza **TypeDoc** para generar documentación automática. Para generarla, ejecuta:  
 
 ```sh
@@ -163,14 +165,14 @@ Los archivos generados se almacenarán en el directorio `docs/`.
 
 ---
 
-## Pruebas  
+## 🧪 Pruebas  
 Para ejecutar las pruebas con **Vitest**, usa:  
 
 ```sh
 npm run test
 ```
 
-## Cubrimiento de Código
+## 💻 Cubrimiento de Código
 Para generar un informe de cubrimiento ejecute:  
 
 ```sh
@@ -179,6 +181,9 @@ npm run coverage
 
 ---
 
-[![Tests](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/actions/workflows/ci.yml/badge.svg?branch=desarrollo)](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/actions/workflows/ci.yml?query=branch:desarrollo)
-[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/badge.svg?branch=desarrollo)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg?branch=desarrollo) 
+## 📊 Estado del Proyecto
+[![Tests](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/actions/workflows/ci.yml/badge.svg?branch=desarrollo)](https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/actions/workflows/ci.yml?query=branch:desarrollo)  
+
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg/badge.svg?branch=desarrollo)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupg?branch=desarrollo)  
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2425_prct07-witcher-datamodel-groupg&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2425_prct07-witcher-datamodel-groupg)
