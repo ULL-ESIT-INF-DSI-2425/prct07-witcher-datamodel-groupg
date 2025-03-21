@@ -22,7 +22,7 @@ export class Inventario {
    * @param dbFileName - Nombre del archivo de la base de datos. Si no se proporciona, se usará "./database.json".
    */
   constructor(dbFileName?: string) {
-    const fileName = dbFileName || "./database.json";
+    const fileName = dbFileName ?? "./database.json";
     this.db = new LowSync<DataSchema>(new JSONFileSync(fileName));
 
     this.db.read();

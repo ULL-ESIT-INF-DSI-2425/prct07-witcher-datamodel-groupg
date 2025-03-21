@@ -419,7 +419,6 @@ export async function filtrarClientes() {
 
   if (clientes.length === 0) {
     console.log("No se encontraron clientes con ese criterio.");
-    return;
   } else {
     console.table(clientes);
   }
@@ -471,7 +470,6 @@ export async function filtrarMercaderes() {
 
   if (mercaderes.length === 0) {
     console.log("No se encontraron mercaderes con ese criterio.");
-    return;
   } else {
     console.table(mercaderes);
   }
