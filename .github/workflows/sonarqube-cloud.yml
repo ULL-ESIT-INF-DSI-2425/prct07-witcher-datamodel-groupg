@@ -2,9 +2,9 @@ name: SonarQube-Cloud
 
 on:
   push:
-    branches: [ desarrollo ]
+    branches: [ main ]
   pull_request:
-    branches: [ desarrollo ]
+    branches: [ main ]
 
 jobs:
   sonarqube-cloud:

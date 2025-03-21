@@ -2,9 +2,9 @@ name: Coveralls
 
 on:
   push:
-    branches: [ "desarrollo" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "desarrollo" ]
+    branches: [ "main" ]
 
 jobs:
   build:
