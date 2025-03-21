@@ -1,4 +1,4 @@
-name: SonarQube-Cloud 
+name: SonarQube-Cloud1 
 
 on:
   push:
