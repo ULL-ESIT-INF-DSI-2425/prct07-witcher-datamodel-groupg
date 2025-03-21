@@ -1,319 +1,424 @@
 {
-  "bienes": [],
+  "bienes": [
+    {
+      "nombre": "Espada de plata",
+      "descripcion": "Espada forjada para combatir monstruos",
+      "material": "Plata",
+      "peso": 3,
+      "valor": 500,
+      "id": "1a2b3c4d-5678-9101-1121-314151617181"
+    },
+    {
+      "nombre": "Espada de acero",
+      "descripcion": "Espada para combatir humanos y bestias",
+      "material": "Acero",
+      "peso": 4,
+      "valor": 300,
+      "id": "2b3c4d5e-6789-1011-1213-415161718192"
+    },
+    {
+      "nombre": "Poción de golondrina",
+      "descripcion": "Poción que acelera la regeneración de salud",
+      "material": "Hierbas mágicas",
+      "peso": 0.5,
+      "valor": 150,
+      "id": "3c4d5e6f-7890-1112-1314-516171819203"
+    },
+    {
+      "nombre": "Poción de gato",
+      "descripcion": "Permite ver en la oscuridad",
+      "material": "Hierbas mágicas",
+      "peso": 0.3,
+      "valor": 100,
+      "id": "4d5e6f7g-8901-1213-1415-617181920314"
+    },
+    {
+      "nombre": "Runa de Igni",
+      "descripcion": "Runa mágica que mejora el signo Igni",
+      "material": "Cristal encantado",
+      "peso": 0.2,
+      "valor": 300,
+      "id": "5e6f7g8h-9012-1314-1516-718192031425"
+    },
+    {
+      "nombre": "Runa de Quen",
+      "descripcion": "Runa mágica que mejora el signo Quen",
+      "material": "Cristal encantado",
+      "peso": 0.2,
+      "valor": 250,
+      "id": "6f7g8h9i-0123-1415-1617-819203142536"
+    },
+    {
+      "nombre": "Armadura de cazador de monstruos",
+      "descripcion": "Armadura resistente diseñada para brujos",
+      "material": "Cuero y acero",
+      "peso": 15,
+      "valor": 1200,
+      "id": "7g8h9i0j-1234-1516-1718-920314253647"
+    },
+    {
+      "nombre": "Botas de cazador",
+      "descripcion": "Botas ligeras y resistentes",
+      "material": "Cuero",
+      "peso": 2,
+      "valor": 200,
+      "id": "8h9i0j1k-2345-1617-1819-031425364758"
+    },
+    {
+      "nombre": "Guantes reforzados",
+      "descripcion": "Guantes que ofrecen protección adicional",
+      "material": "Cuero y acero",
+      "peso": 1,
+      "valor": 150,
+      "id": "9i0j1k2l-3456-1718-1920-142536475869"
+    },
+    {
+      "nombre": "Ballesta de brujo",
+      "descripcion": "Ballesta diseñada para cazar monstruos voladores",
+      "material": "Madera y acero",
+      "peso": 5,
+      "valor": 400,
+      "id": "0j1k2l3m-4567-1819-2021-253647586970"
+    },
+    {
+      "nombre": "Aceite para espadas",
+      "descripcion": "Aumenta el daño contra monstruos específicos",
+      "material": "Hierbas y aceites",
+      "peso": 0.2,
+      "valor": 50,
+      "id": "1k2l3m4n-5678-1920-2122-364758697081"
+    },
+    {
+      "nombre": "Libro de alquimia",
+      "descripcion": "Contiene recetas para pociones y aceites",
+      "material": "Papel y cuero",
+      "peso": 1,
+      "valor": 300,
+      "id": "2l3m4n5o-6789-2021-2223-475869708192"
+    },
+    {
+      "nombre": "Trofeo de grifo",
+      "descripcion": "Cabeza de un grifo cazado",
+      "material": "Hueso y piel",
+      "peso": 10,
+      "valor": 800,
+      "id": "3m4n5o6p-7890-2223-2324-586970819203"
+    },
+    {
+      "nombre": "Trofeo de basilisco",
+      "descripcion": "Cabeza de un basilisco cazado",
+      "material": "Hueso y piel",
+      "peso": 12,
+      "valor": 1000,
+      "id": "4n5o6p7q-8901-2324-2425-697081920314"
+    },
+    {
+      "nombre": "Hierbas mágicas",
+      "descripcion": "Ingredientes para pociones",
+      "material": "Plantas",
+      "peso": 0.5,
+      "valor": 30,
+      "id": "5o6p7q8r-9012-2425-2526-708192031425"
+    },
+    {
+      "nombre": "Cristal encantado",
+      "descripcion": "Material para runas y mejoras",
+      "material": "Cristal",
+      "peso": 0.3,
+      "valor": 200,
+      "id": "6p7q8r9s-0123-2526-2627-819203142536"
+    },
+    {
+      "nombre": "Mapa del continente",
+      "descripcion": "Mapa detallado de las regiones del continente",
+      "material": "Papel",
+      "peso": 0.1,
+      "valor": 50,
+      "id": "7q8r9s0t-1234-2627-2728-920314253647"
+    },
+    {
+      "nombre": "Medallón de brujo",
+      "descripcion": "Detecta magia y monstruos cercanos",
+      "material": "Plata",
+      "peso": 0.5,
+      "valor": 500,
+      "id": "8r9s0t1u-2345-2728-2829-031425364758"
+    },
+    {
+      "nombre": "Capa de brujo",
+      "descripcion": "Capa resistente a las inclemencias del clima",
+      "material": "Tela y cuero",
+      "peso": 3,
+      "valor": 250,
+      "id": "9s0t1u2v-3456-2829-2930-142536475869"
+    },
+    {
+      "nombre": "Elixir de fuerza",
+      "descripcion": "Aumenta temporalmente la fuerza del usuario",
+      "material": "Hierbas mágicas",
+      "peso": 0.4,
+      "valor": 200,
+      "id": "0t1u2v3w-4567-2930-3031-253647586970"
+    }
+  ],
   "mercaderes": [
     {
-      "nombre": "camello",
-      "tipo": "sdffadfs",
-      "ubicacion": "dsafasdf",
-      "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+      "nombre": "Hattori",
+      "tipo": "Herrero",
+      "ubicacion": "Novigrad",
+      "id": "1a2b3c4d-5678-9101-1121-314151617181"
     },
     {
-      "nombre": "asdfasdf",
-      "tipo": "asdfasdf",
-      "ubicacion": "sdafasdf",
-      "id": "64288b2c-4c32-42e9-8eac-8ab0d2a343f3"
+      "nombre": "Tomira",
+      "tipo": "Herbolaria",
+      "ubicacion": "White Orchard",
+      "id": "2b3c4d5e-6789-1011-1213-415161718192"
     },
     {
-      "nombre": "Jose",
-      "tipo": "No",
-      "ubicacion": "Ten",
-      "id": "9ea3ea4c-5ba4-4a79-ba04-9f95dec2e503"
+      "nombre": "Éibhear Hattori",
+      "tipo": "Maestro herrero",
+      "ubicacion": "Novigrad",
+      "id": "3c4d5e6f-7890-1112-1314-516171819203"
+    },
+    {
+      "nombre": "Keira Metz",
+      "tipo": "Hechicera",
+      "ubicacion": "Velen",
+      "id": "4d5e6f7g-8901-1213-1415-617181920314"
+    },
+    {
+      "nombre": "Fergus Graem",
+      "tipo": "Herrero",
+      "ubicacion": "Crow's Perch",
+      "id": "5e6f7g8h-9012-1314-1516-718192031425"
+    },
+    {
+      "nombre": "Iris von Everec",
+      "tipo": "Artista",
+      "ubicacion": "Oxenfurt",
+      "id": "6f7g8h9i-0123-1415-1617-819203142536"
+    },
+    {
+      "nombre": "Yolar",
+      "tipo": "Alquimista",
+      "ubicacion": "Skellige",
+      "id": "7g8h9i0j-1234-1516-1718-920314253647"
+    },
+    {
+      "nombre": "Gremist",
+      "tipo": "Druida",
+      "ubicacion": "Skellige",
+      "id": "8h9i0j1k-2345-1617-1819-031425364758"
+    },
+    {
+      "nombre": "Herbalista de Novigrad",
+      "tipo": "Herbolario",
+      "ubicacion": "Novigrad",
+      "id": "9i0j1k2l-3456-1718-1920-142536475869"
+    },
+    {
+      "nombre": "Armorer de Kaer Trolde",
+      "tipo": "Armero",
+      "ubicacion": "Kaer Trolde",
+      "id": "0j1k2l3m-4567-1819-2021-253647586970"
     }
   ],
   "clientes": [
     {
-      "nombre": "Juan",
-      "raza": "Humano",
-      "ubicacion": "Novigrad",
-      "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+      "nombre": "Geralt de Rivia",
+      "raza": "Brujo",
+      "ubicacion": "Kaer Morhen",
+      "id": "1k2l3m4n-5678-1920-2122-364758697081"
     },
     {
-      "nombre": "Antonio",
-      "raza": "hshss",
-      "ubicacion": "sfasdsf",
-      "id": "ff6b1d38-b5c3-4f4c-9843-d4f7a697e422"
+      "nombre": "Yennefer de Vengerberg",
+      "raza": "Humana",
+      "ubicacion": "Vengerberg",
+      "id": "2l3m4n5o-6789-2021-2223-475869708192"
+    },
+    {
+      "nombre": "Dandelion",
+      "raza": "Humano",
+      "ubicacion": "Novigrad",
+      "id": "3m4n5o6p-7890-2223-2324-586970819203"
+    },
+    {
+      "nombre": "Triss Merigold",
+      "raza": "Humana",
+      "ubicacion": "Novigrad",
+      "id": "4n5o6p7q-8901-2324-2425-697081920314"
+    },
+    {
+      "nombre": "Ciri",
+      "raza": "Humana",
+      "ubicacion": "Skellige",
+      "id": "5o6p7q8r-9012-2425-2526-708192031425"
+    },
+    {
+      "nombre": "Zoltan Chivay",
+      "raza": "Enano",
+      "ubicacion": "Novigrad",
+      "id": "6p7q8r9s-0123-2526-2627-819203142536"
+    },
+    {
+      "nombre": "Vesemir",
+      "raza": "Brujo",
+      "ubicacion": "Kaer Morhen",
+      "id": "7q8r9s0t-1234-2627-2728-920314253647"
+    },
+    {
+      "nombre": "Eskel",
+      "raza": "Brujo",
+      "ubicacion": "Kaer Morhen",
+      "id": "8r9s0t1u-2345-2728-2829-031425364758"
+    },
+    {
+      "nombre": "Lambert",
+      "raza": "Brujo",
+      "ubicacion": "Kaer Morhen",
+      "id": "9s0t1u2v-3456-2829-2930-142536475869"
+    },
+    {
+      "nombre": "Emhyr var Emreis",
+      "raza": "Humano",
+      "ubicacion": "Nilfgaard",
+      "id": "0t1u2v3w-4567-2930-3031-253647586970"
     }
   ],
   "transacciones": [
     {
-      "tipo": "devolución",
-      "fecha": "2025-03-16T19:21:31.557Z",
-      "bienes": [
-        {
-          "nombre": "Arc",
-          "descripcion": "Arco antiguo",
-          "material": "Madera",
-          "peso": 1,
-          "valor": 70,
-          "id": "395b37dd-53d7-40b5-ae1b-e2fcab28f380"
-        }
-      ],
-      "cantidadCoronas": 70,
-      "involucrado": {
-        "nombre": "camello",
-        "tipo": "sdffadfs",
-        "ubicacion": "dsafasdf",
-        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
-      },
-      "id": "a469f02b-eb7d-45d4-942e-5422e2773f9e"
-    },
-    {
-      "tipo": "devolución",
-      "fecha": "2025-03-16T19:22:17.549Z",
-      "bienes": [
-        {
-          "nombre": "Espada",
-          "descripcion": "Espada larga",
-          "material": "Hierro",
-          "peso": 3,
-          "valor": 100,
-          "id": "67eaaf5c-3f92-496f-a4a7-d68b30da0e0e"
-        }
-      ],
-      "cantidadCoronas": 100,
-      "involucrado": {
-        "nombre": "Juan",
-        "raza": "Humano",
-        "ubicacion": "Novigrad",
-        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
-      },
-      "id": "559adad5-83f8-4dec-80e8-b2930e159642"
-    },
-    {
       "tipo": "compra",
-      "fecha": "2025-03-16T19:23:47.514Z",
+      "fecha": "2025-03-20T10:30:00.000Z",
       "bienes": [
         {
-          "nombre": "Hierbas",
-          "descripcion": "Hierbas sospechosas",
-          "material": "Droga",
-          "peso": 1,
+          "nombre": "Espada de plata",
+          "descripcion": "Espada forjada para combatir monstruos",
+          "material": "Plata",
+          "peso": 3,
+          "valor": 500,
+          "id": "1a2b3c4d-5678-9101-1121-314151617181"
+        },
+        {
+          "nombre": "Poción de golondrina",
+          "descripcion": "Poción que acelera la regeneración de salud",
+          "material": "Hierbas mágicas",
+          "peso": 0.5,
+          "valor": 150,
+          "id": "3c4d5e6f-7890-1112-1314-516171819203"
+        }
+      ],
+      "cantidadCoronas": 650,
+      "involucrado": {
+        "nombre": "Hattori",
+        "tipo": "Herrero",
+        "ubicacion": "Novigrad",
+        "id": "1a2b3c4d-5678-9101-1121-314151617181"
+      },
+      "id": "a1b2c3d4-5678-9101-1121-314151617181"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-21T14:45:00.000Z",
+      "bienes": [
+        {
+          "nombre": "Arco élfico",
+          "descripcion": "Arco ligero y preciso, usado por los elfos",
+          "material": "Madera y cuerda",
+          "peso": 2,
+          "valor": 400,
+          "id": "b2c3d4e5-6789-1011-1213-415161718192"
+        },
+        {
+          "nombre": "Flechas de plata",
+          "descripcion": "Flechas diseñadas para cazar monstruos",
+          "material": "Plata y madera",
+          "peso": 0.5,
           "valor": 200,
-          "id": "9673a451-e8b1-454a-a23b-94560562cb00"
+          "id": "c3d4e5f6-7890-1112-1314-516171819203"
         }
       ],
-      "cantidadCoronas": 200,
+      "cantidadCoronas": 600,
       "involucrado": {
-        "nombre": "camello",
-        "tipo": "sdffadfs",
-        "ubicacion": "dsafasdf",
-        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
+        "nombre": "Geralt de Rivia",
+        "raza": "Brujo",
+        "ubicacion": "Kaer Morhen",
+        "id": "1k2l3m4n-5678-1920-2122-364758697081"
       },
-      "id": "815582d5-80ce-4ce2-89b1-7064a2292912"
+      "id": "d4e5f6g7-8901-1213-1415-617181920314"
     },
     {
       "tipo": "devolución",
-      "fecha": "2025-03-16T22:37:33.893Z",
+      "fecha": "2025-03-22T09:15:00.000Z",
       "bienes": [
         {
-          "nombre": "Espada",
-          "descripcion": "Espada larga",
-          "material": "Hierro",
-          "peso": 3,
-          "valor": 100,
-          "id": "67eaaf5c-3f92-496f-a4a7-d68b30da0e0e"
+          "nombre": "Espada de acero",
+          "descripcion": "Espada para combatir humanos y bestias",
+          "material": "Acero",
+          "peso": 4,
+          "valor": 300,
+          "id": "2b3c4d5e-6789-1011-1213-415161718192"
         }
       ],
-      "cantidadCoronas": 100,
+      "cantidadCoronas": 300,
       "involucrado": {
-        "nombre": "Juan",
-        "raza": "Humano",
-        "ubicacion": "Novigrad",
-        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+        "nombre": "Tomira",
+        "tipo": "Herbolaria",
+        "ubicacion": "White Orchard",
+        "id": "2b3c4d5e-6789-1011-1213-415161718192"
       },
-      "id": "7569d829-8eef-4578-ab9b-3409c44da227"
+      "id": "e5f6g7h8-9012-1314-1516-718192031425"
     },
     {
       "tipo": "compra",
-      "fecha": "2025-03-18T19:25:40.758Z",
+      "fecha": "2025-03-23T11:00:00.000Z",
       "bienes": [
         {
-          "nombre": "item1",
-          "descripcion": "fdsafa",
-          "material": "asdfasdf",
-          "peso": 3,
-          "valor": 100,
-          "id": "95f726e3-14a7-4be2-a2db-f490069b4921"
+          "nombre": "Runa de Igni",
+          "descripcion": "Runa mágica que mejora el signo Igni",
+          "material": "Cristal encantado",
+          "peso": 0.2,
+          "valor": 300,
+          "id": "5e6f7g8h-9012-1314-1516-718192031425"
         },
         {
-          "nombre": "item3",
-          "descripcion": "adafadsf",
-          "material": "asdfasd",
+          "nombre": "Runa de Quen",
+          "descripcion": "Runa mágica que mejora el signo Quen",
+          "material": "Cristal encantado",
+          "peso": 0.2,
+          "valor": 250,
+          "id": "6f7g8h9i-0123-1415-1617-819203142536"
+        }
+      ],
+      "cantidadCoronas": 550,
+      "involucrado": {
+        "nombre": "Éibhear Hattori",
+        "tipo": "Maestro herrero",
+        "ubicacion": "Novigrad",
+        "id": "3c4d5e6f-7890-1112-1314-516171819203"
+      },
+      "id": "f6g7h8i9-0123-1415-1617-819203142536"
+    },
+    {
+      "tipo": "venta",
+      "fecha": "2025-03-24T16:30:00.000Z",
+      "bienes": [
+        {
+          "nombre": "Capa de viajero",
+          "descripcion": "Capa resistente al clima, ideal para viajes largos",
+          "material": "Tela y cuero",
           "peso": 2,
-          "valor": 40,
-          "id": "af3ace9f-7cc0-423a-bdec-ee0ffeadf80f"
+          "valor": 150,
+          "id": "g7h8i9j0-1234-1516-1718-920314253647"
         }
       ],
-      "cantidadCoronas": 120,
+      "cantidadCoronas": 150,
       "involucrado": {
-        "nombre": "camello",
-        "tipo": "sdffadfs",
-        "ubicacion": "dsafasdf",
-        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
-      },
-      "id": "11b236b8-a832-48eb-af18-659497049ba4"
-    },
-    {
-      "tipo": "devolución",
-      "fecha": "2025-03-18T20:13:48.163Z",
-      "bienes": [
-        {
-          "nombre": "item2",
-          "descripcion": "sdafasddfa",
-          "material": "sadfasd",
-          "peso": 110,
-          "valor": 100,
-          "id": "7ff7c6d4-a5c6-4b86-814a-ad95dcec1ac9"
-        }
-      ],
-      "cantidadCoronas": 100,
-      "involucrado": {
-        "nombre": "camello",
-        "tipo": "sdffadfs",
-        "ubicacion": "dsafasdf",
-        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
-      },
-      "id": "a7262886-86d0-46b3-851a-f008a456652b"
-    },
-    {
-      "tipo": "compra",
-      "fecha": "2025-03-18T20:14:17.881Z",
-      "bienes": [
-        {
-          "nombre": "ssdgdfgfsdfg",
-          "descripcion": "sdfgsdfg",
-          "material": "sdfgsdfg",
-          "peso": 4,
-          "valor": 4,
-          "id": "6d0eb7cd-1f34-4810-be20-80d970bab1c4"
-        },
-        {
-          "nombre": "gfsdgdsf",
-          "descripcion": "dsafadsf",
-          "material": "sdfgfsdg",
-          "peso": 4,
-          "valor": 4,
-          "id": "b0d2366d-28b8-4a4b-8eb0-ad3588599b02"
-        }
-      ],
-      "cantidadCoronas": 44,
-      "involucrado": {
-        "nombre": "camello",
-        "tipo": "sdffadfs",
-        "ubicacion": "dsafasdf",
-        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
-      },
-      "id": "97603c65-86aa-4122-a11b-d271cc90dfcf"
-    },
-    {
-      "tipo": "venta",
-      "fecha": "2025-03-21T17:56:19.782Z",
-      "bienes": [
-        {
-          "nombre": "item3",
-          "descripcion": "adafadsf",
-          "material": "asdfasd",
-          "peso": 2,
-          "valor": 32,
-          "id": "af3ace9f-7cc0-423a-bdec-ee0ffeadf80f"
-        }
-      ],
-      "cantidadCoronas": 100,
-      "involucrado": {
-        "nombre": "Juan",
-        "raza": "Humano",
+        "nombre": "Zoltan Chivay",
+        "raza": "Enano",
         "ubicacion": "Novigrad",
-        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
+        "id": "6p7q8r9s-0123-2526-2627-819203142536"
       },
-      "id": "a45baa60-7e97-461b-be2a-a0f3efb4af3c"
-    },
-    {
-      "tipo": "venta",
-      "fecha": "2025-03-21T17:57:04.058Z",
-      "bienes": [
-        {
-          "nombre": "item1",
-          "descripcion": "fdsafa",
-          "material": "asdfasdf",
-          "peso": 3,
-          "valor": 32,
-          "id": "95f726e3-14a7-4be2-a2db-f490069b4921"
-        }
-      ],
-      "cantidadCoronas": 32,
-      "involucrado": {
-        "nombre": "Juan",
-        "raza": "Humano",
-        "ubicacion": "Novigrad",
-        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
-      },
-      "id": "d68c654e-d865-405c-8fad-776554eab806"
-    },
-    {
-      "tipo": "devolución",
-      "fecha": "2025-03-21T17:59:37.813Z",
-      "bienes": [
-        {
-          "nombre": "test",
-          "descripcion": "es una prueba",
-          "material": "iron",
-          "peso": 1,
-          "valor": 20,
-          "id": "5dbe0e67-a8e5-4b43-bd7c-d031d28c2150"
-        }
-      ],
-      "cantidadCoronas": 20,
-      "involucrado": {
-        "nombre": "camello",
-        "tipo": "sdffadfs",
-        "ubicacion": "dsafasdf",
-        "id": "8eb17ab2-b833-460a-b29a-6d5069184884"
-      },
-      "id": "428cd73f-7dd9-48ed-8d86-b9ac55252c73"
-    },
-    {
-      "tipo": "venta",
-      "fecha": "2025-03-21T18:00:08.666Z",
-      "bienes": [
-        {
-          "nombre": "NewT",
-          "descripcion": "NewT",
-          "material": "new",
-          "peso": 9,
-          "valor": 20,
-          "id": "179417b3-8bfd-4296-8505-327809d33366"
-        }
-      ],
-      "cantidadCoronas": 20,
-      "involucrado": {
-        "nombre": "Juan",
-        "raza": "Humano",
-        "ubicacion": "Novigrad",
-        "id": "3f406142-fc9d-4b98-8631-564b3072aa35"
-      },
-      "id": "2c0aa3ed-bc5c-4b15-a49f-1e835e645c9e"
-    },
-    {
-      "tipo": "venta",
-      "fecha": "2025-03-21T18:06:18.494Z",
-      "bienes": [
-        {
-          "nombre": "dsaf",
-          "descripcion": "sdafsadff",
-          "material": "asdfafsd",
-          "peso": 4,
-          "valor": 20,
-          "id": "af825afc-8e60-48f6-8f21-124ba0b9802b"
-        }
-      ],
-      "cantidadCoronas": 20,
-      "involucrado": {
-        "nombre": "Antonio",
-        "raza": "hshss",
-        "ubicacion": "sfasdsf",
-        "id": "ff6b1d38-b5c3-4f4c-9843-d4f7a697e422"
-      },
-      "id": "565f1750-2e59-4471-81cd-99a6045f7137"
+      "id": "h8i9j0k1-2345-1617-1819-031425364758"
     }
   ]
 }
