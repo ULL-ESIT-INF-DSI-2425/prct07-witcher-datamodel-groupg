@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Representa un bien en el inventario.
@@ -38,6 +38,6 @@ export class Bien implements IBien {
     public descripcion: string,
     public material: string,
     public peso: number,
-    public valor: number
+    public valor: number,
   ) {}
 }

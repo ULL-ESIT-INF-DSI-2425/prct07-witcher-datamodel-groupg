@@ -17,16 +17,19 @@ export class BienManager {
   }
 
   /**
-  * Añade un nuevo bien al inventario.
-  * @param bien - Objeto de tipo Bien que se desea añadir.
-  * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
-  */
+   * Añade un nuevo bien al inventario.
+   * @param bien - Objeto de tipo Bien que se desea añadir.
+   * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
+   */
   addBien(bien: Bien) {
     if (!this.db.data) {
       throw new Error("La base de datos no está inicializada.");
     }
     if (!this.db.data.bienes) {
       throw new Error("La base de datos no contiene la propiedad 'bienes.");
+    }
+    if (this.db.data.bienes.find((b) => b.id === bien.id)) {
+      throw new Error("El bien ya existe.");
     }
     this.db.data.bienes.push(bien);
     this.db.write();
@@ -104,7 +107,10 @@ export class BienManager {
    * @param order - Orden de la lista: "Ascendente" o "Descendente".
    * @throws Error si la base de datos no está inicializada o no contiene la propiedad 'bienes'.
    */
-  showBienes(type: "Por coronas" | "Alfabeticamente", order: "Ascendente" | "Descendente") {
+  showBienes(
+    type: "Por coronas" | "Alfabeticamente",
+    order: "Ascendente" | "Descendente",
+  ) {
     const bienes = this.getBienes();
     if (bienes && bienes.length > 0) {
       bienes.sort((a, b) => {

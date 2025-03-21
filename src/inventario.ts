@@ -24,7 +24,7 @@ export class Inventario {
   constructor(dbFileName?: string) {
     const fileName = dbFileName || "./database.json";
     this.db = new LowSync<DataSchema>(new JSONFileSync(fileName));
-    
+
     this.db.read();
     this.db.data ||= {
       bienes: [],

@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Representa a un cliente que compra bienes.
@@ -18,10 +18,9 @@ export interface ICliente {
  * Implementación de la clase Cliente.
  */
 export class Cliente implements ICliente {
-    /** Identificador único del cliente, generado automáticamente. */
-
+  /** Identificador único del cliente, generado automáticamente. */
   public id: string = uuidv4();
-  
+
   /**
    * Crea una nueva instancia de la clase Cliente.
    * @param nombre - Nombre del cliente.
@@ -31,6 +30,6 @@ export class Cliente implements ICliente {
   constructor(
     public nombre: string,
     public raza: string,
-    public ubicacion: string
+    public ubicacion: string,
   ) {}
 }

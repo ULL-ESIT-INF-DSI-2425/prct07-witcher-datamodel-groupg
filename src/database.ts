@@ -1,10 +1,10 @@
-import { LowSync } from 'lowdb';
-import { JSONFileSync } from 'lowdb/node';
-import { Bien } from './bien.js';
-import { Mercader } from './mercader.js';
-import { Cliente } from './cliente.js';
-import { Transaccion } from './transaccion.js';
-import path from 'path';
+import { LowSync } from "lowdb";
+import { JSONFileSync } from "lowdb/node";
+import { Bien } from "./bien.js";
+import { Mercader } from "./mercader.js";
+import { Cliente } from "./cliente.js";
+import { Transaccion } from "./transaccion.js";
+import path from "path";
 
 /**
  * Esquema de datos de la base de datos
@@ -23,7 +23,7 @@ export type DataSchema = {
 /**
  * Archivo JSON donde se guardarán los datos
  */
-const file = path.resolve(__dirname, '../databases/test-transacciones.json');
+const file = path.resolve(__dirname, "../databases/test-transacciones.json");
 
 /**
  * Adaptador para manejar el archivo JSON de la base de datos.
@@ -49,7 +49,7 @@ export const initDB = async () => {
     };
     db.write();
   }
-}
+};
 
 /**
  * Exporta la instancia de la base de datos para ser utilizada en otras partes del sistema.

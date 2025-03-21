@@ -10,14 +10,18 @@ import { mainMenu, inventario } from "./cli.js";
  * Añade un nuevo bien al inventario.
  */
 export async function addBien() {
-
   const answers = await inquirer.prompt([
     { type: "input", name: "nombre", message: "Nombre del bien:" },
     { type: "input", name: "descripcion", message: "Descripción del bien:" },
     { type: "input", name: "material", message: "Material del bien:" },
     { type: "number", name: "peso", message: "Peso del bien:" },
     { type: "number", name: "valor", message: "Valor del bien:" },
-    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal?", choices: ["Continuar", "Salir al menú principal y no añadir bien"] },
+    {
+      type: "list",
+      name: "exit",
+      message: "¿Desea continuar o salir al menú principal?",
+      choices: ["Continuar", "Salir al menú principal y no añadir bien"],
+    },
   ]);
 
   if (answers.exit === "Volver y no añadir bien") {
@@ -29,7 +33,7 @@ export async function addBien() {
     answers.descripcion,
     answers.material,
     answers.peso,
-    answers.valor
+    answers.valor,
   );
 
   //inventario.addBien(bien);
@@ -52,7 +56,10 @@ export async function removeBien() {
       type: "list",
       name: "bienId",
       message: "Seleccione el bien a eliminar:",
-      choices: [...bienes.map((b) => ({ name: b.nombre, value: b.id })), { name: "Salir al menú principal", value: "exit" }],
+      choices: [
+        ...bienes.map((b) => ({ name: b.nombre, value: b.id })),
+        { name: "Salir al menú principal", value: "exit" },
+      ],
     },
   ]);
 
@@ -80,39 +87,40 @@ export async function updateBien() {
     return;
   }
 
-  const { bienId, nombre, descripcion, material, peso, valor } = await inquirer.prompt([
-    {
-      type: "list",
-      name: "bienId",
-      message: "Seleccione el bien a actualizar:",
-      choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
-    },
-    {
-      type: "input",
-      name: "nombre",
-      message: "Nuevo nombre:",
-    },
-    {
-      type: "input",
-      name: "descripcion",
-      message: "Nueva descripción:",
-    },
-    {
-      type: "input",
-      name: "material",
-      message: "Nuevo material:",
-    },
-    {
-      type: "number",
-      name: "peso",
-      message: "Nuevo peso:",
-    },
-    {
-      type: "number",
-      name: "valor",
-      message: "Nuevo valor:",
-    },
-  ]);
+  const { bienId, nombre, descripcion, material, peso, valor } =
+    await inquirer.prompt([
+      {
+        type: "list",
+        name: "bienId",
+        message: "Seleccione el bien a actualizar:",
+        choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
+      },
+      {
+        type: "input",
+        name: "nombre",
+        message: "Nuevo nombre:",
+      },
+      {
+        type: "input",
+        name: "descripcion",
+        message: "Nueva descripción:",
+      },
+      {
+        type: "input",
+        name: "material",
+        message: "Nuevo material:",
+      },
+      {
+        type: "number",
+        name: "peso",
+        message: "Nuevo peso:",
+      },
+      {
+        type: "number",
+        name: "valor",
+        message: "Nuevo valor:",
+      },
+    ]);
 
   const datosActualizados = {
     nombre,
@@ -122,7 +130,9 @@ export async function updateBien() {
     valor,
   };
 
-  const actualizado = inventario.getBienManager().updateBien(bienId, datosActualizados);
+  const actualizado = inventario
+    .getBienManager()
+    .updateBien(bienId, datosActualizados);
   if (actualizado) {
     console.log("Bien actualizado con éxito.");
   } else {
@@ -138,7 +148,13 @@ export async function addCliente() {
     { type: "input", name: "nombre", message: "Nombre del cliente:" },
     { type: "input", name: "raza", message: "Raza del cliente:" },
     { type: "input", name: "ubicacion", message: "Ubicación del cliente:" },
-    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal sin añadir el cliente?", choices: ["Continuar", "Salir al menú principal y no añadir cliente"] },
+    {
+      type: "list",
+      name: "exit",
+      message:
+        "¿Desea continuar o salir al menú principal sin añadir el cliente?",
+      choices: ["Continuar", "Salir al menú principal y no añadir cliente"],
+    },
   ]);
 
   if (answers.exit === "Volver y no añadir cliente") {
@@ -172,7 +188,10 @@ export async function removeCliente() {
       type: "list",
       name: "clienteId",
       message: "Seleccione al cliente a eliminar:",
-      choices: [...clientes.map((b) => ({ name: b.nombre, value: b.id })), { name: "Salir al menú principal", value: "exit" }],
+      choices: [
+        ...clientes.map((b) => ({ name: b.nombre, value: b.id })),
+        { name: "Salir al menú principal", value: "exit" },
+      ],
     },
   ]);
 
@@ -230,7 +249,9 @@ export async function updateCliente() {
     ubicacion,
   };
 
-  const actualizado = inventario.getClienteManager().updateCliente(clienteId, datosActualizados);
+  const actualizado = inventario
+    .getClienteManager()
+    .updateCliente(clienteId, datosActualizados);
   if (actualizado) {
     console.log("Cliente actualizado con éxito.");
   } else {
@@ -246,14 +267,24 @@ export async function addMercader() {
     { type: "input", name: "nombre", message: "Nombre del mercader:" },
     { type: "input", name: "raza", message: "Tipo del mercader:" },
     { type: "input", name: "ubicacion", message: "Ubicación del mercader:" },
-    { type: "list", name: "exit", message: "¿Desea continuar o salir al menú principal sin añadir el mercader?", choices: ["Continuar", "Salir al menú principal y no añadir mercader"] },
+    {
+      type: "list",
+      name: "exit",
+      message:
+        "¿Desea continuar o salir al menú principal sin añadir el mercader?",
+      choices: ["Continuar", "Salir al menú principal y no añadir mercader"],
+    },
   ]);
 
   if (answers.exit === "Volver y no añadir mercader") {
     return;
   }
 
-  const mercader = new Mercader(answers.nombre, answers.raza, answers.ubicacion);
+  const mercader = new Mercader(
+    answers.nombre,
+    answers.raza,
+    answers.ubicacion,
+  );
 
   try {
     inventario.getMercaderManager().addMercader(mercader);
@@ -278,7 +309,10 @@ export async function removeMercader() {
       type: "list",
       name: "mercaderId",
       message: "Seleccione al mercader a eliminar:",
-      choices: [...mercaderes.map((b) => ({ name: b.nombre, value: b.id })), { name: "Salir al menú principal", value: "exit" }],
+      choices: [
+        ...mercaderes.map((b) => ({ name: b.nombre, value: b.id })),
+        { name: "Salir al menú principal", value: "exit" },
+      ],
     },
   ]);
 
@@ -336,7 +370,9 @@ export async function updateMercader() {
     ubicacion,
   };
 
-  const actualizado = inventario.getMercaderManager().updateMercader(mercaderId, datosActualizados);
+  const actualizado = inventario
+    .getMercaderManager()
+    .updateMercader(mercaderId, datosActualizados);
   if (actualizado) {
     console.log("Mercader actualizado con éxito.");
   } else {
@@ -348,12 +384,7 @@ export async function updateMercader() {
  * Filtra los clientes por su nombre, raza o locaclizacion
  */
 export async function filtrarClientes() {
-  const choices = [
-    "Nombre", 
-    "Raza", 
-    "Localización", 
-    "No filtrar",
-  ];
+  const choices = ["Nombre", "Raza", "Localización", "No filtrar"];
 
   const { filter } = await inquirer.prompt([
     {
@@ -364,7 +395,7 @@ export async function filtrarClientes() {
     },
   ]);
 
-  if (filter === "No filtrar"){
+  if (filter === "No filtrar") {
     inventario.getClienteManager().showClientes();
     return;
   }
@@ -381,16 +412,16 @@ export async function filtrarClientes() {
 
   switch (filter) {
     case "Nombre":
-    clientes = inventario.getClienteManager().searchClienteNombre(value);
-    break;
+      clientes = inventario.getClienteManager().searchClienteNombre(value);
+      break;
     case "Raza":
-    clientes = inventario.getClienteManager().searchClienteRaza(value);
-    break;
+      clientes = inventario.getClienteManager().searchClienteRaza(value);
+      break;
     case "Localización":
-    clientes = inventario.getClienteManager().searchClienteUbicacion(value);
-    break;
+      clientes = inventario.getClienteManager().searchClienteUbicacion(value);
+      break;
   }
-  
+
   if (clientes.length === 0) {
     console.log("No se encontraron clientes con ese criterio.");
     return;
@@ -403,12 +434,7 @@ export async function filtrarClientes() {
  * Filtra los mercaderes por su nombre, raza o locaclizacion
  */
 export async function filtrarMercaderes() {
-  const choices = [
-    "Nombre", 
-    "Tipo", 
-    "Localización", 
-    "No filtrar",
-  ];
+  const choices = ["Nombre", "Tipo", "Localización", "No filtrar"];
 
   const { filter } = await inquirer.prompt([
     {
@@ -419,7 +445,7 @@ export async function filtrarMercaderes() {
     },
   ]);
 
-  if (filter === "No filtrar"){
+  if (filter === "No filtrar") {
     inventario.getMercaderManager().showMercaderes();
     return;
   }
@@ -437,15 +463,17 @@ export async function filtrarMercaderes() {
   switch (filter) {
     case "Nombre":
       mercaderes = inventario.getMercaderManager().searchMercaderNombre(value);
-    break;
+      break;
     case "Tipo":
       mercaderes = inventario.getMercaderManager().searchMercaderTipo(value);
-    break;
+      break;
     case "Localización":
-      mercaderes = inventario.getMercaderManager().searchMercaderUbicacion(value);
-    break;
+      mercaderes = inventario
+        .getMercaderManager()
+        .searchMercaderUbicacion(value);
+      break;
   }
-  
+
   if (mercaderes.length === 0) {
     console.log("No se encontraron mercaderes con ese criterio.");
     return;
@@ -487,42 +515,50 @@ export async function registerTransaction() {
   } else if (tipo === "devolución") {
     involucradoTipo = "devolución"; // No se necesita cliente o mercader para devolución
   } else {
-    console.log(`No hay ${tipo === "venta" ? "clientes" : "mercaderes"} disponibles para esta transacción.`);
+    console.log(
+      `No hay ${tipo === "venta" ? "clientes" : "mercaderes"} disponibles para esta transacción.`,
+    );
     return mainMenu();
   }
 
   if (involucradoTipo === "devolución") {
     const transaccionesValidas = transacciones.filter(
-      (t) => t.tipo === "compra" || t.tipo === "venta"
+      (t) => t.tipo === "compra" || t.tipo === "venta",
     );
-  
+
     if (!transaccionesValidas || transaccionesValidas.length === 0) {
-      console.log("No hay transacciones de compra o venta disponibles para devolución.");
+      console.log(
+        "No hay transacciones de compra o venta disponibles para devolución.",
+      );
       return mainMenu();
     }
-  
+
     const { transaccionId } = await inquirer.prompt([
       {
         type: "list",
         name: "transaccionId",
         message: "Seleccione la transacción para la devolución:",
-        choices: transaccionesValidas.map((t) => ({
-          name: `${t.tipo} - ${new Date(t.fecha).toLocaleString()} - ${t.bienes.map((b) => b.nombre).join(", ")}`,
-          value: t.id,
-        })).concat({ name: "Salir al menú principal", value: "exit" }),
+        choices: transaccionesValidas
+          .map((t) => ({
+            name: `${t.tipo} - ${new Date(t.fecha).toLocaleString()} - ${t.bienes.map((b) => b.nombre).join(", ")}`,
+            value: t.id,
+          }))
+          .concat({ name: "Salir al menú principal", value: "exit" }),
       },
     ]);
 
     if (transaccionId === "exit") {
       return mainMenu();
     }
-  
-    const transaccionOriginal = transacciones.find((t) => t.id === transaccionId);
+
+    const transaccionOriginal = transacciones.find(
+      (t) => t.id === transaccionId,
+    );
     if (!transaccionOriginal) {
       console.log("Transacción no encontrada.");
       return mainMenu();
     }
-  
+
     const { devolverTodos } = await inquirer.prompt([
       {
         type: "confirm",
@@ -530,32 +566,41 @@ export async function registerTransaction() {
         message: "¿Desea devolver todos los bienes de esta transacción?",
       },
     ]);
-  
+
     const bienesDevueltos: Bien[] = devolverTodos
       ? transaccionOriginal.bienes
-      : await inquirer.prompt([
-          {
-            type: "checkbox",
-            name: "bienesSeleccionados",
-            message: "Seleccione los bienes a devolver:",
-            choices: transaccionOriginal.bienes.map((b) => ({ name: b.nombre, value: b.id })).concat({ name: "Salir al menú principal", value: "exit" }),
-          },
-        ]).then((res) =>
-          transaccionOriginal.bienes.filter((b) => res.bienesSeleccionados.includes(b.id))
-        );
-    
-    if (bienesDevueltos.some(bien => bien.id === "exit")) {
+      : await inquirer
+          .prompt([
+            {
+              type: "checkbox",
+              name: "bienesSeleccionados",
+              message: "Seleccione los bienes a devolver:",
+              choices: transaccionOriginal.bienes
+                .map((b) => ({ name: b.nombre, value: b.id }))
+                .concat({ name: "Salir al menú principal", value: "exit" }),
+            },
+          ])
+          .then((res) =>
+            transaccionOriginal.bienes.filter((b) =>
+              res.bienesSeleccionados.includes(b.id),
+            ),
+          );
+
+    if (bienesDevueltos.some((bien) => bien.id === "exit")) {
       return mainMenu();
     }
-  
+
     if (bienesDevueltos.length === 0) {
       console.log("No se seleccionaron bienes para devolver.");
       return mainMenu();
     }
-  
+
     // Calcular el valor total de los bienes devueltos
-    const valorDevuelto = bienesDevueltos.reduce((total, bien) => total + bien.valor, 0);
-  
+    const valorDevuelto = bienesDevueltos.reduce(
+      (total, bien) => total + bien.valor,
+      0,
+    );
+
     // Actualizar inventario según el tipo de transacción original
     if (transaccionOriginal.tipo === "compra") {
       for (const bien of bienesDevueltos) {
@@ -566,63 +611,76 @@ export async function registerTransaction() {
         await inventario.getBienManager().addBien(bien);
       }
     }
-  
+
     // Actualizar la transacción original eliminando los bienes devueltos
     transaccionOriginal.bienes = transaccionOriginal.bienes.filter(
-      (bien) => !bienesDevueltos.some((bDevuelto) => bDevuelto.id === bien.id)
+      (bien) => !bienesDevueltos.some((bDevuelto) => bDevuelto.id === bien.id),
     );
-  
+
     // Actualizar la cantidad total de la transacción original
     transaccionOriginal.cantidadCoronas -= valorDevuelto;
-  
+
     if (transaccionOriginal.bienes.length === 0) {
-      await inventario.getTransaccionManager().removeTransaccion(transaccionOriginal.id);
-      console.log("Todos los bienes fueron devueltos. La transacción original ha sido eliminada.");
+      await inventario
+        .getTransaccionManager()
+        .removeTransaccion(transaccionOriginal.id);
+      console.log(
+        "Todos los bienes fueron devueltos. La transacción original ha sido eliminada.",
+      );
     } else {
       // Si quedan bienes, actualizar la transacción original
-      const actualizado = await inventario.getTransaccionManager().updateTransaccion(
-        transaccionOriginal.id,
-        {
+      const actualizado = await inventario
+        .getTransaccionManager()
+        .updateTransaccion(transaccionOriginal.id, {
           bienes: transaccionOriginal.bienes,
           cantidadCoronas: transaccionOriginal.cantidadCoronas,
-        }
-      );
-    
+        });
+
       if (actualizado) {
-        console.log(`La transacción original ahora tiene un valor total de ${transaccionOriginal.cantidadCoronas} coronas.`);
-        console.log(`Los bienes restantes en la transacción original son: ${transaccionOriginal.bienes.map((b) => b.nombre).join(", ")}`);
+        console.log(
+          `La transacción original ahora tiene un valor total de ${transaccionOriginal.cantidadCoronas} coronas.`,
+        );
+        console.log(
+          `Los bienes restantes en la transacción original son: ${transaccionOriginal.bienes.map((b) => b.nombre).join(", ")}`,
+        );
       } else {
         console.error("Error al actualizar la transacción original.");
       }
     }
-  
-  // Registrar la nueva transacción de devolución
-  const transaccionDevolucion = new Transaccion(
-    "devolución",
-    new Date(),
-    bienesDevueltos,
-    valorDevuelto,
-    transaccionOriginal.involucrado
-  );
 
-  // Verificar si ya existe una devolución idéntica
-  const transaccionesExistentes = inventario.getTransaccionManager().getTransacciones();
-  const devolucionDuplicada = transaccionesExistentes.some(
-    (t) =>
-      t.tipo === "devolución" &&
-      t.cantidadCoronas === valorDevuelto &&
-      t.involucrado.id === transaccionOriginal.involucrado.id &&
-      t.bienes.length === bienesDevueltos.length &&
-      t.bienes.every((b, index) => b.id === bienesDevueltos[index].id)
-  );
+    // Registrar la nueva transacción de devolución
+    const transaccionDevolucion = new Transaccion(
+      "devolución",
+      new Date(),
+      bienesDevueltos,
+      valorDevuelto,
+      transaccionOriginal.involucrado,
+    );
 
-  if (devolucionDuplicada) {
-    console.log("Esta devolución ya ha sido registrada previamente.");
-  } else {
-    await inventario.getTransaccionManager().addTransaccion(transaccionDevolucion);
-    console.log("Devolución registrada con éxito.");
-    console.log(`Se devolvieron bienes por un valor total de ${valorDevuelto} coronas.`);
-  }
+    // Verificar si ya existe una devolución idéntica
+    const transaccionesExistentes = inventario
+      .getTransaccionManager()
+      .getTransacciones();
+    const devolucionDuplicada = transaccionesExistentes.some(
+      (t) =>
+        t.tipo === "devolución" &&
+        t.cantidadCoronas === valorDevuelto &&
+        t.involucrado.id === transaccionOriginal.involucrado.id &&
+        t.bienes.length === bienesDevueltos.length &&
+        t.bienes.every((b, index) => b.id === bienesDevueltos[index].id),
+    );
+
+    if (devolucionDuplicada) {
+      console.log("Esta devolución ya ha sido registrada previamente.");
+    } else {
+      await inventario
+        .getTransaccionManager()
+        .addTransaccion(transaccionDevolucion);
+      console.log("Devolución registrada con éxito.");
+      console.log(
+        `Se devolvieron bienes por un valor total de ${valorDevuelto} coronas.`,
+      );
+    }
     return mainMenu();
   }
 
@@ -632,10 +690,12 @@ export async function registerTransaction() {
       type: "list",
       name: "involucradoId",
       message: `Seleccione el ${involucradoTipo}:`,
-      choices: (involucradoTipo === "cliente" ? clientes : mercaderes).map((i) => ({
-        name: i.nombre,
-        value: i.id,
-      })).concat({ name: "Salir al menú principal", value: "exit" }),
+      choices: (involucradoTipo === "cliente" ? clientes : mercaderes)
+        .map((i) => ({
+          name: i.nombre,
+          value: i.id,
+        }))
+        .concat({ name: "Salir al menú principal", value: "exit" }),
     },
   ]);
 
@@ -653,104 +713,118 @@ export async function registerTransaction() {
     return mainMenu();
   }
 
-// Manejar compra
-if (tipo === "compra") {
-  const bienesComprados: Bien[] = [];
-  let continuar = true;
+  // Manejar compra
+  if (tipo === "compra") {
+    const bienesComprados: Bien[] = [];
+    let continuar = true;
 
-  while (continuar) {
-    const answers = await inquirer.prompt([
-      { type: "input", name: "nombre", message: "Nombre del bien:" },
-      { type: "input", name: "descripcion", message: "Descripción del bien:" },
-      { type: "input", name: "material", message: "Material del bien:" },
-      { type: "number", name: "peso", message: "Peso del bien:" },
-      { type: "number", name: "valor", message: "Valor del bien:" },
-      { type: "confirm", name: "continuar", message: "¿Desea añadir otro bien?" },
-    ]);
+    while (continuar) {
+      const answers = await inquirer.prompt([
+        { type: "input", name: "nombre", message: "Nombre del bien:" },
+        {
+          type: "input",
+          name: "descripcion",
+          message: "Descripción del bien:",
+        },
+        { type: "input", name: "material", message: "Material del bien:" },
+        { type: "number", name: "peso", message: "Peso del bien:" },
+        { type: "number", name: "valor", message: "Valor del bien:" },
+        {
+          type: "confirm",
+          name: "continuar",
+          message: "¿Desea añadir otro bien?",
+        },
+      ]);
 
-    const bien = new Bien(
-      answers.nombre,
-      answers.descripcion,
-      answers.material,
-      answers.peso,
-      answers.valor
-    );
+      const bien = new Bien(
+        answers.nombre,
+        answers.descripcion,
+        answers.material,
+        answers.peso,
+        answers.valor,
+      );
 
-    inventario.getBienManager().addBien(bien);
-    bienesComprados.push(bien);
+      inventario.getBienManager().addBien(bien);
+      bienesComprados.push(bien);
 
-    continuar = answers.continuar;
-  }
+      continuar = answers.continuar;
+    }
 
-  const { cantidadCoronas } = await inquirer.prompt([
-    { type: "number", name: "cantidadCoronas", message: "Cantidad total de coronas pagadas:" },
-  ]);
-
-  const transaccion = new Transaccion(
-    tipo,
-    new Date(),
-    bienesComprados,
-    cantidadCoronas,
-    involucrado
-  );
-
-  inventario.getTransaccionManager().addTransaccion(transaccion);
-  console.log("Transacción de compra registrada con éxito.");
-}
-
-else if (tipo === "venta") {
-  if (!bienes || bienes.length === 0) {
-    console.log("No hay bienes disponibles para la venta.");
-    return mainMenu();
-  }
-
-  const { bienesSeleccionados } = await inquirer.prompt([
-    {
-      type: "checkbox",
-      name: "bienesSeleccionados",
-      message: "Seleccione los bienes a vender:",
-      choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
-    },
-  ]);
-
-  if (bienesSeleccionados.length === 0) {
-    console.log("No se seleccionaron bienes para la venta.");
-    return mainMenu();
-  }
-
-  const bienesVendidos: Bien[] = [];
-  for (const bienId of bienesSeleccionados) {
-    const { precio } = await inquirer.prompt([
+    const { cantidadCoronas } = await inquirer.prompt([
       {
         type: "number",
-        name: "precio",
-        message: `Ingrese el precio de venta para el bien con id ${bienId}:`,
+        name: "cantidadCoronas",
+        message: "Cantidad total de coronas pagadas:",
       },
     ]);
 
-    const bien = bienes.find((b) => b.id === bienId);
-    if (bien) {
-      inventario.getBienManager().removeBien(bien.id);
-      bienesVendidos.push({ ...bien, valor: precio });
+    const transaccion = new Transaccion(
+      tipo,
+      new Date(),
+      bienesComprados,
+      cantidadCoronas,
+      involucrado,
+    );
+
+    inventario.getTransaccionManager().addTransaccion(transaccion);
+    console.log("Transacción de compra registrada con éxito.");
+  } else if (tipo === "venta") {
+    if (!bienes || bienes.length === 0) {
+      console.log("No hay bienes disponibles para la venta.");
+      return mainMenu();
     }
+
+    const { bienesSeleccionados } = await inquirer.prompt([
+      {
+        type: "checkbox",
+        name: "bienesSeleccionados",
+        message: "Seleccione los bienes a vender:",
+        choices: bienes.map((b) => ({ name: b.nombre, value: b.id })),
+      },
+    ]);
+
+    if (bienesSeleccionados.length === 0) {
+      console.log("No se seleccionaron bienes para la venta.");
+      return mainMenu();
+    }
+
+    const bienesVendidos: Bien[] = [];
+    for (const bienId of bienesSeleccionados) {
+      const { precio } = await inquirer.prompt([
+        {
+          type: "number",
+          name: "precio",
+          message: `Ingrese el precio de venta para el bien con id ${bienId}:`,
+        },
+      ]);
+
+      const bien = bienes.find((b) => b.id === bienId);
+      if (bien) {
+        inventario.getBienManager().removeBien(bien.id);
+        bienesVendidos.push({ ...bien, valor: precio });
+      }
+    }
+
+    const { cantidadCoronas } = await inquirer.prompt([
+      {
+        type: "number",
+        name: "cantidadCoronas",
+        message: "Cantidad total de coronas recibidas:",
+      },
+    ]);
+
+    const transaccion = new Transaccion(
+      tipo,
+      new Date(),
+      bienesVendidos,
+      cantidadCoronas,
+      involucrado,
+    );
+
+    inventario.getTransaccionManager().addTransaccion(transaccion);
+    console.log("Transacción de venta registrada con éxito.");
+    mainMenu();
   }
-
-  const { cantidadCoronas } = await inquirer.prompt([
-    { type: "number", name: "cantidadCoronas", message: "Cantidad total de coronas recibidas:" },
-  ]);
-
-  const transaccion = new Transaccion(
-    tipo,
-    new Date(),
-    bienesVendidos,
-    cantidadCoronas,
-    involucrado
-  );
-
-  inventario.getTransaccionManager().addTransaccion(transaccion);
-  console.log("Transacción de venta registrada con éxito.");
-  mainMenu();
-}
 
   mainMenu();
 }
@@ -777,7 +851,10 @@ export function reportBienesPopulares(tipo: "vendidos" | "demandados") {
   const conteo: Record<string, number> = {};
 
   transacciones.forEach((t) => {
-    if ((tipo === "vendidos" && t.tipo === "venta") || (tipo === "demandados" && t.tipo === "compra")) {
+    if (
+      (tipo === "vendidos" && t.tipo === "venta") ||
+      (tipo === "demandados" && t.tipo === "compra")
+    ) {
       t.bienes.forEach((b) => {
         conteo[b.nombre] = (conteo[b.nombre] || 0) + 1;
       });
@@ -815,10 +892,14 @@ export function reportIngresosGastos() {
  */
 export function reportHistoricoTransacciones(nombre: string) {
   const transacciones = inventario.getTransaccionManager().getTransacciones();
-  const historico = transacciones.filter((t) => t.involucrado.nombre === nombre);
+  const historico = transacciones.filter(
+    (t) => t.involucrado.nombre === nombre,
+  );
 
   if (historico.length === 0) {
-    console.log(`No se encontraron transacciones para el cliente o mercader "${nombre}".`);
+    console.log(
+      `No se encontraron transacciones para el cliente o mercader "${nombre}".`,
+    );
   } else {
     console.table(
       historico.map((t) => ({
@@ -826,7 +907,7 @@ export function reportHistoricoTransacciones(nombre: string) {
         fecha: new Date(t.fecha).toLocaleString(),
         bienes: t.bienes.map((b) => b.nombre).join(", "),
         cantidadCoronas: t.cantidadCoronas,
-      }))
+      })),
     );
   }
 }

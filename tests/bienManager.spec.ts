@@ -235,6 +235,7 @@ describe('BienManager - Additional Tests', () => {
   });
 
   it('should throw an error if bienes property is missing in the database when adding a bien', () => {
+    inventario.getBienManager().removeBien(bien1.id);
     inventario['db'].data = { 
       ...inventario['db'].data, 
       bienes: undefined as any, 
@@ -242,9 +243,11 @@ describe('BienManager - Additional Tests', () => {
       clientes: inventario['db'].data?.clientes || [], 
       transacciones: inventario['db'].data?.transacciones || [] 
     };
+    vi.spyOn(inventario['db'], 'read').mockImplementation(() => {});
     expect(() => inventario.getBienManager().addBien(bien1)).toThrowError(
       "La base de datos no contiene la propiedad 'bienes."
     );
+    vi.restoreAllMocks();
   });
 
   it('should throw an error if bienes property is missing in the database when getting bienes', () => {
@@ -448,5 +451,11 @@ describe('BienManager - Additional Tests', () => {
         .getBienManager()
         .searchBienMaterial("mat1", "valor", "desc"),
     ).toEqual([bien3, bien1]);
+  });
+
+  it("should throw an error if adding an existing bien", () => {
+    expect(() => inventario.getBienManager().addBien(bien1)).toThrowError(
+      "El bien ya existe."
+    );
   });
 });

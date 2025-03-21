@@ -1,10 +1,30 @@
 import inquirer from "inquirer";
 import { Inventario } from "./inventario.js";
-import { addBien, removeBien, addCliente, addMercader, registerTransaction, reportBienesPopulares, reportIngresosGastos, reportHistoricoTransacciones, reportStockEstado, updateBien, filtrarClientes, filtrarMercaderes, removeCliente, removeMercader, updateCliente, updateMercader } from "./cliFunctions.js";
+import {
+  addBien,
+  removeBien,
+  addCliente,
+  addMercader,
+  registerTransaction,
+  reportBienesPopulares,
+  reportIngresosGastos,
+  reportHistoricoTransacciones,
+  reportStockEstado,
+  updateBien,
+  filtrarClientes,
+  filtrarMercaderes,
+  removeCliente,
+  removeMercader,
+  updateCliente,
+  updateMercader,
+} from "./cliFunctions.js";
 
 // Inicializar el inventario
 export const inventario = new Inventario();
 
+/**
+ * Menú principal de la aplicación.
+ */
 export async function mainMenu() {
   const choices = [
     "Mostrar bienes",
@@ -33,8 +53,8 @@ export async function mainMenu() {
 
       async function mostrarBienesMenu() {
         const choices = [
-          "Por coronas", 
-          "Alfabeticamente", 
+          "Por coronas",
+          "Alfabeticamente",
           "Volver al menú principal",
         ];
 
@@ -46,11 +66,11 @@ export async function mainMenu() {
             choices,
           },
         ]);
-      
+
         if (criterio === "Volver al menú principal") {
           return mainMenu();
         }
-      
+
         const { orden } = await inquirer.prompt([
           {
             type: "list",
@@ -59,19 +79,19 @@ export async function mainMenu() {
             choices: ["Ascendente", "Descendente"],
           },
         ]);
-      
+
         inventario.getBienManager().showBienes(criterio, orden);
         await mostrarBienesMenu();
       }
     case "Gestionar bienes":
       gestionarBienesMenu();
       break;
-      
+
       async function gestionarBienesMenu() {
         const choices = [
-          "Añadir bien", 
-          "Eliminar bien", 
-          "Editar bien", 
+          "Añadir bien",
+          "Eliminar bien",
+          "Editar bien",
           "Volver al menú principal",
         ];
 
@@ -103,13 +123,9 @@ export async function mainMenu() {
     case "Mostrar clientes/mercaderes":
       mostrarClientesMercaderesMenu();
       break;
-      
+
       async function mostrarClientesMercaderesMenu() {
-        const choices = [
-          "Clientes", 
-          "Mercaderes", 
-          "Volver al menú principal",
-        ];
+        const choices = ["Clientes", "Mercaderes", "Volver al menú principal"];
 
         const { action } = await inquirer.prompt([
           {
@@ -217,7 +233,11 @@ export async function mainMenu() {
         switch (report) {
           case "Estado del stock":
             const { bienNombre } = await inquirer.prompt([
-              { type: "input", name: "bienNombre", message: "Nombre del bien:" },
+              {
+                type: "input",
+                name: "bienNombre",
+                message: "Nombre del bien:",
+              },
             ]);
             reportStockEstado(bienNombre);
             break;
@@ -232,7 +252,11 @@ export async function mainMenu() {
             break;
           case "Histórico de transacciones":
             const { id } = await inquirer.prompt([
-              { type: "input", name: "id", message: "ID del cliente o mercader:" },
+              {
+                type: "input",
+                name: "id",
+                message: "ID del cliente o mercader:",
+              },
             ]);
             reportHistoricoTransacciones(id);
             break;

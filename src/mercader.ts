@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Representa a un mercader.
@@ -30,6 +30,6 @@ export class Mercader implements IMercader {
   constructor(
     public nombre: string,
     public tipo: string,
-    public ubicacion: string
+    public ubicacion: string,
   ) {}
 }

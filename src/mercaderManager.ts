@@ -30,7 +30,7 @@ export class MercaderManager {
         "La base de datos no contiene la propiedad 'mercaderes'.",
       );
     }
-    if (this.db.data.mercaderes.some(m => m.id === mercader.id)) {
+    if (this.db.data.mercaderes.some((m) => m.id === mercader.id)) {
       throw new Error("El mercader ya existe.");
     }
     this.db.data.mercaderes.push(mercader);
