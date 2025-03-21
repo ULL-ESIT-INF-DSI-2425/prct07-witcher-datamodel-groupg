@@ -1,7 +1,10 @@
 import { TransaccionManager } from "../src/transaccionManager.js";
 import { Transaccion } from "../src/transaccion.js";
 import { db, initDB } from "../src/database.js";
-import { describe, expect, vi, beforeEach, it , afterEach } from "vitest";
+import { describe, expect, vi, beforeEach, it, afterEach } from "vitest";
+import { after } from "node:test";
+import { Inventario } from "../src/inventario.js";
+import path from "path";
 
 describe("TransaccionManager", () => {
   let transaccionManager: TransaccionManager;
@@ -10,14 +13,14 @@ describe("TransaccionManager", () => {
     new Date(),
     [],
     100,
-    { id: "cliente1", nombre: "Cliente1" } as any
+    { id: "cliente1", nombre: "Cliente1" } as any,
   );
   const transaccion2: Transaccion = new Transaccion(
     "venta",
     new Date(),
     [],
     200,
-    { id: "mercader1", nombre: "Mercader1" } as any
+    { id: "mercader1", nombre: "Mercader1" } as any,
   );
 
   beforeEach(async () => {
@@ -36,15 +39,12 @@ describe("TransaccionManager", () => {
       transaccionManager.removeTransaccion(transaccion2.id);
     }
   });
-  
+
   it("should add a new transaction", () => {
-    const transaccion3 = new Transaccion(
-      "devolución",
-      new Date(),
-      [],
-      50,
-      { id: "cliente2", nombre: "Cliente2" } as any
-    );
+    const transaccion3 = new Transaccion("devolución", new Date(), [], 50, {
+      id: "cliente2",
+      nombre: "Cliente2",
+    } as any);
     transaccionManager.addTransaccion(transaccion3);
     const transacciones = transaccionManager.getTransacciones();
     expect(transacciones).toEqual(
@@ -64,7 +64,7 @@ describe("TransaccionManager", () => {
           cantidadCoronas: 50,
           involucrado: { id: "cliente2", nombre: "Cliente2" },
         }),
-      ])
+      ]),
     );
     transaccionManager.removeTransaccion(transaccion3.id);
   });
@@ -84,7 +84,7 @@ describe("TransaccionManager", () => {
           cantidadCoronas: 200,
           involucrado: { id: "mercader1", nombre: "Mercader1" },
         }),
-      ])
+      ]),
     );
   });
 
@@ -107,7 +107,7 @@ describe("TransaccionManager", () => {
     expect(result).toBe(true);
     const transacciones = transaccionManager.getTransacciones();
     expect(
-      transacciones.find((t) => t.id === transaccion1.id)?.cantidadCoronas
+      transacciones.find((t) => t.id === transaccion1.id)?.cantidadCoronas,
     ).toBe(150);
   });
 
@@ -131,7 +131,9 @@ describe("TransaccionManager", () => {
 
     const consoleSpy = vi.spyOn(console, "log");
     transaccionManager.showTransacciones();
-    expect(consoleSpy).toHaveBeenCalledWith("No hay transacciones registradas.");
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "No hay transacciones registradas.",
+    );
     vi.restoreAllMocks();
   });
 
@@ -139,7 +141,7 @@ describe("TransaccionManager", () => {
     db.data = null;
     vi.spyOn(db, "read").mockImplementation(() => {});
     expect(() => transaccionManager.addTransaccion(transaccion1)).toThrowError(
-      "La base de datos no está inicializada."
+      "La base de datos no está inicializada.",
     );
     vi.restoreAllMocks();
   });
@@ -148,7 +150,7 @@ describe("TransaccionManager", () => {
     db.data = null;
     vi.spyOn(db, "read").mockImplementation(() => {});
     expect(() => transaccionManager.getTransacciones()).toThrowError(
-      "La base de datos no está inicializada."
+      "La base de datos no está inicializada.",
     );
     vi.restoreAllMocks();
   });
@@ -157,7 +159,7 @@ describe("TransaccionManager", () => {
     db.data = null;
     vi.spyOn(db, "read").mockImplementation(() => {});
     expect(() =>
-      transaccionManager.removeTransaccion(transaccion1.id)
+      transaccionManager.removeTransaccion(transaccion1.id),
     ).toThrowError("La base de datos no está inicializada.");
     vi.restoreAllMocks();
   });
@@ -168,8 +170,115 @@ describe("TransaccionManager", () => {
     expect(() =>
       transaccionManager.updateTransaccion(transaccion1.id, {
         cantidadCoronas: 150,
-      })
+      }),
     ).toThrowError("La base de datos no está inicializada.");
+    vi.restoreAllMocks();
+  });
+});
+
+describe("TransaccionManager - additional tests", () => {
+  let inventario: Inventario;
+  const transaccion1: Transaccion = new Transaccion(
+    "compra",
+    new Date(),
+    [],
+    100,
+    { id: "cliente1", nombre: "Cliente1" } as any,
+  );
+  const transaccion2: Transaccion = new Transaccion(
+    "venta",
+    new Date(),
+    [],
+    200,
+    { id: "mercader1", nombre: "Mercader1" } as any,
+  );
+
+  beforeEach(() => {
+    inventario = new Inventario(
+      path.resolve(__dirname, "../databases/test-transacciones.json"),
+    );
+    inventario.getTransaccionManager().addTransaccion(transaccion1);
+    inventario.getTransaccionManager().addTransaccion(transaccion2);
+  });
+
+  afterEach(() => {
+    const transacciones = inventario.getTransaccionManager().getTransacciones();
+    transacciones.forEach((t) =>
+      inventario.getTransaccionManager().removeTransaccion(t.id),
+    );
+  });
+
+  it("should throw an error when propety transacciones is missing when adding a transaction", () => {
+    inventario.getTransaccionManager().removeTransaccion(transaccion1.id);
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      transacciones: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      bienes: inventario["db"].data?.bienes || [],
+      clientes: inventario["db"].data?.clientes || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getTransaccionManager().addTransaccion(transaccion1),
+    ).toThrowError(
+      "La base de datos no contiene la propiedad 'transacciones'.",
+    );
+    vi.restoreAllMocks();
+  });
+
+  it("should throw an error when propety transacciones is missing when getting transactions", () => {
+    inventario.getTransaccionManager().removeTransaccion(transaccion1.id);
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      transacciones: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      bienes: inventario["db"].data?.bienes || [],
+      clientes: inventario["db"].data?.clientes || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getTransaccionManager().getTransacciones(),
+    ).toThrowError(
+      "La base de datos no contiene la propiedad 'transacciones'.",
+    );
+    vi.restoreAllMocks();
+  });
+
+  it("should throw an error when propety transacciones is missing when removing a transaction", () => {
+    inventario.getTransaccionManager().removeTransaccion(transaccion1.id);
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      transacciones: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      bienes: inventario["db"].data?.bienes || [],
+      clientes: inventario["db"].data?.clientes || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getTransaccionManager().removeTransaccion(transaccion1.id),
+    ).toThrowError(
+      "La base de datos no contiene la propiedad 'transacciones'.",
+    );
+    vi.restoreAllMocks();
+  });
+
+  it("should throw an error when propety transacciones is missing when updating a transaction", () => {
+    inventario.getTransaccionManager().removeTransaccion(transaccion1.id);
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      transacciones: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      bienes: inventario["db"].data?.bienes || [],
+      clientes: inventario["db"].data?.clientes || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getTransaccionManager().updateTransaccion(transaccion1.id, {
+        cantidadCoronas: 150,
+      }),
+    ).toThrowError(
+      "La base de datos no contiene la propiedad 'transacciones'.",
+    );
     vi.restoreAllMocks();
   });
 });
