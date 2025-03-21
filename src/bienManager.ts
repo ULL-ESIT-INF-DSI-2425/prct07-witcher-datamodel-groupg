@@ -6,7 +6,7 @@ import { Bien, IBien } from "./bien.js";
  * Clase que gestiona las operaciones de bienes.
  */
 export class BienManager {
-  private db: LowSync<DataSchema>;
+  private readonly db: LowSync<DataSchema>;
 
   /**
    * Crea una instancia de BienManager.
@@ -151,18 +151,11 @@ export class BienManager {
     const bienes = this.db.data.bienes.filter((b) => b.nombre === nombre);
     bienes.sort((a, b) => {
       if (ordenarPor === "nombre") {
-        if (orden === "asc") {
-          return a.nombre.localeCompare(b.nombre);
-        } else {
-          return b.nombre.localeCompare(a.nombre);
-        }
-      } else {
-        if (orden === "asc") {
-          return a.valor - b.valor;
-        } else {
-          return b.valor - a.valor;
-        }
+        return orden === "asc"
+          ? a.nombre.localeCompare(b.nombre)
+          : b.nombre.localeCompare(a.nombre);
       }
+      return orden === "asc" ? a.valor - b.valor : b.valor - a.valor;
     });
     return bienes;
   }
@@ -192,18 +185,11 @@ export class BienManager {
     );
     bienes.sort((a, b) => {
       if (ordenarPor === "descripcion") {
-        if (orden === "asc") {
-          return a.descripcion.localeCompare(b.descripcion);
-        } else {
-          return b.descripcion.localeCompare(a.descripcion);
-        }
-      } else {
-        if (orden === "asc") {
-          return a.valor - b.valor;
-        } else {
-          return b.valor - a.valor;
-        }
+        return orden === "asc"
+          ? a.descripcion.localeCompare(b.descripcion)
+          : b.descripcion.localeCompare(a.descripcion);
       }
+      return orden === "asc" ? a.valor - b.valor : b.valor - a.valor;
     });
     return bienes;
   }
@@ -231,18 +217,11 @@ export class BienManager {
     const bienes = this.db.data.bienes.filter((b) => b.material === material);
     bienes.sort((a, b) => {
       if (ordenarPor === "material") {
-        if (orden === "asc") {
-          return a.material.localeCompare(b.material);
-        } else {
-          return b.material.localeCompare(a.material);
-        }
-      } else {
-        if (orden === "asc") {
-          return a.valor - b.valor;
-        } else {
-          return b.valor - a.valor;
-        }
+        return orden === "asc"
+          ? a.material.localeCompare(b.material)
+          : b.material.localeCompare(a.material);
       }
+      return orden === "asc" ? a.valor - b.valor : b.valor - a.valor;
     });
     return bienes;
   }

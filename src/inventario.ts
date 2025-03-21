@@ -11,11 +11,11 @@ import { DataSchema } from "../src/database.js";
  * Gestiona los bienes, mercaderes, clientes y transacciones utilizando sus respectivos managers.
  */
 export class Inventario {
-  private db: LowSync<DataSchema>;
-  private bienManager: BienManager;
-  private mercaderManager: MercaderManager;
-  private clienteManager: ClienteManager;
-  private transaccionManager: TransaccionManager;
+  private readonly db: LowSync<DataSchema>;
+  private readonly bienManager: BienManager;
+  private readonly mercaderManager: MercaderManager;
+  private readonly clienteManager: ClienteManager;
+  private readonly transaccionManager: TransaccionManager;
 
   /**
    * Crea una nueva instancia de la clase Inventario.

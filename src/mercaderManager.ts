@@ -6,7 +6,7 @@ import { DataSchema } from "./database.js";
  * Clase que gestiona las operaciones de mercaderes.
  */
 export class MercaderManager {
-  private db: LowSync<DataSchema>;
+  private readonly db: LowSync<DataSchema>;
 
   /**
    * Crea una instancia de MercaderManager.
