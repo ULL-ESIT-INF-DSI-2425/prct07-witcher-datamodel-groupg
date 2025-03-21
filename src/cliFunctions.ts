@@ -1,4 +1,3 @@
-import { Inventario } from "./inventario.js";
 import { Bien } from "./bien.js";
 import { Transaccion } from "./transaccion.js";
 import { Cliente } from "./cliente.js";
@@ -36,7 +35,6 @@ export async function addBien() {
     answers.valor,
   );
 
-  //inventario.addBien(bien);
   inventario.getBienManager().addBien(bien);
   console.log("Bien añadido con éxito.");
 }
@@ -74,7 +72,6 @@ export async function removeBien() {
   } else {
     console.log("No se encontró el bien especificado.");
   }
-  //mainMenu();
 }
 
 /**
@@ -169,8 +166,6 @@ export async function addCliente() {
   } catch (error) {
     console.error("Error al añadir el cliente:", error.message);
   }
-
-  //mainMenu();
 }
 
 /**
@@ -206,7 +201,6 @@ export async function removeCliente() {
   } else {
     console.log("No se encontró al cliente especificado.");
   }
-  //mainMenu();
 }
 
 /**
@@ -327,7 +321,6 @@ export async function removeMercader() {
   } else {
     console.log("No se encontró al mercader especificado.");
   }
-  //mainMenu();
 }
 
 /**
@@ -424,7 +417,6 @@ export async function filtrarClientes() {
 
   if (clientes.length === 0) {
     console.log("No se encontraron clientes con ese criterio.");
-    return;
   } else {
     console.table(clientes);
   }
@@ -476,7 +468,6 @@ export async function filtrarMercaderes() {
 
   if (mercaderes.length === 0) {
     console.log("No se encontraron mercaderes con ese criterio.");
-    return;
   } else {
     console.table(mercaderes);
   }
