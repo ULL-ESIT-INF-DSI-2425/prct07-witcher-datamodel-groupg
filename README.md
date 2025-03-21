@@ -1,4 +1,4 @@
-# ⚔️ Práctica 7 - The Witcher ⚔️
+# ⚔️ La Posada del Lobo Blanco ⚔️
 
 ## ✍️ Autores
 - 👤 **Jonathan Martínez Pérez - alu0101254098@ull.edu.es**
