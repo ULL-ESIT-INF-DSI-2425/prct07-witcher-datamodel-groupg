@@ -102,6 +102,42 @@ describe('BienManager', () => {
     expect(bienes).toEqual(expect.arrayContaining([bien1]));
   });
 
+  it("should show all bienes by value asc order", () => {
+    const consoleSpy = vi.spyOn(console, "table");
+    inventario.getBienManager().showBienes("Por coronas", "Ascendente");
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.arrayContaining([bien1, bien2]),
+    );
+    consoleSpy.mockRestore();
+  });
+
+  it("should show all bienes by name desc order", () => {
+    const consoleSpy = vi.spyOn(console, "table");
+    inventario.getBienManager().showBienes("Alfabeticamente", "Descendente");
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.arrayContaining([bien2, bien1]),
+    );
+    consoleSpy.mockRestore();
+  });
+
+  it("should show all bienes by value desc order", () => {
+    const consoleSpy = vi.spyOn(console, "table");
+    inventario.getBienManager().showBienes("Por coronas", "Descendente");
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.arrayContaining([bien2, bien1]),
+    );
+    consoleSpy.mockRestore();
+  });
+
+  it("should show and log message when there are no bienes in the inventory", () => {
+    inventario.getBienManager().removeBien(bien1.id);
+    inventario.getBienManager().removeBien(bien2.id);
+    const consoleSpy = vi.spyOn(console, "log");
+    inventario.getBienManager().showBienes("Por coronas", "Ascendente");
+    expect(consoleSpy).toHaveBeenCalledWith("No hay bienes en el inventario.");
+    consoleSpy.mockRestore();
+  });
+
   it('should sort bienes by valor in descending order', () => {
     const bienes = inventario.getBienManager().searchBienNombre(bien1.nombre, 'valor', 'desc');
     expect(bienes).toEqual(expect.arrayContaining([bien1]));
@@ -184,11 +220,13 @@ describe('BienManager - Additional Tests', () => {
   let inventario: Inventario;
   const bien1 = new Bien('Bien1', 'desc1', 'mat1', 1, 1);
   const bien2 = new Bien('Bien2', 'desc2', 'mat2', 2, 2);
+  const bien3 = new Bien("Bien1", "desc1", "mat1", 3, 3);
 
   beforeEach(() => {
     inventario = new Inventario(path.resolve(__dirname, '../databases/test-bienes.json'));
     inventario.getBienManager().addBien(bien1);
     inventario.getBienManager().addBien(bien2);
+    inventario.getBienManager().addBien(bien3);
   });
 
   afterEach(() => {
@@ -239,23 +277,176 @@ describe('BienManager - Additional Tests', () => {
     vi.restoreAllMocks();
   });
 
-  it('should handle sorting bienes by material in ascending order', () => {
-    const bienes = inventario.getBienManager().searchBienMaterial('mat1', 'material', 'asc');
-    expect(bienes[0].material).toBe('mat1');
+  it("should throw an error if the database is not initialized when updating a bien", () => {
+    inventario["db"].data = null;
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getBienManager().updateBien(bien1.id, { valor: 150 }),
+    ).toThrowError("La base de datos no está inicializada.");
+    vi.restoreAllMocks();
   });
 
-  it('should handle sorting bienes by material in descending order', () => {
-    const bienes = inventario.getBienManager().searchBienMaterial('mat1', 'material', 'desc');
-    expect(bienes[0].material).toBe('mat1');
+  it("should throw an error if bienes property is missing in the database when updating a bien", () => {
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      bienes: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      clientes: inventario["db"].data?.clientes || [],
+      transacciones: inventario["db"].data?.transacciones || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getBienManager().updateBien(bien1.id, { valor: 150 }),
+    ).toThrowError("La base de datos no contiene la propiedad 'bienes'.");
+    vi.restoreAllMocks();
   });
 
-  it('should handle sorting bienes by valor in ascending order when searching by material', () => {
-    const bienes = inventario.getBienManager().searchBienMaterial('mat1', 'valor', 'asc');
+  it("should return false and log a message when trying to update a non-existent bien", () => {
+    const result = inventario
+      .getBienManager()
+      .updateBien("non-existent-id", { valor: 150 });
+    expect(result).toBe(false);
+  });
+
+  it("should handle sorting bienes by valor in ascending order when searching by descripcion", () => {
+    const bienes = inventario
+      .getBienManager()
+      .searchBienDescripcion("desc1", "valor", "asc");
     expect(bienes[0].valor).toBe(1);
   });
 
-  it('should handle sorting bienes by valor in descending order when searching by material', () => {
-    const bienes = inventario.getBienManager().searchBienMaterial('mat1', 'valor', 'desc');
-    expect(bienes[0].valor).toBe(1);
+  it("should throw an error if bienes property is missing in the database when searching by name", () => {
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      bienes: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      clientes: inventario["db"].data?.clientes || [],
+      transacciones: inventario["db"].data?.transacciones || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getBienManager().searchBienNombre("Bien1", "nombre", "asc"),
+    ).toThrowError("La base de datos no contiene la propiedad 'bienes'.");
+    vi.restoreAllMocks();
+  });
+
+  it("should return an ordered list of bienes searching by name ordered by nombre in ascending order", () => {
+    expect(
+      inventario.getBienManager().searchBienNombre("Bien1", "nombre", "asc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by name ordered by nombre in descending order", () => {
+    expect(
+      inventario.getBienManager().searchBienNombre("Bien1", "nombre", "desc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by name ordered by valor in ascending order", () => {
+    expect(
+      inventario.getBienManager().searchBienNombre("Bien1", "valor", "asc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by name ordered by valor in descending order", () => {
+    expect(
+      inventario.getBienManager().searchBienNombre("Bien1", "valor", "desc"),
+    ).toEqual([bien3, bien1]);
+  });
+
+  it("should throw an error if bienes property is missing in the database when searching by descripcion", () => {
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      bienes: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      clientes: inventario["db"].data?.clientes || [],
+      transacciones: inventario["db"].data?.transacciones || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario
+        .getBienManager()
+        .searchBienDescripcion("desc1", "descripcion", "asc"),
+    ).toThrowError("La base de datos no contiene la propiedad 'bienes'.");
+    vi.restoreAllMocks();
+  });
+
+  it("should return an ordered list of bienes searching by descripcion ordered by descripcion in ascending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienDescripcion("desc1", "descripcion", "asc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by descripcion ordered by descripcion in descending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienDescripcion("desc1", "descripcion", "desc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by descripcion ordered by valor in ascending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienDescripcion("desc1", "valor", "asc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by descripcion ordered by valor in descending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienDescripcion("desc1", "valor", "desc"),
+    ).toEqual([bien3, bien1]);
+  });
+
+  it("should throw an error if bienes property is missing in the database when searching by material", () => {
+    inventario["db"].data = {
+      ...inventario["db"].data,
+      bienes: undefined as any,
+      mercaderes: inventario["db"].data?.mercaderes || [],
+      clientes: inventario["db"].data?.clientes || [],
+      transacciones: inventario["db"].data?.transacciones || [],
+    };
+    vi.spyOn(inventario["db"], "read").mockImplementation(() => {});
+    expect(() =>
+      inventario.getBienManager().searchBienMaterial("mat1", "material", "asc"),
+    ).toThrowError("La base de datos no contiene la propiedad 'bienes'.");
+    vi.restoreAllMocks();
+  });
+
+  it("should return an ordered list of bienes searching by material ordered by material in ascending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienMaterial("mat1", "material", "asc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by material ordered by material in descending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienMaterial("mat1", "material", "desc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by material ordered by valor in ascending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienMaterial("mat1", "valor", "asc"),
+    ).toEqual([bien1, bien3]);
+  });
+
+  it("should return an ordered list of bienes searching by material ordered by valor in descending order", () => {
+    expect(
+      inventario
+        .getBienManager()
+        .searchBienMaterial("mat1", "valor", "desc"),
+    ).toEqual([bien3, bien1]);
   });
 });
